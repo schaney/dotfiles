@@ -1,7 +1,5 @@
 alias deepsleep="echo -e 'sudo pmset -a hibernatemode 0'"
 
-alias gpl="git pull origin master"
-alias gps="git push origin master"
 alias s="subl"
 
 alias myip='curl ifconfig.me'
@@ -10,26 +8,16 @@ alias top='htop'
 alias ll='ls -alf'
 alias ..='cd ..'
 alias ...='cd ../..'
+alias home='cd ~'
+alias g='git'
+alias dev='cd ~/dev'
+
+# Adzerk CLI Tools
+alias adzerk=$ADZERK_SCRIPTS_PATH/adzerk
 
 # Flush DNS cache
 alias flush="dscacheutil -flushcache"
 
-# View HTTP traffic
-alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
-alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
-
-alias g="git"
-alias st="status"
-
-# Show/hide hidden files in Finder
-alias show="defaults write com.apple.Finder AppleShowAllFiles -bool true && killall Finder"
-alias hide="defaults write com.apple.Finder AppleShowAllFiles -bool false && killall Finder"
-
-# Hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume 0'"
 alias pumpitup="osascript -e 'set volume 10'"
-alias hax="growlnotify -a 'Activity Monitor' 'System error' -m 'WTF R U DOIN'"
