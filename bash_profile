@@ -4,6 +4,7 @@ export TERM=xterm-color
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export ADZERK_SCRIPTS_PATH=/Users/sean/dev/cli-tools
+export MONO_PATH=/Library/Frameworks/Mono.framework/Versions/
 
 source ~/.aliases
 source ~/.creds
@@ -24,3 +25,5 @@ fi
 
 ~/.dotfiles/scripts/welcome.sh
 
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
