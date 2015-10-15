@@ -12,9 +12,13 @@ alias home='cd ~'
 alias g='git'
 alias dev='cd ~/dev'
 alias changemono='~/.dotfiles/scripts/changemono'
+alias emacsd='~/.dotfiles/scripts/emacsd'
+alias vpn='sudo openvpn --config /usr/local/etc/openvpn/sean.conf'
+alias hodr-redis='redis-server ~/dev/adzerk-redis.conf'
+alias ecache-redis='redis-server --slaveof redis-ecache-slave.adzerk.net 6379'
 
 # Adzerk CLI Tools
-alias adzerk=$ADZERK_SCRIPTS_PATH/adzerk
+alias adzerk=$ADZERK_SCRIPTS_PATH/../adzerk
 
 # Flush DNS cache
 alias flush="dscacheutil -flushcache"

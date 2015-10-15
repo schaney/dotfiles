@@ -3,7 +3,7 @@ export EDITOR="subl -n -w"
 export TERM=xterm-color
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
-export ADZERK_SCRIPTS_PATH=/Users/sean/dev/cli-tools
+export ADZERK_SCRIPTS_PATH=/Users/sean/dev/cli-tools/scripts
 export MONO_PATH=/Library/Frameworks/Mono.framework/Versions/
 
 source ~/.aliases

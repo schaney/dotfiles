@@ -1,0 +1,11 @@
+#! /bin/bash
+
+cd ~
+PS3='pick your emacs d: '
+options=($(ls -a | grep .emacs.d | egrep -v '^.emacs.d$'))
+select opt in "${options[@]}"
+do
+  rm .emacs.d
+  ln -s $opt .emacs.d
+  break;
+done
