@@ -5,6 +5,8 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export ADZERK_SCRIPTS_PATH=/Users/sean/dev/cli-tools/scripts
 export MONO_PATH=/Library/Frameworks/Mono.framework/Versions/
+export NODE_PATH=/usr/local/lib/node_modules
+export AWS_DEFAULT_PROFILE=work
 
 source ~/.aliases
 source ~/.creds

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+PS3='pick your knife gem: '
+options=('adzerk-ops' 'knife-adzerk')
+echo ${options[0]}
+echo ${options[1]}
+select opt in "${options[@]}"
+do
+  if [[ $opt == ${options[0]} ]]
+     then
+       sudo gem uninstall ${options[1]}
+       (cd "/Users/sean/dev/adzerk-chef/ops" && sudo make install)
+  fi
+  if [[ $opt == ${options[1]} ]]
+     then
+       sudo gem uninstall ${options[0]}
+       (cd "/Users/sean/dev/adzerk-knife" && sudo make install)
+  fi
+  break;
+done
