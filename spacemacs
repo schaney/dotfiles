@@ -251,7 +251,7 @@ in `dotspacemacs/user-config'."
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  ;; Transparency by default
+
   (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
   (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
@@ -278,9 +278,13 @@ layers configuration. You are free to put any user code."
   (global-unset-key (kbd "s-t"))
   (global-set-key (kbd "s-t") 'helm-projectile-find-file)
   (global-set-key (kbd "C-;") 'spacemacs/comment-or-uncomment-lines)
+
   (global-auto-highlight-symbol-mode)
   (global-linum-mode)
+
   (spacemacs/toggle-transparency)
+
+  ;; wrap search
   (defadvice isearch-search (after isearch-no-fail activate)
     (unless isearch-success
       (ad-disable-advice 'isearch-search 'after 'isearch-no-fail)
