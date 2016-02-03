@@ -281,6 +281,7 @@ layers configuration. You are free to put any user code."
   (global-unset-key (kbd "C-z"))
   (global-unset-key (kbd "C-x C-z"))
   (global-unset-key (kbd "s-t"))
+  (global-unset-key (kbd "s-p"))
 
   (global-set-key (kbd "M-m f a") 'align-regexp)
   (global-set-key (kbd "M-m . n") 'mc/mark-next-like-this)
@@ -296,6 +297,7 @@ layers configuration. You are free to put any user code."
   (global-set-key (kbd "C-;")     'spacemacs/comment-or-uncomment-lines)
   (global-set-key (kbd "M-m b +") 'alandipert/increase-font-size)
   (global-set-key (kbd "M-m b -") 'alandipert/decrease-font-size)
+  (global-set-key (kbd "s-p")     'neotree-toggle)
 
   (add-hook 'after-init-hook 'global-company-mode)
   (global-auto-highlight-symbol-mode)
