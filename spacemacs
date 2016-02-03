@@ -32,6 +32,7 @@ values."
      git
      markdown
      org
+     (ibuffer :variables ibuffer-group-buffers-by 'projects ibuffer-old-time 8)
      ;; spell-checking
      spotify
      syntax-checking
@@ -44,13 +45,26 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(multiple-cursors company)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
    dotspacemacs-delete-orphan-packages t))
+
+(defun alandipert/change-font-size (multiplier)
+  (set-face-attribute 'default nil :height
+                      (floor (* multiplier
+                                (face-attribute 'default :height)))))
+
+(defun alandipert/increase-font-size ()
+  (interactive)
+  (alandipert/change-font-size 1.10))
+
+(defun alandipert/decrease-font-size ()
+  (interactive)
+  (alandipert/change-font-size 0.9))
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -264,6 +278,10 @@ layers configuration. You are free to put any user code."
   (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
   (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 
+  (global-unset-key (kbd "C-z"))
+  (global-unset-key (kbd "C-x C-z"))
+  (global-unset-key (kbd "s-t"))
+
   (global-set-key (kbd "M-m f a") 'align-regexp)
   (global-set-key (kbd "M-m . n") 'mc/mark-next-like-this)
   (global-set-key (kbd "M-m . p") 'mc/mark-previous-like-this)
@@ -271,18 +289,24 @@ layers configuration. You are free to put any user code."
   (global-set-key (kbd "M-m . e") 'mc/edit-beginnings-of-lines)
   (global-set-key (kbd "M-m . c") 'mc/add-cursor-on-click)
   (global-set-key (kbd "M-m . r") 'mc/mark-all-in-region-regexp)
-  (global-set-key (kbd "s-z") 'undo-tree-undo)
-  (global-set-key (kbd "s-Z") 'undo-tree-redo)
-  (global-unset-key (kbd "C-z"))
-  (global-unset-key (kbd "C-x C-z"))
-  (global-unset-key (kbd "s-t"))
-  (global-set-key (kbd "s-t") 'helm-projectile-find-file)
-  (global-set-key (kbd "C-;") 'spacemacs/comment-or-uncomment-lines)
+  (global-set-key (kbd "M-m d")   'spacemacs/toggle-holy-mode)
+  (global-set-key (kbd "s-z")     'undo-tree-undo)
+  (global-set-key (kbd "s-Z")     'undo-tree-redo)
+  (global-set-key (kbd "s-t")     'helm-projectile-find-file)
+  (global-set-key (kbd "C-;")     'spacemacs/comment-or-uncomment-lines)
+  (global-set-key (kbd "M-m b +") 'alandipert/increase-font-size)
+  (global-set-key (kbd "M-m b -") 'alandipert/decrease-font-size)
 
+  (add-hook 'after-init-hook 'global-company-mode)
   (global-auto-highlight-symbol-mode)
   (global-linum-mode)
 
+  (require 'multiple-cursors)
+
   (spacemacs/toggle-transparency)
+
+  (evil-leader/set-key "of+" 'alandipert/increase-font-size)
+  (evil-leader/set-key "of-" 'alandipert/decrease-font-size)
 
   ;; wrap search
   (defadvice isearch-search (after isearch-no-fail activate)
