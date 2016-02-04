@@ -4,7 +4,7 @@
 [core]
 	excludesfile = ~/.gitignore
 	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
-	editor = subl -n -w
+	editor = ew
 [alias]
     co = checkout
     st = status

@@ -1,5 +1,5 @@
 export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:$PATH
-export EDITOR="subl -n -w"
+export EDITOR="ew"
 export TERM=xterm-256color
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -7,10 +7,11 @@ export MONO_PATH=/Library/Frameworks/Mono.framework/Versions/
 export NODE_PATH=/usr/local/lib/node_modules
 export AWS_DEFAULT_PROFILE=work
 
+[ -z $ADZERK_SCRIPTS_PATH ] && export ADZERK_SCRIPTS_PATH=$HOME/dev/cli-tools/scripts
+
 source ~/.colors
 source ~/.aliases
 
-[ -z $ADZERK_SCRIPTS_PATH ] && export ADZERK_SCRIPTS_PATH=$HOME/dev/cli-tools/scripts
 [ -f ~/.creds ] && source ~/.creds
 [ -f ~/dev/adzerk/.adzerk ] && source ~/dev/adzerk/.adzerk
 [ -f ~/.git-completion.bash ] && source ~/.dotfiles/git-completion.bash
