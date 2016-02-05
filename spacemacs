@@ -310,7 +310,7 @@ layers configuration. You are free to put any user code."
   (evil-leader/set-key "of+" 'alandipert/increase-font-size)
   (evil-leader/set-key "of-" 'alandipert/decrease-font-size)
 
-  (setq linum-format "%d ")
+  (setq linum-format "%d    ")
 
   ;; wrap search
   (defadvice isearch-search (after isearch-no-fail activate)
