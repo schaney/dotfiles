@@ -12,6 +12,12 @@ export AWS_DEFAULT_PROFILE=work
 source ~/.colors
 source ~/.aliases
 
+if [[ $ADZERK_SCRIPTS_PATH ]]; then
+  PATH="$PATH:$ADZERK_SCRIPTS_PATH"
+fi
+
+[ -d ~/.scripts ] && PATH="$PATH:$HOME/.scripts"
+
 [ -f ~/.creds ] && source ~/.creds
 [ -f ~/dev/adzerk/.adzerk ] && source ~/dev/adzerk/.adzerk
 [ -f ~/.git-completion.bash ] && source ~/.dotfiles/git-completion.bash
@@ -34,3 +40,5 @@ ssh-reagent () {
   done
   echo Cannot find ssh agent - maybe you should reconnect and forward it?
 }
+
+bind 'set completion-ignore-case on'

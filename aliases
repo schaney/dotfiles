@@ -3,9 +3,9 @@ alias deepsleep="echo -e 'sudo pmset -a hibernatemode 0'"
 alias s="subl"
 
 alias myip='curl https://api.ipify.org | pbcopy'
-alias ls='ls -G'
+alias ls='ls --color=auto'
 alias top='htop'
-alias ll='ls -alf'
+alias ll='ls -alF'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias home='cd ~'
