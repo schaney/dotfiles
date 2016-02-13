@@ -114,15 +114,7 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(afternoon
-                         cyberpunk
-                         sanityinc-tomorrow-bright
-                         spacemacs-dark
-                         spacemacs-light
-                         solarized-light
-                         solarized-dark
-                         leuven
-                         monokai
-                         zenburn)
+                         monokai)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -305,12 +297,10 @@ layers configuration. You are free to put any user code."
 
   (require 'multiple-cursors)
 
-  (spacemacs/toggle-transparency)
-
   (evil-leader/set-key "of+" 'alandipert/increase-font-size)
   (evil-leader/set-key "of-" 'alandipert/decrease-font-size)
 
-  (setq linum-format "%d    ")
+  (setq linum-format "%4d \u2502 ")
 
   ;; wrap search
   (defadvice isearch-search (after isearch-no-fail activate)
@@ -322,5 +312,6 @@ layers configuration. You are free to put any user code."
       (ad-activate 'isearch-search)))
   )
 )
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.

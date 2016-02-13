@@ -41,4 +41,16 @@ ssh-reagent () {
   echo Cannot find ssh agent - maybe you should reconnect and forward it?
 }
 
+gc ()
+{
+    local FROM="git@github.com:${1?}";
+    local TO="$HOME/dev/${1?}";
+    if [ -d "$TO" ]; then
+       echo "Already done!";
+    else
+       git clone "$FROM" "$TO";
+    fi;
+    cd "$TO"
+}
+
 bind 'set completion-ignore-case on'
