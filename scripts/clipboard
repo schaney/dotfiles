@@ -1,0 +1,14 @@
+#!/bin/bash
+if [[ $1 == "start" ]]
+then
+    echo "starting clipboard"
+    launchctl start com.apple.pboard
+    launchctl start com.apple.ibtoold
+elif [[ $1 == "stop" ]]
+then
+    echo "stopping clipboard"
+    killall pboard ibtoold
+    killall Dock
+else
+    echo "usage clipboard start|stop"
+fi
