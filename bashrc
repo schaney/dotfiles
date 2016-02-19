@@ -6,6 +6,7 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 export MONO_PATH=/Library/Frameworks/Mono.framework/Versions/
 export NODE_PATH=/usr/local/lib/node_modules
 export AWS_DEFAULT_PROFILE=work
+export KONSOLE_DBUS_SESSION=true
 
 [ -z $ADZERK_SCRIPTS_PATH ] && export ADZERK_SCRIPTS_PATH=$HOME/dev/cli-tools/scripts
 
