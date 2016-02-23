@@ -1,3 +1,5 @@
+# -*- mode: sh;-*-
+
 export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:$PATH
 export EDITOR="ew"
 export TERM=xterm-256color
@@ -8,7 +10,7 @@ export NODE_PATH=/usr/local/lib/node_modules
 export AWS_DEFAULT_PROFILE=work
 export KONSOLE_DBUS_SESSION=true
 
-[ -z $ADZERK_SCRIPTS_PATH ] && export ADZERK_SCRIPTS_PATH=$HOME/dev/cli-tools/scripts
+[ -z $ADZERK_SCRIPTS_PATH ] && export ADZERK_SCRIPTS_PATH=$HOME/dev/adzerk/cli-tools/scripts
 
 source ~/.colors
 source ~/.aliases
@@ -52,6 +54,17 @@ gc ()
        git clone "$FROM" "$TO";
     fi;
     cd "$TO"
+}
+
+function .. { # "cd up" - move up $1 directories
+  local num;
+  local dest;
+  num=${1:-1}
+  while [[ $num > 0 ]]; do
+    dest="../${dest}"
+    (( num-- ))
+  done
+  cd "${dest}"
 }
 
 bind 'set completion-ignore-case on'
