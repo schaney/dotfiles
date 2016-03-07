@@ -68,3 +68,6 @@ function .. { # "cd up" - move up $1 directories
 }
 
 bind 'set completion-ignore-case on'
+
+# added by travis gem
+[ -f /data/home/sean/.travis/travis.sh ] && source /data/home/sean/.travis/travis.sh

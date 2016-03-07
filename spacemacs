@@ -280,6 +280,7 @@ layers configuration. You are free to put any user code."
   (global-unset-key (kbd "s-p"))
 
   (global-set-key (kbd "M-m f a") 'align-regexp)
+  (global-set-key (kbd "M-m . f") 'evil-toggle-fold)
   (global-set-key (kbd "M-m . n") 'mc/mark-next-like-this)
   (global-set-key (kbd "M-m . p") 'mc/mark-previous-like-this)
   (global-set-key (kbd "M-m . a") 'mc/mark-all-like-this)
