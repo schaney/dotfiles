@@ -21,7 +21,6 @@ fi
 
 [ -d ~/.scripts ] && PATH="$PATH:$HOME/.scripts"
 
-[ -f ~/.creds ] && source ~/.creds
 [ -f ~/dev/adzerk/.adzerk ] && source ~/dev/adzerk/.adzerk
 [ -f ~/.git-completion.bash ] && source ~/.dotfiles/git-completion.bash
 [ -f ~/.git-prompt.sh ] && source ~/.dotfiles/git-prompt.sh
