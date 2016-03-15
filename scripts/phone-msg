@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ $1 ]]
+then
+  aws sns publish --topic-arn arn:aws:sns:us-east-1:411053564761:tasker --message message --subject $1 --profile home
+else
+  aws sns publish --topic-arn arn:aws:sns:us-east-1:411053564761:tasker --message message --subject "default message" --profile home
+fi
