@@ -296,6 +296,8 @@ layers configuration. You are free to put any user code."
   (global-set-key (kbd "M-m b -") 'alandipert/decrease-font-size)
   (global-set-key (kbd "s-p")     'neotree-toggle)
 
+  (setq cider-boot-parameters "cider repl -s wait")
+
   (add-hook 'after-init-hook 'global-company-mode)
   (global-auto-highlight-symbol-mode)
   (global-linum-mode)
@@ -306,6 +308,13 @@ layers configuration. You are free to put any user code."
   (evil-leader/set-key "of-" 'alandipert/decrease-font-size)
 
   (setq linum-format "%4d \u2502 ")
+
+  ;; for editing .asc files
+  (require 'epa-file)
+  (epa-file-enable)
+  (setq epa-file-name-regexp "\\.\\(gpg\\|asc\\)$"
+        epa-armor t)
+  (epa-file-name-regexp-update)
 
   ;; wrap search
   (defadvice isearch-search (after isearch-no-fail activate)
