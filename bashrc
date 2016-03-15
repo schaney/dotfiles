@@ -56,6 +56,11 @@ gc ()
     cd "$TO"
 }
 
+creds ()
+{
+    eval "$(gpg -d ~/.creds.asc)"
+}
+
 function .. { # "cd up" - move up $1 directories
   local num;
   local dest;
