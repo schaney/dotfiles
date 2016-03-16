@@ -25,7 +25,19 @@ fi
 [ -f ~/.git-completion.bash ] && source ~/.dotfiles/git-completion.bash
 [ -f ~/.git-prompt.sh ] && source ~/.dotfiles/git-prompt.sh
 
+# #U+039B
+
+# __env_marker()
+# {
+#     if [ $ENV_IS_SET ]
+#     then
+#         echo "${c_red} (Λ)"
+#     fi
+# }
+
+
 export PS1="${c_green}\h:${c_magenta}\w${c_blue}\$(__git_ps1 ' [%s]')${c_magenta} → ${c_reset}"
+
 
 [ -f /Users/sean/.travis/travis.sh ] && source /Users/sean/.travis/travis.sh
 
@@ -57,7 +69,12 @@ gc ()
 
 creds ()
 {
-    eval "$(gpg -d ~/.creds.asc)"
+    if [ $ENV_IS_SET ]
+    then
+        echo "env is already set :)"
+    else
+        eval "$(gpg -d ~/.creds.asc)"
+    fi
 }
 
 function .. { # "cd up" - move up $1 directories
