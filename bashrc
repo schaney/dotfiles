@@ -43,7 +43,7 @@ export PS1="${c_green}\h:${c_magenta}\w${c_blue}\$(__git_ps1 ' [%s]')${c_magenta
 
 ~/.dotfiles/scripts/welcome.sh
 
-ssh-reagent () {
+sr () {
   for agent in /tmp/ssh-*/agent.*; do
     export SSH_AUTH_SOCK=$agent
     if ssh-add -l 2>&1 > /dev/null; then
