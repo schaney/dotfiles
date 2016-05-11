@@ -24,7 +24,7 @@ def pwd
 end
 
 def files
-  Dir[File.expand_path "~/.dotfiles/*"].reject { |p| DONT_LINK.include?(File.basename(p)) }
+  Dir[File.expand_path "./*"].reject { |p| DONT_LINK.include?(File.basename(p)) }
 end
  
 def run(cmd)
