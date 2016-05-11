@@ -1,0 +1,2 @@
+#!/bin/bash
+rofi -show run -lines 8 -eh 2 -width 100 -padding 500 -opacity 85 -bw 0 -bc "#1f222d" -bg "#1f222d" -fg "#ffffff" -hlbg "#1f222d" -hlfg "#9575cd" -font "SourceCodePro 18"

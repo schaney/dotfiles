@@ -25,6 +25,12 @@ fi
 [ -f ~/.git-completion.bash ] && source ~/.dotfiles/git-completion.bash
 [ -f ~/.git-prompt.sh ] && source ~/.dotfiles/git-prompt.sh
 
+command_exists () {
+    type "$1" &> /dev/null ;
+}
+
+command_exists xset && xset m 0 0
+
 # #U+039B
 
 # __env_marker()
