@@ -219,7 +219,7 @@ values."
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters the
    ;; point when it reaches the top or bottom of the screen. (default t)
-   dotspacemacs-smooth-scrolling t
+   dotspacemacs-smooth-scrolling nil
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
@@ -269,6 +269,7 @@ layers configuration. You are free to put any user code."
   (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+  (add-hook 'cider-repl-mode-hook       #'enable-paredit-mode)
   (add-hook 'clojure-mode-hook 'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
   (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
@@ -295,6 +296,8 @@ layers configuration. You are free to put any user code."
   (global-set-key (kbd "M-m b +") 'alandipert/increase-font-size)
   (global-set-key (kbd "M-m b -") 'alandipert/decrease-font-size)
   (global-set-key (kbd "s-p")     'neotree-toggle)
+  (global-set-key (kbd "<mouse-5>") 'scroll-up-line)
+  (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
 
   (setq cider-boot-parameters "cider repl -s wait")
 
