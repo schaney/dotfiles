@@ -29,7 +29,7 @@ command_exists () {
     type "$1" &> /dev/null ;
 }
 
-command_exists xset && xset m 0 0
+[ `uname` != "Darwin" ] && command_exists xset && xset m 0 0
 
 # #U+039B
 
