@@ -16,7 +16,7 @@ source ~/.colors
 source ~/.aliases
 
 if [[ $ADZERK_SCRIPTS_PATH ]]; then
-  PATH="$PATH:$ADZERK_SCRIPTS_PATH"
+    PATH="$PATH:$ADZERK_SCRIPTS_PATH:$ADZERK_SCRIPTS_PATH/../micha"
 fi
 
 [ -d ~/.scripts ] && PATH="$PATH:$HOME/.scripts"
@@ -98,3 +98,6 @@ bind 'set completion-ignore-case on'
 
 # added by travis gem
 [ -f /data/home/sean/.travis/travis.sh ] && source /data/home/sean/.travis/travis.sh
+
+export NVM_DIR="/data/home/sean/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
