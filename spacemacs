@@ -31,17 +31,22 @@ values."
      emacs-lisp
      javascript
      git
+     (version-control :variables
+                      version-control-diff-tool 'git-gutter
+                      version-control-global-margin t)
      markdown
      org
-     (ibuffer :variables ibuffer-group-buffers-by 'projects ibuffer-old-time 8)
+     (ibuffer :variables
+              ibuffer-group-buffers-by 'projects
+              ibuffer-old-time 8)
      ;; spell-checking
      spotify
+     lua
      syntax-checking
      themes-megapack
-     version-control
      yaml
-     xkcd
-     )
+     xkcd)
+
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
@@ -114,8 +119,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(grandshell
-                         afternoon
+   dotspacemacs-themes '(afternoon
+                         grandshell
                          hemisu-dark
                          monokai
                          cyberpunk)
@@ -127,7 +132,7 @@ values."
                                :size 13
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.5)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -223,7 +228,7 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -303,7 +308,6 @@ layers configuration. You are free to put any user code."
 
   (add-hook 'after-init-hook 'global-company-mode)
   (global-auto-highlight-symbol-mode)
-  (global-linum-mode)
 
   (require 'multiple-cursors)
 
