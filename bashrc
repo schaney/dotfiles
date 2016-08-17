@@ -9,6 +9,11 @@ export MONO_PATH=/Library/Frameworks/Mono.framework/Versions/
 export NODE_PATH=/usr/local/lib/node_modules
 export AWS_DEFAULT_PROFILE=work
 export KONSOLE_DBUS_SESSION=true
+export HISTFILESIZE=100000000
+export HISTSIZE=$HISTFILESIZE
+export HISTCONTROL=ignoreboth
+export HISTTIMEFORMAT='%F %T '
+export PROMPT_COMMAND='history -a'
 
 [ -z $ADZERK_SCRIPTS_PATH ] && export ADZERK_SCRIPTS_PATH=$HOME/dev/adzerk/cli-tools/scripts
 
@@ -19,8 +24,9 @@ if [[ $ADZERK_SCRIPTS_PATH ]]; then
     PATH="$PATH:$ADZERK_SCRIPTS_PATH:$ADZERK_SCRIPTS_PATH/../micha"
 fi
 
-[ -d ~/.scripts ] && PATH="$PATH:$HOME/.scripts"
-
+[ -d ~/.scripts ] && export PATH="$PATH:$HOME/.scripts"
+[ -d /usr/local/opt/go/bin ] && export GOPATH=/usr/local/opt/go/bin
+[ -d /usr/local/opt/go/libexec/bin ] && export PATH=$PATH:/usr/local/opt/go/libexec/bin
 [ -f ~/dev/adzerk/.adzerk ] && source ~/dev/adzerk/.adzerk
 [ -f ~/.git-completion.bash ] && source ~/.dotfiles/git-completion.bash
 [ -f ~/.git-prompt.sh ] && source ~/.dotfiles/git-prompt.sh
@@ -59,6 +65,10 @@ sr () {
     fi
   done
   echo Cannot find ssh agent - maybe you should reconnect and forward it?
+}
+
+hg () {
+    history | grep $1
 }
 
 gc ()
@@ -101,3 +111,5 @@ bind 'set completion-ignore-case on'
 
 export NVM_DIR="/data/home/sean/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

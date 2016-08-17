@@ -43,6 +43,8 @@ alias stopmc="~/.dotfiles/scripts/stopmc"
 alias phone-msg="~/.dotfiles/scripts/phone-msg"
 alias mcstatus="aws ec2 describe-instances --instance-ids i-c99cff78 --profile home | grep -A 2 '\"State\": {' | grep Name | cut -c 34-40"
 
+alias lock="pmset displaysleepnow"
+
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume 0'"
 alias pumpitup="osascript -e 'set volume 10'"
