@@ -93,6 +93,11 @@ creds ()
     fi
 }
 
+fixcamera ()
+{
+    sudo killall AppleCameraAssistant; sudo killall VDCAssistant
+}
+
 function .. { # "cd up" - move up $1 directories
   local num;
   local dest;

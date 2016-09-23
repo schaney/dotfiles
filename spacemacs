@@ -263,12 +263,18 @@ any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
     )
 
+  (defun my-change-window-divider ()
+    (let ((display-table (or buffer-display-table standard-display-table)))
+      (set-display-table-slot display-table 5 ?║)
+      (set-window-display-table (selected-window) display-table)))
+
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
   (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+  (add-hook 'window-configuration-change-hook 'my-change-window-divider)
   (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
   (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
@@ -282,7 +288,6 @@ layers configuration. You are free to put any user code."
   (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 
   (global-unset-key (kbd "C-z"))
-  (global-unset-key (kbd "C-x C-z"))
   (global-unset-key (kbd "s-t"))
   (global-unset-key (kbd "s-p"))
 
@@ -309,6 +314,16 @@ layers configuration. You are free to put any user code."
 
   (add-hook 'after-init-hook 'global-company-mode)
   (global-auto-highlight-symbol-mode)
+
+
+  ;; Reverse colors for the border to have nicer line
+  (set-face-inverse-video-p 'vertical-border nil)
+  (set-face-background 'vertical-border (face-background 'default))
+
+  ;; Set symbol for the border
+  (set-display-table-slot standard-display-table
+                          'vertical-border
+                          (make-glyph-code ?┃))
 
   (require 'multiple-cursors)
 
