@@ -1,7 +1,41 @@
-c_red='\[\e[0;31m\]'
-c_green='\[\e[0;32m\]'
-c_darkgrey='\[\e[1;30m\]'
-c_blue='\[\e[0;34m\]'
-c_magenta='\[\e[0;35m\]'
-c_cyan='\[\e[0;36m\]'
+c_red="\[\033[01;38;5;196m\]"
+c_green="\[\033[01;38;5;34m\]"
+c_darkgrey="\[\033[01;38;5;239m\]"
+c_blue="\[\033[01;38;5;33m\]"
+c_purple="\[\033[01;38;5;93m\]"
+c_cyan="\[\033[01;38;5;117m\]"
 c_reset='\[\e[m\]'
+c_orange="\[\033[01;38;5;202m\]"
+
+function colorgrid( )
+{
+    iter=16
+    while [ $iter -lt 52 ]
+    do
+        second=$[$iter+36]
+        third=$[$second+36]
+        four=$[$third+36]
+        five=$[$four+36]
+        six=$[$five+36]
+        seven=$[$six+36]
+        if [ $seven -gt 250 ];then seven=$[$seven-251]; fi
+
+        echo -en "\033[38;5;$(echo $iter)m█ "
+        printf "%03d" $iter
+        echo -en "   \033[38;5;$(echo $second)m█ "
+        printf "%03d" $second
+        echo -en "   \033[38;5;$(echo $third)m█ "
+        printf "%03d" $third
+        echo -en "   \033[38;5;$(echo $four)m█ "
+        printf "%03d" $four
+        echo -en "   \033[38;5;$(echo $five)m█ "
+        printf "%03d" $five
+        echo -en "   \033[38;5;$(echo $six)m█ "
+        printf "%03d" $six
+        echo -en "   \033[38;5;$(echo $seven)m█ "
+        printf "%03d" $seven
+
+        iter=$[$iter+1]
+        printf '\r\n'
+    done
+}
