@@ -39,12 +39,13 @@ command_exists () {
 PROMPT_COMMAND=__prompt_command # Func to gen PS1 after CMDs
 
 __prompt_command() {
-    local EXIT="$?"             # This needs to be first
+    local EXIT="$?"
     PS1=""
+    local sep="➤"
     if [ $EXIT != 0 ]; then
-        PS1+="${c_red}\h "      # Add red if exit code non 0
+        PS1+="${c_red}${sep} \h"
     else
-        PS1+="${c_green}\h "
+        PS1+="${c_green}${sep} \h"
     fi
 
     if [ $ADZERK_ENV_IS_SET ]
@@ -53,7 +54,7 @@ __prompt_command() {
     else
         local redishcolor=$c_purple
     fi
-    PS1+="${redishcolor}\w${c_blue}\$(__git_ps1 ' [%s]')${redishcolor} → ${c_reset}"
+    PS1+="${redishcolor} ${sep} \w ${c_blue}${sep}\$(__git_ps1 ' [%s]')${redishcolor} ${c_yellow}${sep}${c_reset}  "
 }
 
 
