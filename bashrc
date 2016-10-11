@@ -35,7 +35,7 @@ command_exists () {
     type "$1" &> /dev/null ;
 }
 
-[ `uname` != "Darwin" ] && command_exists xset && xset m 0 0 &> /dev/null
+[ `uname` != "Darwin" ] && [ $DISPLAY ] && command_exists xset && xset m 0 0 &> /dev/null
 
 PROMPT_COMMAND=__prompt_command # Func to gen PS1 after CMDs
 
@@ -60,8 +60,6 @@ __prompt_command() {
 
 
 [ -f /Users/sean/.travis/travis.sh ] && source /Users/sean/.travis/travis.sh
-
-~/.dotfiles/scripts/welcome.sh
 
 sr () {
   for agent in /tmp/ssh-*/agent.*; do
@@ -126,3 +124,5 @@ export NVM_DIR="/data/home/sean/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+~/.dotfiles/scripts/welcome.sh
