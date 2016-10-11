@@ -68,7 +68,7 @@ sr () {
 }
 
 hg () {
-    history | grep $1
+    history | grep "$1"
 }
 
 gc ()
