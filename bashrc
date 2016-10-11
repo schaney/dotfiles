@@ -14,7 +14,6 @@ export HISTSIZE=$HISTFILESIZE
 export HISTCONTROL=ignoreboth
 export HISTTIMEFORMAT='%F %T '
 export PROMPT_COMMAND='history -a'
-
 [ -z $ADZERK_SCRIPTS_PATH ] && export ADZERK_SCRIPTS_PATH=$HOME/dev/adzerk/cli-tools/scripts
 
 source ~/.colors
