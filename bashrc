@@ -54,7 +54,7 @@ __prompt_command() {
     else
         local redishcolor=$c_purple
     fi
-    PS1+="${redishcolor} ${sep} \w ${c_blue}${sep}\$(__git_ps1 ' [%s]')${redishcolor} ${c_yellow}${sep}${c_reset}  "
+    PS1+="${redishcolor} ${sep} \w${c_blue}\$(__git_ps1 ' ${sep} [%s]')${redishcolor} ${c_yellow}${sep}${c_reset}  "
 }
 
 
