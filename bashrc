@@ -1,7 +1,7 @@
 # -*- mode: sh;-*-
 
 export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:$PATH
-export EDITOR="ew"
+export EDITOR="emacs"
 export TERM=xterm-256color
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -102,6 +102,11 @@ creds ()
 fixcamera ()
 {
     sudo killall AppleCameraAssistant; sudo killall VDCAssistant
+}
+
+fixssh ()
+{
+    eval $(tmux show-env |sed -n 's/^\(SSH_[^=]*\)=\(.*\)/export \1="\2"/p')
 }
 
 function .. { # "cd up" - move up $1 directories
