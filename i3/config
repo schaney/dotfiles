@@ -1,3 +1,10 @@
+#hax
+
+  exec --no-startup-id echo "$0: DESKTOP_AUTOSTART_ID $DESKTOP_AUTOSTART_ID, registering with org.gnome.SessionManager"
+
+  exec --no-startup-id dbus-send --session --print-reply=literal --dest=org.gnome.SessionManager "/org/gnome/SessionManager" org.gnome.SessionManager.RegisterClient "string:i3" "string:$DESKTOP_AUTOSTART_ID"
+
+
 # constants
   set $mod Mod4
 
@@ -22,7 +29,7 @@
 
 ## workspaces
   set $workspace1 "1: "
-  set $workspace2 "2: "
+  set $workspace2 "2: "
   set $workspace3 "3: "
   set $workspace4 "4"
   set $workspace5 "5"
@@ -41,18 +48,18 @@
   exec_always --no-startup-id compton
   exec_always --no-startup-id xmodmap ~/.Xmodmap
   exec --no-startup-id gnome-terminal
-  exec --no-startup-id ~/.wine/drive_c/Program\ Files\ \(x86\)/1Password\ 4/1Password.exe
+#  exec --no-startup-id ~/.wine/drive_c/Program\ Files\ \(x86\)/1Password\ 4/1Password.exe
   exec --no-startup-id ~/.dropbox-dist/dropboxd
-  exec --no-startup-id firefox
+  exec --no-startup-id chromium-browser
   exec --no-startup-id slack
-  exec --no-startup-id 1password
+#  exec --no-startup-id 1password
 
 # keys
   bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
-  bindsym $mod+Shift+q kill
-  bindsym $mod+d exec rofi -show run -lines 8 -eh 2 -width 100 -padding 800 -opacity "85" -bw 0 -bc "$base01" -bg "$base01" -fg "$base07" -hlbg "$base01" -hlfg "#9575cd" -font "SourceCodePro 18"
+  bindsym $mod+q kill
+  bindsym $mod+d exec rofi -show run -lines 8 -eh 2 -width 100 -padding 400 -opacity "85" -bw 0 -bc "$base01" -bg "$base01" -fg "$base07" -hlbg "$base01" -hlfg "#9575cd" -font "SourceCodePro 18"
 
 # change focus
   bindsym $mod+j focus left
@@ -114,14 +121,9 @@
   bindsym $mod+Shift+0 move container to workspace $workspace10
 
 # assign workspaces
-  assign [class="Firefox"] $workspace2
+  assign [class="chromium-browser"] $workspace2
   assign [class="Slack"] $workspace3
   assign [class="1Password.exe"] $workspace10
-
-# Volume & Media Bindings
-  bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5%
-  bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5%
-  bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle
 
 # reload the configuration file
   bindsym $mod+Shift+c reload
