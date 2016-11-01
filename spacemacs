@@ -27,7 +27,6 @@ values."
      better-defaults
      clojure
      csharp
-     dockerfile
      emacs-lisp
      javascript
      git
@@ -40,12 +39,10 @@ values."
               ibuffer-group-buffers-by 'projects
               ibuffer-old-time 8)
      ;; spell-checking
-     spotify
      lua
      syntax-checking
      themes-megapack
-     yaml
-     xkcd)
+     yaml)
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -58,19 +55,6 @@ values."
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
    dotspacemacs-delete-orphan-packages t))
-
-(defun alandipert/change-font-size (multiplier)
-  (set-face-attribute 'default nil :height
-                      (floor (* multiplier
-                                (face-attribute 'default :height)))))
-
-(defun alandipert/increase-font-size ()
-  (interactive)
-  (alandipert/change-font-size 1.10))
-
-(defun alandipert/decrease-font-size ()
-  (interactive)
-  (alandipert/change-font-size 0.9))
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -87,7 +71,7 @@ values."
    ;; This variable has no effect if Emacs is launched with the parameter
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
-   dotspacemacs-elpa-https t
+   dotspacemacs-elpa-https nil
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    dotspacemacs-elpa-timeout 5
    ;; If non nil then spacemacs will check for updates at startup
@@ -119,12 +103,14 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(grandshell
-                         reverse
-                         afternoon
-                         hemisu-dark
-                         monokai
-                         cyberpunk)
+   dotspacemacs-themes '(monokai
+                         ;; fogus
+                         ;; grandshell
+                         ;; reverse
+                         ;; afternoon
+                         ;; hemisu-dark
+                         ;; cyberpunk
+                         )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -201,7 +187,7 @@ values."
    ;; If non nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
-   dotspacemacs-loading-progress-bar t
+   dotspacemacs-loading-progress-bar nil
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
    dotspacemacs-fullscreen-at-startup nil
@@ -288,8 +274,6 @@ layers configuration. You are free to put any user code."
   (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 
   (global-unset-key (kbd "C-z"))
-  (global-unset-key (kbd "s-t"))
-  (global-unset-key (kbd "s-p"))
 
   (global-set-key (kbd "M-m f a") 'align-regexp)
   (global-set-key (kbd "M-m . f") 'evil-toggle-fold)
@@ -300,21 +284,11 @@ layers configuration. You are free to put any user code."
   (global-set-key (kbd "M-m . c") 'mc/add-cursor-on-click)
   (global-set-key (kbd "M-m . r") 'mc/mark-all-in-region-regexp)
   (global-set-key (kbd "M-m d")   'spacemacs/toggle-holy-mode)
-  (global-set-key (kbd "s-z")     'undo-tree-undo)
-  (global-set-key (kbd "s-Z")     'undo-tree-redo)
-  (global-set-key (kbd "s-t")     'helm-projectile-find-file)
   (global-set-key (kbd "C-;")     'spacemacs/comment-or-uncomment-lines)
-  (global-set-key (kbd "M-m b +") 'alandipert/increase-font-size)
-  (global-set-key (kbd "M-m b -") 'alandipert/decrease-font-size)
-  (global-set-key (kbd "s-p")     'neotree-toggle)
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line)
   (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
 
   (setq cider-boot-parameters "cider repl -s wait")
-
-  (add-hook 'after-init-hook 'global-company-mode)
-  (global-auto-highlight-symbol-mode)
-
 
   ;; Reverse colors for the border to have nicer line
   (set-face-inverse-video-p 'vertical-border nil)
@@ -327,26 +301,12 @@ layers configuration. You are free to put any user code."
 
   (require 'multiple-cursors)
 
-  (evil-leader/set-key "of+" 'alandipert/increase-font-size)
-  (evil-leader/set-key "of-" 'alandipert/decrease-font-size)
-
   (setq linum-format "%4d \u2502 ")
 
   ;; for editing .asc files
-  (require 'epa-file)
-  (epa-file-enable)
   (setq epa-file-name-regexp "\\.\\(gpg\\|asc\\)$"
         epa-armor t)
  (epa-file-name-regexp-update)
-
-  ;; wrap search
-  (defadvice isearch-search (after isearch-no-fail activate)
-    (unless isearch-success
-      (ad-disable-advice 'isearch-search 'after 'isearch-no-fail)
-      (ad-activate 'isearch-search)
-      (isearch-repeat (if isearch-forward 'forward))
-      (ad-enable-advice 'isearch-search 'after 'isearch-no-fail)
-      (ad-activate 'isearch-search)))
  )
 )
 
@@ -359,14 +319,10 @@ layers configuration. You are free to put any user code."
  ;; If there is more than one, they won't work right.
  '(js-indent-level 2)
  '(json-reformat:indent-width 2)
- '(package-selected-packages
-   (quote
-    (paradox company-statistics clj-refactor hydra inflections edn paredit cider adaptive-wrap zonokai-theme zenburn-theme zen-and-art-theme yaml-mode xkcd ws-butler window-numbering web-beautify volatile-highlights vi-tilde-fringe underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stekene-theme spotify spacemacs-theme spaceline powerline spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smooth-scrolling smeargle seti-theme restart-emacs rainbow-delimiters railscasts-theme purple-haze-theme professional-theme popwin planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pcre2el pastels-on-dark-theme spinner page-break-lines orgit organic-green-theme org-repo-todo org-present org-pomodoro alert log4e gntp org-plus-contrib org-bullets open-junk-file omtose-phellack-theme omnisharp csharp-mode oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme neotree naquadah-theme mustang-theme move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc markdown-mode majapahit-theme magit-gitflow macrostep lush-theme lua-mode lorem-ipsum linum-relative light-soap-theme leuven-theme json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc jbeans-theme jazz-theme ir-black-theme inkpot-theme info+ indent-guide ido-vertical-mode ibuffer-projectile hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation heroku-theme hemisu-theme help-fns+ helm-themes helm-swoop helm-spotify multi helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md gandalf-theme flycheck-pos-tip flycheck flx-ido flx flatui-theme flatland-theme firebelly-theme fill-column-indicator farmhouse-theme fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-args evil-anzu anzu espresso-theme elisp-slime-nav dracula-theme dockerfile-mode django-theme diff-hl define-word darktooth-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme company-tern s dash-functional tern company-quickhelp pos-tip company colorsarenice-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized coffee-mode clues-theme peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight queue pkg-info clojure-mode epl cherry-blossom-theme busybee-theme buffer-move bubbleberry-theme bracketed-paste birds-of-paradise-plus-theme badwolf-theme auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed dash apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes aggressive-indent afternoon-theme ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build use-package which-key bind-key bind-map evil reverse-theme))))
+)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:background nil))))
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+ )
