@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     html
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -33,7 +34,7 @@ values."
      (version-control :variables
                       version-control-diff-tool 'git-gutter
                       version-control-global-margin t)
-     markdown
+     (markdown :variables markdown-live-preview-engine 'vmd)
      org
      (ibuffer :variables
               ibuffer-group-buffers-by 'projects
