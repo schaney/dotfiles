@@ -109,6 +109,10 @@ fixssh ()
     eval $(tmux show-env |sed -n 's/^\(SSH_[^=]*\)=\(.*\)/export \1="\2"/p')
 }
 
+ee ()
+{
+    eval `sed 's/^/export /' $1`
+}
 function .. { # "cd up" - move up $1 directories
   local num;
   local dest;
