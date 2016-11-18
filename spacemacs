@@ -43,6 +43,7 @@ values."
      ;; spell-checking
      lua
      spacemacs-editing-visual
+     (spell-checking :variables spell-checking-enable-by-default nil)
      syntax-checking
      themes-megapack
      yaml)
