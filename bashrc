@@ -113,7 +113,7 @@ ee ()
 {
     eval `sed 's/^/export /' $1`
 }
-complete -F _minimal ee
+[ `uname` != "Darwin" ] && complete -F _minimal ee
 
 function .. { # "cd up" - move up $1 directories
   local num;
