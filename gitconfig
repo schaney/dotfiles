@@ -4,7 +4,7 @@
 [core]
 	excludesfile = $HOME/.gitignore_global
 	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
-	editor = emacs
+	editor = e
 [alias]
     co = checkout
     st = status

@@ -1,7 +1,7 @@
 # -*- mode: sh;-*-
 
 export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:$PATH
-export EDITOR="emacs"
+export EDITOR="emacsclient -a \"\" -t"
 export TERM=xterm-256color
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
