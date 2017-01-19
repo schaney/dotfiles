@@ -30,7 +30,7 @@
 ## workspaces
   set $workspace1 "1: "
   set $workspace2 "2: "
-  set $workspace3 "3: "
+  set $workspace3 "3: "
   set $workspace4 "4: "
   set $workspace5 "5: "
   set $workspace6 "6"
@@ -47,7 +47,6 @@
 # Startup
   exec_always --no-startup-id compton
   exec_always --no-startup-id xmodmap ~/.Xmodmap
-  exec --no-startup-id gnome-keyring-daemon
   exec --no-startup-id 1pass
   exec --no-startup-id ~/.dropbox-dist/dropboxd
   exec --no-startup-id chromium-browser

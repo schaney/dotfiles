@@ -91,6 +91,7 @@ gc ()
 
 creds ()
 {
+    ssh-add ~/.ssh/{id_rsa,*.pem}
     if [ $ADZERK_ENV_IS_SET ]
     then
         echo "env is already set :)"

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [[ $1 == "on" ]]
+then
+    [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+    service openvpn@sean start
+elif [[ $1 == "off" ]]
+then
+    [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+    service openvpn@sean stop
+elif [[ $1 == "status" ]]
+then
+    if `service openvpn@sean status | grep running > dev/null`
+    then
+        echo "ON"
+    else
+        echo "OFF"
+    fi
+else
+    echo "usage: vpn [on|off|status]"
+fi
