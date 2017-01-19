@@ -4,7 +4,8 @@ alias deepsleep="echo -e 'sudo pmset -a hibernatemode 0'"
 
 alias e="emacsclient -a \"\" -t"
 
-alias myip='curl https://api.ipify.org | pbcopy'
+alias copy='xclip -sel clip'
+alias myip='curl https://api.ipify.org | xclip -sel clip'
 
 if [ `uname` == "Darwin" ]
 then
