@@ -1,3 +1,8 @@
 #!/bin/bash
 
-pactl list sinks | grep "Volume" | tail -n 2 | head -n 1 | awk '{print $5}'
+if [[ `awk -F"[][]" '/dB/ { print $6 }' <(amixer sget Master)` == "off" ]]
+then
+    echo "MUTE"
+else
+    awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master)
+fi

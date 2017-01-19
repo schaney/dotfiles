@@ -1,9 +1,9 @@
-#hax
+# i3 config file (v4)
 
-  exec --no-startup-id echo "$0: DESKTOP_AUTOSTART_ID $DESKTOP_AUTOSTART_ID, registering with org.gnome.SessionManager"
-
-  exec --no-startup-id dbus-send --session --print-reply=literal --dest=org.gnome.SessionManager "/org/gnome/SessionManager" org.gnome.SessionManager.RegisterClient "string:i3" "string:$DESKTOP_AUTOSTART_ID"
-
+# volume control keys
+  bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 5+ unmute"
+  bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 5- unmute"
+  bindsym XF86AudioMute exec "amixer -q -D pulse sset Master toggle"
 
 # constants
   set $mod Mod4
@@ -31,8 +31,8 @@
   set $workspace1 "1: "
   set $workspace2 "2: "
   set $workspace3 "3: "
-  set $workspace4 "4"
-  set $workspace5 "5"
+  set $workspace4 "4: "
+  set $workspace5 "5: "
   set $workspace6 "6"
   set $workspace7 "7"
   set $workspace8 "8"
@@ -47,19 +47,28 @@
 # Startup
   exec_always --no-startup-id compton
   exec_always --no-startup-id xmodmap ~/.Xmodmap
-  exec --no-startup-id gnome-terminal
-#  exec --no-startup-id ~/.wine/drive_c/Program\ Files\ \(x86\)/1Password\ 4/1Password.exe
+  exec --no-startup-id ~/.wine/drive_c/Program\ Files\ \(x86\)/1Password\ 4/1Password.exe
   exec --no-startup-id ~/.dropbox-dist/dropboxd
   exec --no-startup-id chromium-browser
+  exec --no-startup-id thunderbird
   exec --no-startup-id slack
-#  exec --no-startup-id 1password
+  exec --no-startup-id gnome-terminal
+  exec --no-startup-id gnome-terminal
+
+# Unity/applet stuff (16.04)
+  bindsym $mod+comma exec ~/.i3/ucc
+  exec --no-startup-id unity-settings-daemon
+  exec --no-startup-id nm-applet
+  #exec --no-startup-id volumeicon
 
 # keys
   bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
   bindsym $mod+q kill
-  bindsym $mod+d exec rofi -show run -lines 8 -eh 2 -width 100 -padding 400 -opacity "85" -bw 0 -bc "$base01" -bg "$base01" -fg "$base07" -hlbg "$base01" -hlfg "#9575cd" -font "SourceCodePro 18"
+
+# rofi (dmenu replacement)
+  bindsym $mod+d exec rofi -show run -lines 8 -eh 2 -width 50 -padding 400 -opacity "85" -bw 0 -bc "$base01" -bg "$base01" -fg "$base07" -hlbg "$base01" -hlfg "#9575cd" -font "SourceCodePro 18"
 
 # change focus
   bindsym $mod+j focus left
@@ -81,6 +90,9 @@
 
 # enter fullscreen mode for the focused container
   bindsym $mod+f fullscreen toggle
+
+# move workspace to other monitor
+  bindsym $mod+x move workspace to output right
 
 # change container layout (stacked, tabbed, toggle split)
   bindsym $mod+s layout stacking
@@ -122,7 +134,12 @@
 
 # assign workspaces
   assign [class="chromium-browser"] $workspace2
+  assign [class="Chromium-browser"] $workspace2
   assign [class="Slack"] $workspace3
+  assign [class="Mail"] $workspace4
+  assign [class="Thunderbird"] $workspace4
+  assign [class="spotify"] $workspace5
+  assign [class="Spotify"] $workspace5
   assign [class="1Password.exe"] $workspace10
 
 # reload the configuration file
