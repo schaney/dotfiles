@@ -47,6 +47,7 @@
 # Startup
   exec_always --no-startup-id compton
   exec_always --no-startup-id xmodmap ~/.Xmodmap
+  exec --no-startup-id gnome-keyring-daemon
   exec --no-startup-id ~/.wine/drive_c/Program\ Files\ \(x86\)/1Password\ 4/1Password.exe
   exec --no-startup-id ~/.dropbox-dist/dropboxd
   exec --no-startup-id chromium-browser
