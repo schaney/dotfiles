@@ -1,12 +1,34 @@
 # i3 config file (v4)
 
+  set $mod Mod4
+
 # volume control keys
   bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 5+ unmute"
   bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 5- unmute"
   bindsym XF86AudioMute exec "amixer -q -D pulse sset Master toggle"
 
+# media
+  bindsym XF86AudioPlay exec playerctl play-pause
+  bindsym XF86AudioNext exec playerctl next
+  bindsym XF86AudioPrev exec playerctl previous
+
+# touchpad
+  bindsym $mod+p exec ~/.scripts/touchpad
+
+# poweroff menu
+  set $sysmenu "     [r]eload  [l]ogout  [p]oweroff  re[b]oot"
+  bindsym XF86PowerOff mode $sysmenu
+
+mode $sysmenu {
+    bindsym r         restart
+    bindsym l         exit
+    bindsym p         exec shutdown -P now
+    bindsym b         exec shutdown -r now
+    bindsym Return    mode "default"
+    bindsym Escape    mode "default"
+}
+
 # constants
-  set $mod Mod4
 
 ## colors
   set $base00 #101218
@@ -44,22 +66,24 @@
   floating_modifier $mod
   hide_edge_borders both
 
+# Unity/applet stuff (16.04)
+  bindsym $mod+comma exec ~/.i3/ucc
+  exec --no-startup-id ~/.scripts/start-unity
+  exec --no-startup-id nm-applet
+  exec --no-startup-id volumeicon
+
 # Startup
   exec_always --no-startup-id compton
   exec_always --no-startup-id xmodmap ~/.Xmodmap
+  exec_always --no-startup-id feh --bg-fill ~/Dropbox/wallpapers/rainbow_blocks.jpg
   exec --no-startup-id 1pass
   exec --no-startup-id ~/.dropbox-dist/dropboxd
   exec --no-startup-id chromium-browser
   exec --no-startup-id thunderbird
+  exec --no-startup-id yakyak
   exec --no-startup-id slack
   exec --no-startup-id gnome-terminal
   exec --no-startup-id gnome-terminal
-
-# Unity/applet stuff (16.04)
-  bindsym $mod+comma exec ~/.i3/ucc
-  exec --no-startup-id unity-settings-daemon
-  exec --no-startup-id nm-applet
-  #exec --no-startup-id volumeicon
 
 # keys
   bindsym $mod+Return exec i3-sensible-terminal
@@ -136,6 +160,7 @@
   assign [class="chromium-browser"] $workspace2
   assign [class="Chromium-browser"] $workspace2
   assign [class="Slack"] $workspace3
+  assign [class="yakyak"] $workspace3
   assign [class="Mail"] $workspace4
   assign [class="Thunderbird"] $workspace4
   assign [class="spotify"] $workspace5
@@ -146,8 +171,6 @@
   bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
   bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-  bindsym $mod+Shift+e exec i3-msg exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {

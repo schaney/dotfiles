@@ -1,0 +1,9 @@
+#!/bin/bash
+
+unity-settings-daemon &
+
+sleep 3;
+/usr/bin/syndaemon -i 1 -K -d
+xinput set-prop 13 "Synaptics Palm Detection" 1
+xinput set-prop 13 "Synaptics Palm Dimensions" 5, 5
+xmodmap ~/.Xmodmap;
