@@ -3,9 +3,21 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 active_sink=`$dir/currentsink`
 if [ -z $1 ]
 then
-    sink=`pactl list sinks short | cut -f1 | grep -v $active_sink`
+    largest_sink=`pactl list sinks short | cut -f1 | sort -nu | tail -n1`
+    if [[ $active_sink == $largest_sink ]]
+    then
+        sink=0
+    else
+        sink="$(( $active_sink + 1 ))"
+    fi
 else
-    sink=$1
+    if pactl list sinks short | cut -f1 | grep $1
+    then
+        sink=$1
+    else
+        echo "invalid sink"
+        exit 0
+    fi
 fi
 
 echo "Setting default sink to: $sink";
