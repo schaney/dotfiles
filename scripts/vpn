@@ -12,9 +12,9 @@ elif [[ $1 == "status" ]]
 then
     if `service openvpn@sean status | grep running > dev/null`
     then
-        echo "ON"
+        echo ""
     else
-        echo "OFF"
+        echo ""
     fi
 else
     echo "usage: vpn [on|off|status]"

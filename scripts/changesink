@@ -1,0 +1,20 @@
+#!/bin/bash
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+active_sink=`$dir/currentsink`
+if [ -z $1 ]
+then
+    sink=`pactl list sinks short | cut -f1 | grep -v $active_sink`
+else
+    sink=$1
+fi
+
+echo "Setting default sink to: $sink";
+pacmd set-default-sink $sink
+pacmd list-sink-inputs | grep index | while read line
+do
+echo "Moving input: ";
+echo $line | cut -f2 -d' ';
+echo "to sink: $sink";
+pacmd move-sink-input `echo $line | cut -f2 -d' '` $sink
+
+done

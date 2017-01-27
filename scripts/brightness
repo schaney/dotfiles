@@ -1,6 +1,37 @@
 #!/bin/bash
 
-if [[ $1 ]]
+backlight="/sys/class/backlight/intel_backlight"
+
+max=`cat ${backlight}/max_brightness`
+min=0
+current=`cat ${backlight}/brightness`
+step=11
+if [[ $1 == "up" ]]
 then
-   echo $1 | sudo tee /sys/class/backlight/acpi_video0/brightness
+    new=$(( $current + $step ))
+    echo "$current plus $step equals $new"
+elif [[ $1 == "down" ]]
+then
+    new=$(( $current - $step ))
+    echo "$current minus $step equals $new"
+elif [[ $1 == "max" ]]
+then
+    echo $(( $max / $step ))
+    exit 0
+else
+    echo $(( $current / $step ))
+    exit 0
 fi
+echo $new
+
+if (( $new > $max ))
+then
+    new=$max
+fi
+
+if (( $new < $min ))
+then
+    new=$min
+fi
+echo $new
+echo $new > ${backlight}/brightness

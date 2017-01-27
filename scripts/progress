@@ -1,0 +1,5 @@
+#!/bin/bash
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+max=`sudo ~/.scripts/brightness max`
+cur=`sudo ~/.scripts/brightness`
+python $dir/progress_bar.py $cur 10 1 $max

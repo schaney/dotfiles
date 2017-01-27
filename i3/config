@@ -1,31 +1,39 @@
 # i3 config file (v4)
-
+  exec --no-startup-id "xrandr --dpi 175"
   set $mod Mod4
 
 # volume control keys
-  bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 5+ unmute"
-  bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 5- unmute"
-  bindsym XF86AudioMute exec "amixer -q -D pulse sset Master toggle"
+  bindsym XF86AudioRaiseVolume exec "/home/sean/.scripts/volume up"
+  bindsym XF86AudioLowerVolume exec "/home/sean/.scripts/volume down"
+  #bindsym XF86AudioMute exec
+  bindsym $mod+Shift+s exec "/home/sean/.scripts/changesink"
+  bindsym $mod+Shift+v exec "pavucontrol -t 3"
 
 # media
   bindsym XF86AudioPlay exec playerctl play-pause
   bindsym XF86AudioNext exec playerctl next
   bindsym XF86AudioPrev exec playerctl previous
 
+# brightness
+  bindsym XF86MonBrightnessUp exec "sudo ~/.scripts/brightness up"
+  bindsym XF86MonBrightnessDown exec "sudo ~/.scripts/brightness down"
+
 # touchpad
   bindsym $mod+p exec ~/.scripts/touchpad
 
 # poweroff menu
-  set $sysmenu "     [r]eload  [l]ogout  [p]oweroff  re[b]oot"
+  set $sysmenu "      [l]ogout loc[k] [r]eboot [s]leep shut[d]own"
   bindsym XF86PowerOff mode $sysmenu
 
 mode $sysmenu {
-    bindsym r         restart
-    bindsym l         exit
-    bindsym p         exec shutdown -P now
-    bindsym b         exec shutdown -r now
-    bindsym Return    mode "default"
-    bindsym Escape    mode "default"
+    bindsym l            exit
+    bindsym d            exec systemctl poweroff
+    bindsym r            exec systemctl reboot
+    bindsym s            exec systemctl suspend & mode "default"
+    bindsym k            exec "i3lock -c 000000"; mode "default"
+    bindsym XF86PowerOff mode "default"
+    bindsym Return       mode "default"
+    bindsym Escape       mode "default"
 }
 
 # constants
@@ -55,20 +63,20 @@ mode $sysmenu {
   set $workspace3 "3: "
   set $workspace4 "4: "
   set $workspace5 "5: "
-  set $workspace6 "6"
+  set $workspace6 "6: "
   set $workspace7 "7"
   set $workspace8 "8"
   set $workspace9 "9"
   set $workspace10 "10: "
 
 # General
-  font pango:SourceCodePro 14
+  font pango:SourceCodePro Bold 14
   floating_modifier $mod
   hide_edge_borders both
 
 # Unity/applet stuff (16.04)
   bindsym $mod+comma exec ~/.i3/ucc
-  exec --no-startup-id ~/.scripts/start-unity
+  #exec --no-startup-id ~/.scripts/start-unity
   exec --no-startup-id nm-applet
   exec --no-startup-id volumeicon
 
@@ -80,10 +88,11 @@ mode $sysmenu {
   exec --no-startup-id ~/.dropbox-dist/dropboxd
   exec --no-startup-id chromium-browser
   exec --no-startup-id thunderbird
-  exec --no-startup-id yakyak
   exec --no-startup-id slack
+  exec --no-startup-id yakyak
   exec --no-startup-id gnome-terminal
   exec --no-startup-id gnome-terminal
+  exec --no-startup-id "syndaemon -i 0.3 -K -d"
 
 # keys
   bindsym $mod+Return exec i3-sensible-terminal
@@ -165,6 +174,7 @@ mode $sysmenu {
   assign [class="Thunderbird"] $workspace4
   assign [class="spotify"] $workspace5
   assign [class="Spotify"] $workspace5
+  assign [class="zoom"] $workspace6
   assign [class="1Password.exe"] $workspace10
 
 # reload the configuration file
@@ -209,7 +219,7 @@ mode "resize" {
 
 # Bar
   bar {
-    font pango: SourceCodePro, FontAwesome 15
+    font pango: SourceCodePro Medium, FontAwesome 15
     status_command i3blocks
     position bottom
     strip_workspace_numbers yes
