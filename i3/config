@@ -5,7 +5,8 @@
 # volume control keys
   bindsym XF86AudioRaiseVolume exec "/home/sean/.scripts/volume up"
   bindsym XF86AudioLowerVolume exec "/home/sean/.scripts/volume down"
-  #bindsym XF86AudioMute exec
+  bindsym XF86AudioMute exec "/home/sean/.scripts/volume mute"
+  bindsym $mod+Shift+m exec "/home/sean/.scripts/volume mute"
   bindsym $mod+Shift+s exec "/home/sean/.scripts/changesink"
   bindsym $mod+Shift+v exec "pavucontrol -t 3"
 
@@ -56,7 +57,6 @@ mode $sysmenu {
   set $base0E #c0b7f9
   set $base0F #fcc09e
 
-
 ## workspaces
   set $workspace1 "1: "
   set $workspace2 "2: "
@@ -70,7 +70,7 @@ mode $sysmenu {
   set $workspace10 "10: "
 
 # General
-  font pango:SourceCodePro Bold 14
+  font pango:SourceCodePro, FontAwesome Bold 14
   floating_modifier $mod
   hide_edge_borders both
 
@@ -168,15 +168,21 @@ mode $sysmenu {
 # assign workspaces
   assign [class="chromium-browser"] $workspace2
   assign [class="Chromium-browser"] $workspace2
-  assign [class="Slack"] $workspace3
-  assign [class="yakyak"] $workspace3
-  assign [class="Mail"] $workspace4
-  assign [class="Thunderbird"] $workspace4
-  assign [class="spotify"] $workspace5
-  assign [class="Spotify"] $workspace5
+  assign [class="Slack|yakyak"] $workspace3
+  assign [class="Mail|Thunderbird"] $workspace4
+  assign [class="spotify|Spotify"] $workspace5
   assign [class="zoom"] $workspace6
   assign [class="1Password.exe"] $workspace10
 
+# window title formats
+  for_window [class=".*"] title_format " %title"
+  for_window [class="chromium-browser|Chromium-browser"] title_format " %title"
+  for_window [class="Slack|yakyak"] title_format " %title"
+  for_window [class="Mail|Thunderbird"] title_format " %title"
+  for_window [class="spotify|Spotify"] title_format " %title"
+  for_window [class="zoom"] title_format " %title"
+  for_window [class="1Password.exe"] title_format " %title"
+  for_window [class="gnome-terminal-server|Gnome-terminal"] title_format " %title"
 # reload the configuration file
   bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
