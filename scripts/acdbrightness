@@ -1,0 +1,14 @@
+#!/bin/bash
+
+device="/dev/usb/hiddev1"
+bump=32
+
+if [[ $1 == "up" ]]
+then
+    acdcontrol $device -- +$bump
+elif [[ $1 == "down" ]]
+then
+    acdcontrol $device -- -$bump
+else
+    acdcontrol $device | tail -n1 | cut -d= -f2
+fi
