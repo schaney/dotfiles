@@ -11,8 +11,9 @@
   bindsym $mod+Shift+v exec "pavucontrol -t 3"
 
 # screenshots
-  bindsym Print exec scrot '%Y%m%d_%H%M%S.png' -e 'mv $f $HOME/screenshots' && notify-send 'screenshot' '~/screenshots'
-  bindsym shift+Print --release exec notify-send 'screenshot' 'please select area' && scrot '%Y%m%d_%H%M%S.png' -s -e 'mv $f $HOME/screenshots' && notify-send 'screnshot' 'taken. in ~/screenshots'
+  bindsym Print exec "/home/sean/.scripts/scrot-dropbox window"
+  bindsym --release Shift+Print exec "/home/sean/.scripts/scrot-dropbox select"
+  bindsym $mod+Shift+Print exec "/home/sean/.scripts/scrot-dropbox"
 
 # media
   bindsym XF86AudioPlay exec playerctl play-pause

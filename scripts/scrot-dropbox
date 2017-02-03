@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -e
+OUTDIR="$HOME/Dropbox/Public/screenshots"
+USER_ID=63798244
+DB_BASE_URL="https://dl.dropboxusercontent.com/u/${USER_ID}/screenshots"
+IMG="$(uuidgen).png"
+OUT="${OUTDIR}/${IMG}"
+if [[ $1 == "select" ]]; then
+    notify-send -a scrot "select area"
+    scrot -s $OUT
+elif [[ $1 == "window" ]]; then
+    scrot -u $OUT
+else
+    scrot $OUT
+fi
+URL="${DB_BASE_URL}/${IMG}"
+echo -n $URL | xclip -i -sel c
+notify-send -a scrot "copied to clipboard"
