@@ -7,7 +7,6 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export MONO_PATH=/usr/lib/mono
 export NODE_PATH=/usr/local/lib/node_modules
-export AWS_DEFAULT_PROFILE=work
 export KONSOLE_DBUS_SESSION=true
 export HISTFILESIZE=100000000
 export HISTSIZE=$HISTFILESIZE
