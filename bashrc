@@ -96,7 +96,29 @@ creds ()
     then
         echo "env is already set :)"
     else
-        eval "$(gpg -d ~/.creds.asc)"
+        . "$(gpg -d ~/.creds.asc)"
+    fi
+}
+
+function set-aws-keys {
+    export AWS_ACCESS_KEY=$1
+    export AWS_ACCESS_KEY_ID=$1
+    export AWS_SECRET_KEY=$2
+    export AWS_SECRET_KEY_ID=$2
+    export AWS_SECRET_ACCESS_KEY=$2
+    export AWS_SECRET_ACCESS_KEY_ID=$2
+}
+
+function aws-keys {
+    if [[ "$1" == "reporting" ]]; then
+        echo "setting reporting account keys"
+        set_aws_keys $REPORTING_AWS_KEY $REPORTING_AWS_SECRET
+    elif [[ "$1" == "personal" ]]; then
+        echo "setting personal account keys"
+        set_aws_keys $PERSONAL_AWS_KEY $PERSONAL_AWS_SECRET
+    else
+        echo "setting adzerk account keys"
+        set_aws_keys $ADZERK_AWS_ACCESS_KEY $ADZERK_AWS_SECRET_KEY
     fi
 }
 
