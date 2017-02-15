@@ -117,7 +117,7 @@ function aws-keys {
         set-aws-keys $PERSONAL_AWS_KEY $PERSONAL_AWS_SECRET
     else
         echo "setting adzerk account keys"
-        set-aws- $ADZERK_AWS_ACCESS_KEY $ADZERK_AWS_SECRET_KEY
+        set-aws-keys $ADZERK_AWS_ACCESS_KEY $ADZERK_AWS_SECRET_KEY
     fi
 }
 
