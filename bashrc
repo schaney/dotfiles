@@ -96,7 +96,7 @@ creds ()
     then
         echo "env is already set :)"
     else
-        . "$(gpg -d ~/.creds.asc)"
+        eval "$(gpg -d ~/.creds.asc)"
     fi
 }
 
