@@ -1,6 +1,6 @@
 # -*- mode: sh;-*-
 
-export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:$HOME/.scripts:$PATH
+export PATH=$HOME/.scripts:$HOME/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:$PATH
 export EDITOR="emacsclient -a \"\" -t"
 export TERM=xterm-256color
 export GIT_PS1_SHOWDIRTYSTATE=1
@@ -20,7 +20,7 @@ source ~/.colors
 source ~/.aliases
 
 if [[ $ADZERK_SCRIPTS_PATH ]]; then
-    PATH="$PATH:$ADZERK_SCRIPTS_PATH:$ADZERK_SCRIPTS_PATH/../micha:$ADZERK_SCRIPTS_PATH/../jarrodx"
+    PATH="$PATH:$ADZERK_SCRIPTS_PATH:$ADZERK_SCRIPTS_PATH/../micha:$ADZERK_SCRIPTS_PATH/../jarrod"
 fi
 
 [ -d ~/.scripts ] && export PATH="$PATH:$HOME/.scripts"
