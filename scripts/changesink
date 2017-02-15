@@ -4,9 +4,10 @@ active_sink=`$dir/currentsink`
 if [ -z $1 ]
 then
     largest_sink=`pactl list sinks short | cut -f1 | sort -nu | tail -n1`
+    smallest_sink=`pactl list sinks short | cut -f1 | sort -nur | tail -n1`
     if [[ $active_sink == $largest_sink ]]
     then
-        sink=0
+        sink=$smallest_sink
     else
         sink="$(( $active_sink + 1 ))"
     fi
@@ -30,3 +31,5 @@ echo "to sink: $sink";
 pacmd move-sink-input `echo $line | cut -f2 -d' '` $sink
 
 done
+
+pkill -RTMIN+1 i3blocks

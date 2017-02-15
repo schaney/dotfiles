@@ -1,6 +1,6 @@
 #!/bin/bash
 
-device="/dev/usb/hiddev1"
+device=`acdcontrol --detect /dev/usb/hiddev* | grep -i supported | cut -d: -f1`
 bump=32
 
 if [[ $1 == "up" ]]

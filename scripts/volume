@@ -30,3 +30,5 @@ else
     fi
     echo $volume
 fi
+
+pkill -RTMIN+1 i3blocks

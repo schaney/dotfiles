@@ -21,10 +21,10 @@
   bindsym XF86AudioPrev exec playerctl previous
 
 # brightness
-  bindsym XF86MonBrightnessUp exec "sudo ~/.scripts/brightness up"
-  bindsym XF86MonBrightnessDown exec "sudo ~/.scripts/brightness down"
-  bindsym $mod+Shift+g exec "acdbrightness up"
-  bindsym $mod+Shift+f exec "acdbrightness down"
+  bindsym XF86MonBrightnessUp exec "sudo /home/sean/.scripts/brightness up"
+  bindsym XF86MonBrightnessDown exec "sudo /home/sean/.scripts/brightness down"
+  bindsym $mod+Shift+g exec "sudo /home/sean/.scripts/acdbrightness up"
+  bindsym $mod+Shift+f exec "sudo /home/sean/.scripts/acdbrightness down"
 
 # touchpad
   bindsym $mod+p exec ~/.scripts/touchpad
@@ -71,10 +71,10 @@ mode $sysmenu {
   set $workspace4 "4: "
   set $workspace5 "5: "
   set $workspace6 "6: "
-  set $workspace7 "7"
+  set $workspace7 "7: "
   set $workspace8 "8"
   set $workspace9 "9"
-  set $workspace10 "10: "
+  set $workspace10 "10: "
 
 # General
   font pango:Source Code Pro, FontAwesome Medium 14
@@ -85,12 +85,12 @@ mode $sysmenu {
   bindsym $mod+comma exec ~/.i3/ucc
   #exec --no-startup-id ~/.scripts/start-unity
   exec --no-startup-id nm-applet
-  exec --no-startup-id volumeicon
 
 # Startup
   exec_always --no-startup-id compton
   exec_always --no-startup-id xmodmap ~/.Xmodmap
   exec_always --no-startup-id feh --bg-fill ~/Dropbox/wallpapers/rainbow_blocks.jpg
+  exec --no-startup-id autokey
   exec --no-startup-id "dunst -config $HOME/.dunstrc"
   exec --no-startup-id 1pass
   exec --no-startup-id ~/.dropbox-dist/dropboxd
@@ -102,6 +102,10 @@ mode $sysmenu {
   exec --no-startup-id gnome-terminal
   exec --no-startup-id "syndaemon -i 0.3 -K -d"
 
+# Focus-last
+  bindsym $mod+Tab exec "~/.i3/focus-last.py --switch"
+  exec_always --no-startup-id "~/.i3/focus-last.py"
+
 # keys
   bindsym $mod+Return exec i3-sensible-terminal
 
@@ -109,7 +113,8 @@ mode $sysmenu {
   bindsym $mod+q kill
 
 # rofi (dmenu replacement)
-  bindsym $mod+d exec rofi -show run -lines 8 -eh 2 -width 50 -padding 400 -opacity "85" -bw 0 -bc "$base01" -bg "$base01" -fg "$base07" -hlbg "$base01" -hlfg "#9575cd" -font "SourceCodePro 18"
+
+  bindsym $mod+d exec rofi -show run -padding 50 -lines 8 -eh 2 -opacity "85" -bw 0 -bc "$base01" -bg "$base01" -fg "$base07" -hlbg "$base01" -hlfg "#9575cd" -font "SourceCodePro 18"
 
 # change focus
   bindsym $mod+j focus left
@@ -178,8 +183,11 @@ mode $sysmenu {
   assign [class="Chromium-browser"] $workspace2
   assign [class="Slack|yakyak"] $workspace3
   assign [class="Mail|Thunderbird"] $workspace4
-  assign [class="spotify|Spotify"] $workspace5
+  #assign [class="Spotify|spotify"] $workspace5
+  ## hack because spotify is retarded and doesn't assign the class name before creating the window
+  for_window [class="Spotify|spotify"] move to workspace $workspace5
   assign [class="zoom"] $workspace6
+  assign [class="Steam"] $workspace7
   assign [class="1Password.exe"] $workspace10
 
 # window title formats

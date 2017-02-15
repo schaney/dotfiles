@@ -19,3 +19,5 @@ then
 else
     echo "usage: vpn [on|off|status]"
 fi
+
+pkill -RTMIN+3 i3blocks
