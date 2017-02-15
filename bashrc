@@ -112,13 +112,13 @@ function set-aws-keys {
 function aws-keys {
     if [[ "$1" == "reporting" ]]; then
         echo "setting reporting account keys"
-        set_aws_keys $REPORTING_AWS_KEY $REPORTING_AWS_SECRET
+        set-aws-keys $REPORTING_AWS_KEY $REPORTING_AWS_SECRET
     elif [[ "$1" == "personal" ]]; then
         echo "setting personal account keys"
-        set_aws_keys $PERSONAL_AWS_KEY $PERSONAL_AWS_SECRET
+        set-aws-keys $PERSONAL_AWS_KEY $PERSONAL_AWS_SECRET
     else
         echo "setting adzerk account keys"
-        set_aws_keys $ADZERK_AWS_ACCESS_KEY $ADZERK_AWS_SECRET_KEY
+        set-aws- $ADZERK_AWS_ACCESS_KEY $ADZERK_AWS_SECRET_KEY
     fi
 }
 
