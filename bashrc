@@ -99,6 +99,11 @@ creds ()
     fi
 }
 
+uncreds ()
+{
+  unset ADZERK_ENV_IS_SET
+}
+
 function set-aws-keys {
     export AWS_ACCESS_KEY=$1
     export AWS_ACCESS_KEY_ID=$1
