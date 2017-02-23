@@ -90,7 +90,7 @@ gc ()
 
 creds ()
 {
-    ssh-add ~/.ssh/{id_rsa,*.pem}
+    ssh-add ~/.ssh/{id_rsa,adzerk.pem,bifrost.pem,reporting_vpc.pem}
     if [ $ADZERK_ENV_IS_SET ]
     then
         echo "env is already set :)"
@@ -148,6 +148,7 @@ function .. { # "cd up" - move up $1 directories
   cd "${dest}"
 }
 
+set -o emacs
 bind 'set completion-ignore-case on'
 
 # added by travis gem
@@ -158,4 +159,6 @@ export NVM_DIR="/data/home/sean/.nvm"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-~/.dotfiles/scripts/welcome.sh
+if [[ -z "$SSH_CLIENT" ]]; then
+  ~/.dotfiles/scripts/welcome.sh
+fi
