@@ -187,6 +187,7 @@ mode $sysmenu {
   ## hack because spotify is retarded and doesn't assign the class name before creating the window
   for_window [class="Spotify|spotify"] move to workspace $workspace5
   assign [class="zoom"] $workspace6
+  for_window [class="zoom"] move to workspace $workspace6
   assign [class="Steam"] $workspace7
   assign [class="1Password.exe"] $workspace10
 
