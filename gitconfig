@@ -4,7 +4,7 @@
 [core]
 	excludesfile = $HOME/.gitignore_global
 	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
-	editor = emacsclient -a \"\" -t
+	editor = emacsclient-snapshot -a \"\" -t
 [alias]
     co = checkout
     st = status
