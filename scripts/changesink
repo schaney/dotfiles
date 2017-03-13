@@ -9,7 +9,7 @@ then
     then
         sink=$smallest_sink
     else
-        sink="$(( $active_sink + 1 ))"
+        sink="$(pactl list sinks short | cut -f1 | sort -nu | grep -A 1 $active_sink | tail -1)"
     fi
 else
     if pactl list sinks short | cut -f1 | grep $1
