@@ -60,18 +60,6 @@ __prompt_command() {
 
 [ -f /Users/sean/.travis/travis.sh ] && source /Users/sean/.travis/travis.sh
 
-sr () {
-  for agent in /tmp/ssh-*/agent.*; do
-    export SSH_AUTH_SOCK=$agent
-    if ssh-add -l 2>&1 > /dev/null; then
-      echo Found working SSH Agent:
-      ssh-add -l
-      return
-    fi
-  done
-  echo Cannot find ssh agent - maybe you should reconnect and forward it?
-}
-
 hg () {
     history | grep "$1"
 }
@@ -131,7 +119,7 @@ fixcamera ()
     sudo killall AppleCameraAssistant; sudo killall VDCAssistant
 }
 
-fixssh ()
+sr ()
 {
     eval $(tmux show-env |sed -n 's/^\(SSH_[^=]*\)=\(.*\)/export \1="\2"/p')
 }
