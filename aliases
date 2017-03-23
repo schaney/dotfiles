@@ -2,7 +2,8 @@
 
 alias deepsleep="echo -e 'sudo pmset -a hibernatemode 0'"
 
-alias e="TERM=xterm-24bits emacsclient-snapshot -a \"\" -t"
+alias e="emacsclient -a \"\" -t"
+alias es="TERM=xterm-24bits emacsclient-snapshot -a \"emacs-snapshot --daemon\" -t"
 
 alias copy='xclip -sel clip'
 alias myip='curl https://api.ipify.org | xclip -sel clip'
