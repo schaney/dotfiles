@@ -75,7 +75,7 @@ mode $sysmenu {
   set $workspace6 "6: "
   set $workspace7 "7: "
   set $workspace8 "8"
-  set $workspace9 "9"
+  set $workspace9 "9: "
   set $workspace10 "10: "
 
 # General
@@ -84,7 +84,7 @@ mode $sysmenu {
   hide_edge_borders both
 
 # Unity/applet stuff (16.04)
-  bindsym $mod+comma exec ~/.i3/ucc
+  #bindsym $mod+comma exec ~/.i3/ucc
   #exec --no-startup-id ~/.scripts/start-unity
   exec --no-startup-id nm-applet
 
@@ -191,6 +191,7 @@ mode $sysmenu {
   assign [class="zoom"] $workspace6
   for_window [class="zoom"] move to workspace $workspace6
   assign [class="Steam"] $workspace7
+  assign [class="SWT"] $workspace9
   assign [class="1Password.exe"] $workspace10
 
 # window title formats
@@ -200,6 +201,7 @@ mode $sysmenu {
   for_window [class="Mail|Thunderbird"] title_format " %title"
   for_window [class="spotify|Spotify"] title_format " %title"
   for_window [class="zoom"] title_format " %title"
+  for_window [class="SWT"] title_format " %title"
   for_window [class="1Password.exe"] title_format " %title"
   for_window [class="gnome-terminal-server|Gnome-terminal"] title_format " %title"
 # reload the configuration file
