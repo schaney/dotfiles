@@ -1,6 +1,6 @@
 # -*- mode: sh;-*-
-
 export PATH=$HOME/.scripts:$HOME/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:$PATH
+export ADZERK_REPO_PATH=$HOME/dev/adzerk/adzerk
 export EDITOR="emacsclient -a \"\" -t"
 export TERM=xterm-256color
 export GIT_PS1_SHOWDIRTYSTATE=1

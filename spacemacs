@@ -31,6 +31,7 @@ values."
      better-defaults
      clojure
      csharp
+     docker
      emacs-lisp
      javascript
      git
