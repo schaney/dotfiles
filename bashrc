@@ -3,6 +3,7 @@ export PATH=$HOME/.scripts:$HOME/local/bin:/opt/local/bin:/opt/local/sbin:/usr/l
 export ADZERK_REPO_PATH=$HOME/dev/adzerk/adzerk
 export EDITOR="emacsclient -a \"\" -t"
 export TERM=xterm-256color
+export ITERM_24BIT=yes
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export MONO_PATH=/usr/lib/mono
