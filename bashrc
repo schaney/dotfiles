@@ -67,14 +67,19 @@ hg () {
 
 gc ()
 {
+  if [[ -z "$1" ]]; then
+    gc $(tmux display-message -p '#S')
+  else
     local FROM="git@github.com:${1?}";
     local TO="$HOME/dev/${1?}";
-    if [ -d "$TO" ]; then
-       echo "Already done!";
-    else
-       git clone "$FROM" "$TO";
+    if [[ ! -d "$TO" ]]; then
+      git clone "$FROM" "$TO" > /dev/null 2>&1;
+      if [[ $? != 0 ]]; then
+        TO="$(pwd)"
+      fi;
     fi;
-    cd "$TO"
+  fi;
+  cd "$TO"
 }
 
 creds ()
@@ -155,4 +160,8 @@ export NVM_DIR="/data/home/sean/.nvm"
 
 if [[ -z "$SSH_CLIENT" ]]; then
   ~/.dotfiles/scripts/welcome.sh
+fi
+
+if [[ $TMUX ]]; then
+  gc
 fi
