@@ -83,12 +83,8 @@ mode $sysmenu {
   floating_modifier $mod
   hide_edge_borders both
 
-# Unity/applet stuff (16.04)
-  #bindsym $mod+comma exec ~/.i3/ucc
-  #exec --no-startup-id ~/.scripts/start-unity
-  exec --no-startup-id nm-applet
-
 # Startup
+  exec --no-startup-id nm-applet
   exec_always --no-startup-id compton
   exec_always --no-startup-id xmodmap ~/.Xmodmap
   exec_always --no-startup-id feh --bg-fill ~/Dropbox/wallpapers/rainbow_blocks.jpg
