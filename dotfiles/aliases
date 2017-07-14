@@ -1,12 +1,8 @@
 # -*- mode: sh;-*-
-
-alias deepsleep="echo -e 'sudo pmset -a hibernatemode 0'"
-
 alias e="emacsclient -a \"\" -t"
-alias es="TERM=xterm-24bits emacsclient-snapshot -a \"emacs-snapshot --daemon\" -t"
 
-alias copy='xclip -sel clip'
-alias myip='curl https://api.ipify.org | xclip -sel clip'
+alias pbcopy='xclip -i -sel clip'
+alias myip='curl https://api.ipify.org | xclip -i -sel clip'
 
 if [ `uname` == "Darwin" ]
 then
@@ -14,28 +10,9 @@ then
 else
     alias ls='ls --color=auto'
 fi
+
 alias top='htop'
 alias ll='ls -alF'
-alias home='cd ~'
 alias g='git'
-alias dev='cd ~/dev'
 alias stripcolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"'
-alias changemono='~/.dotfiles/scripts/changemono'
-alias knifegem='~/.dotfiles/scripts/knifegem'
-alias emacsd='~/.dotfiles/scripts/emacsd'
-alias hodr-redis='redis-server ~/dev/adzerk-redis.conf'
-alias dosass='sass --style compressed master.scss styles.css'
-alias reportlogger='while true; do /Library/Frameworks/Mono.framework/Versions/2.10.11/bin/mono ~/dev/adzerk/Code/Adzerk.DaemonLauncher/bin/Debug/adzerkd.exe /reportLogger; done;'
 alias 1password='~/.wine/drive_c/Program\ Files\ \(x86\)/1Password\ 4/1Password.exe'
-
-alias dockerup='docker-machine start dev'
-alias dockerenv='eval $(docker-machine env dev)'
-
-# Adzerk CLI Tools
-alias adzerk=$ADZERK_SCRIPTS_PATH/../adzerk
-
-# Flush DNS cache
-alias startmc="~/.dotfiles/scripts/startmc"
-alias stopmc="~/.dotfiles/scripts/stopmc"
-alias phone-msg="~/.dotfiles/scripts/phone-msg"
-alias mcstatus="aws ec2 describe-instances --instance-ids i-c99cff78 --profile home | grep -A 2 '\"State\": {' | grep Name | cut -c 34-40"
