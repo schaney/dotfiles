@@ -1,12 +1,12 @@
 #!/bin/bash
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 dotfiles=$dir/dotfiles
-installdir=$HOME/test
+installdir=$HOME
 
 if [[ $1 == "-u" ]]; then
   echo "uninstalling..."
-  ls $dotfiles | parallel rm -f $installdir/.{} || echo rm -rf $installdir/.{}
+  ls $dotfiles | parallel --no-notice rm -f "$installdir/.{}" || "rm -rf $installdir/.{}"
 else
   echo "installing..."
-  ls $dotfiles | parallel --no-notice ln -fns $dotfiles/{} $installdir/.{}
+  ls $dotfiles | parallel --no-notice ln -fns "$dotfiles/{}" "$installdir/.{}"
 fi

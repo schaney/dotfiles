@@ -26,9 +26,8 @@ fi
 [ -d ~/.scripts ] && export PATH="$PATH:$HOME/.scripts"
 [ -d /usr/local/opt/go/bin ] && export GOPATH=/usr/local/opt/go/bin
 [ -d /usr/local/opt/go/libexec/bin ] && export PATH=$PATH:/usr/local/opt/go/libexec/bin
-[ -f ~/dev/adzerk/.adzerk ] && source ~/dev/adzerk/.adzerk
-[ -f ~/.git-completion.bash ] && source ~/.dotfiles/git-completion.bash
-[ -f ~/.git-prompt.sh ] && source ~/.dotfiles/git-prompt.sh
+[ -f ~/.scripts/git-completion.bash ] && source ~/.scripts/git-completion.bash
+[ -f ~/.scripts/git-prompt.sh ] && source ~/.scripts/git-prompt.sh
 
 command_exists () {
     type "$1" &> /dev/null ;
@@ -159,7 +158,7 @@ export NVM_DIR="/data/home/sean/.nvm"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 if [[ -z "$SSH_CLIENT" ]]; then
-  ~/.dotfiles/scripts/welcome.sh
+  ~/.scripts/welcome.sh
 fi
 
 if [[ $TMUX ]]; then
