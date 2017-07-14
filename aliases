@@ -26,6 +26,7 @@ alias emacsd='~/.dotfiles/scripts/emacsd'
 alias hodr-redis='redis-server ~/dev/adzerk-redis.conf'
 alias dosass='sass --style compressed master.scss styles.css'
 alias reportlogger='while true; do /Library/Frameworks/Mono.framework/Versions/2.10.11/bin/mono ~/dev/adzerk/Code/Adzerk.DaemonLauncher/bin/Debug/adzerkd.exe /reportLogger; done;'
+alias 1password='~/.wine/drive_c/Program\ Files\ \(x86\)/1Password\ 4/1Password.exe'
 
 alias dockerup='docker-machine start dev'
 alias dockerenv='eval $(docker-machine env dev)'

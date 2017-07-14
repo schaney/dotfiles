@@ -1,0 +1,21 @@
+#!/bin/bash
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if [[ "$1" ]]; then
+  num="$1"
+else
+  num=$(xrandr | grep -v disconnected | grep connected | wc -l)
+fi
+
+mainscreen=eDP-1-1
+otherscreen=DP-1-1-2
+
+if [[ "$num" = "2" ]]; then
+  xrandr --output $otherscreen --auto --right-of $mainscreen
+  xrandr --dpi 100
+else
+  xrandr --output $otherscreen --off
+  xrandr --dpi 175
+fi
+i3-msg restart
+$dir/fixtouchscreen

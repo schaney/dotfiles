@@ -14,5 +14,5 @@ else
     scrot $OUT
 fi
 URL="${DB_BASE_URL}/${IMG}"
-echo -n $URL | xclip -i -sel c
+echo -n $OUT | xclip -i -sel c
 notify-send -a scrot "copied to clipboard"

@@ -114,6 +114,9 @@ mode $sysmenu {
 # kill focused window
   bindsym $mod+q kill
 
+# kill via title bar middle click
+  bindsym $mod+button2 kill
+
 # rofi (dmenu replacement)
 
   bindsym $mod+d exec rofi -show run -padding 50 -lines 8 -eh 2 -opacity "85" -bw 0 -bc "$base01" -bg "$base01" -fg "$base07" -hlbg "$base01" -hlfg "#9575cd" -font "SourceCodePro 18"
