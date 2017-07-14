@@ -24,8 +24,7 @@ if [[ $ADZERK_SCRIPTS_PATH ]]; then
 fi
 
 [ -d ~/.scripts ] && export PATH="$PATH:$HOME/.scripts"
-[ -d /usr/local/opt/go/bin ] && export GOPATH=/usr/local/opt/go/bin
-[ -d /usr/local/opt/go/libexec/bin ] && export PATH=$PATH:/usr/local/opt/go/libexec/bin
+[ -d /usr/local/go/bin ] && export PATH="$PATH:/usr/local/go/bin"
 [ -f ~/.scripts/git-completion.bash ] && source ~/.scripts/git-completion.bash
 [ -f ~/.scripts/git-prompt.sh ] && source ~/.scripts/git-prompt.sh
 
