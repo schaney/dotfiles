@@ -7,28 +7,30 @@ muted=`pacmd list-sinks |grep -wA 30 'index: '${active_sink}'' | grep 'muted:' |
 
 if [[ $1 == "up" ]]
 then
-    [[ $muted == "yes" ]] && pactl set-sink-mute $active_sink toggle && muted="no"
+  [[ $muted == "yes" ]] && pactl set-sink-mute $active_sink toggle && muted="no"
+  if [[ $current_volume -lt 125 ]]; then
     pactl set-sink-volume $active_sink +5%
+  fi
 elif [[ $1 == "down" ]]
 then
-    [[ $muted == "yes" ]] && pactl set-sink-mute $active_sink toggle && muted="no"
-    pactl set-sink-volume $active_sink -5%
+  [[ $muted == "yes" ]] && pactl set-sink-mute $active_sink toggle && muted="no"
+  pactl set-sink-volume $active_sink -5%
 elif [[ $1 == "mute" ]]
 then
-    pactl set-sink-mute $active_sink toggle
+  pactl set-sink-mute $active_sink toggle
 else
-    if [[ $muted == "yes" ]]
-    then
-        volume=""
-    else
-        volume=""
-    fi
-    volume="$volume ${current_volume}%"
-    if [[ `pactl list sinks short | wc -l` > 1 ]]
-    then
-        volume="$volume  ${current_description}"
-    fi
-    echo $volume
+  if [[ $muted == "yes" ]]
+  then
+    volume=""
+  else
+    volume=""
+  fi
+  volume="$volume ${current_volume}%"
+  if [[ `pactl list sinks short | wc -l` > 1 ]]
+  then
+    volume="$volume  ${current_description}"
+  fi
+  echo $volume
 fi
 
 pkill -RTMIN+1 i3blocks

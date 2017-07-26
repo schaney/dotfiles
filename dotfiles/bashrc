@@ -68,16 +68,18 @@ gc ()
   if [[ -z "$1" ]]; then
     gc $(tmux display-message -p '#S')
   else
-    local FROM="git@github.com:${1?}";
-    local TO="$HOME/dev/${1?}";
-    if [[ ! -d "$TO" ]]; then
-      git clone "$FROM" "$TO" > /dev/null 2>&1;
-      if [[ $? != 0 ]]; then
-        TO="$(pwd)"
-      fi;
-    fi;
-  fi;
-  cd "$TO"
+    if grep -q "/" <(echo "$1"); then
+      local FROM="git@github.com:${1?}"
+      local TO="$HOME/dev/${1?}"
+      if [[ ! -d "$TO" ]]; then
+        git clone "$FROM" "$TO" > /dev/null 2>&1
+        if [[ $? != 0 ]]; then
+          TO="$(pwd)"
+        fi
+      fi
+      cd "$TO"
+    fi
+  fi
 }
 
 creds ()
