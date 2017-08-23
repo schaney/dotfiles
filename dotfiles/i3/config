@@ -1,6 +1,13 @@
 # i3 config file (v4)
-exec --no-startup-id "xrandr --dpi 175"
 set $mod Mod4
+
+#colors
+
+set $green4 "#006400"
+set $purple4 "#551a8b"
+set $black "#000000"
+set $white "#ffffff"
+set $red    "#dd1111"
 
 bindsym $mod+Shift+y sticky toggle
 
@@ -46,28 +53,6 @@ bindsym Return       mode "default"
 bindsym Escape       mode "default"
 }
 
-# constants
-
-## colors
-set $base00 #101218
-#active titles
-set $base01 #140530
-#inactive titles
-set $base02 #1a093a
-set $base03 #7f76a0
-# set $base04 #C0C5CE
-set $base05 #d7d1e0
-# set $base06 #C9CCDB
-set $base07 #ffffff
-set $base08 #ed5353
-# set $base09 #f99170
-# set $base0A #ffefcc
-# set $base0B #a5ffe1
-# set $base0C #97e0ff
-# set $base0D #97bbf7
-# set $base0E #c0b7f9
-set $base0F #ff9e68
-
 ## workspaces
 set $workspace1 "1: "
 set $workspace2 "2: "
@@ -90,7 +75,7 @@ exec --no-startup-id nm-applet
 exec_always --no-startup-id compton
 exec_always --no-startup-id xmodmap ~/.Xmodmap
 exec_always --no-startup-id feh --bg-fill ~/Dropbox/wallpapers/rainbow_blocks.jpg
-exec --no-startup-id autokey
+#exec --no-startup-id autokey
 exec --no-startup-id "dunst -config $HOME/.dunstrc"
 exec --no-startup-id 1pass
 exec --no-startup-id ~/.dropbox-dist/dropboxd
@@ -103,8 +88,8 @@ exec --no-startup-id gnome-terminal
 exec --no-startup-id "syndaemon -i 0.3 -K -d"
 
 # Focus-last
-bindsym $mod+Tab exec "~/.i3/focus-last.py --switch"
-exec_always --no-startup-id "~/.i3/focus-last.py"
+#bindsym $mod+Tab exec "~/.i3/focus-last.py --switch"
+#exec_always --no-startup-id "~/.i3/focus-last.py"
 
 # keys
 bindsym $mod+Return exec i3-sensible-terminal
@@ -114,10 +99,6 @@ bindsym $mod+q kill
 
 # kill via title bar middle click
 bindsym $mod+button2 kill
-
-# rofi (dmenu replacement)
-
-bindsym $mod+d exec rofi -show run -padding 50 -lines 8 -eh 2 -opacity "85" -bw 0 -bc "$base01" -bg "$base01" -fg "$base07" -hlbg "$base01" -hlfg "#9575cd" -font "SourceCodePro 18"
 
 # change focus
 bindsym $mod+j focus left
@@ -241,14 +222,16 @@ bindsym Escape mode "default"
 
 bindsym $mod+r mode "resize"
 
-# Widow Colours
-#                         border  background text    indicator
-client.focused          $base01 $base01    $base07 $base0F
-client.focused_inactive $base02 $base02    $base03 $base0F
-client.unfocused        $base02 $base02    $base03 $base0F
-client.urgent           $base02 $base08    $base00 $base0F
+# bc = border color
+# bg = background color
+# hlbg = highlighted bg color
+# hlfg = highlighted foreground
+bindsym $mod+d exec rofi -show run -padding 50 -lines 8 -eh 2 -opacity "85" -bw 0 -bc $black -bg $black -fg $white -hlbg $purple4 -hlfg $white -font "SourceCodePro 16"
 
-hide_edge_borders both
+# Widow Colours
+#                       border  bg      text     indicator
+client.focused          $purple4 $purple4 $white
+client.urgent           $red    $red    $white
 
 # Bar
 bar {
@@ -256,15 +239,12 @@ font pango: SourceCodePro Medium, FontAwesome 15
 status_command i3blocks
 position bottom
 strip_workspace_numbers yes
-#height 25
 colors {
-separator $base03
-background $base01
-statusline $base05
-#                        border  background text
-focused_workspace  $base01 $base01    $base07
-active_workspace   $base01 $base02    $base03
-inactive_workspace $base01 $base01    $base03
-urgent_workspace   $base01 $base01    $base08
-}
+        background $black
+#                          border  bg      text
+        focused_workspace  $purple4 $purple4 $white
+        active_workspace   $black $black $white
+        inactive_workspace $black $black $white
+        urgent_workspace   $red    $red    $white
+        }
 }
