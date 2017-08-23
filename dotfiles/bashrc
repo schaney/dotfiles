@@ -84,7 +84,7 @@ gc ()
 
 creds ()
 {
-    ssh-add ~/.ssh/{id_rsa,adzerk.pem,bifrost.pem,reporting_vpc.pem}
+    ssh-add ~/.ssh/{id_rsa,adzerk.pem,bifrost.pem,reporting.pem}
     if [ $ADZERK_ENV_IS_SET ]
     then
         echo "env is already set :)"

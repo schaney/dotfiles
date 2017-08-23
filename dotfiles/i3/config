@@ -191,6 +191,7 @@ mode $sysmenu {
   assign [class="Steam"] $workspace7
   assign [class="SWT"] $workspace9
   assign [class="1Password.exe"] $workspace10
+  assign [class="remmina|Remmina"] $workspace10
 
 # window title formats
   for_window [class=".*"] title_format " %title"
@@ -202,6 +203,7 @@ mode $sysmenu {
   for_window [class="SWT"] title_format " %title"
   for_window [class="1Password.exe|1pass"] title_format " %title"
   for_window [class="gnome-terminal-server|Gnome-terminal"] title_format " %title"
+  for_window [class="remmina|Remmina"] title_format " %title"
 
 # force floating for 1pass
   for_window [class="1pass"] floating enable
