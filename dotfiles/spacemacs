@@ -50,8 +50,8 @@ values."
      spacemacs-editing-visual
      syntax-checking
      sql
-     themes-megapack
      theming
+     themes-megapack
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -132,8 +132,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(monokai
-                         grandshell
+   dotspacemacs-themes '(reverse
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -215,7 +214,7 @@ values."
    dotspacemacs-enable-paste-transient-state nil
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
-   dotspacemacs-which-key-delay 0.2
+   dotspacemacs-which-key-delay 0.4
    ;; Which-key frame position. Possible values are `right', `bottom' and
    ;; `right-then-bottom'. right-then-bottom tries to display the frame to the
    ;; right; if there is insufficient space it displays it at the bottom.
@@ -307,6 +306,19 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setq theming-modifications
+        '((reverse
+           (mode-line :foreground "darkgreen" :background "black" :inverse-video nil)
+           (mode-line-inactive :foreground "darkgreen" :background "black")
+           (mode-line-buffer-id :foreground "purple2" :background "black" :inverse-video nil)
+           (powerline-active1 :foreground "gray80" :background "purple4" :inverse-video nil)
+           (powerline-active2 :background "darkgreen" :inverse-video nil)
+           (powerline-inactive1 :foreground "black" :background "gray20" :inverse-video nil)
+           (powerline-inactive2 :foreground "black" :background "gray10" :inverse-video nil)
+           (fringe :background "black" :foreground "darkgreen")
+           (vertical-border :background "black" :foreground "darkgreen")
+           (linum :background "black" :foreground "mediumpurple3")
+           )))
   )
 
 (defun my-change-window-divider ()
