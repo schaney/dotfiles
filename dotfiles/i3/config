@@ -1,268 +1,270 @@
 # i3 config file (v4)
-  exec --no-startup-id "xrandr --dpi 175"
-  set $mod Mod4
+exec --no-startup-id "xrandr --dpi 175"
+set $mod Mod4
 
-  bindsym $mod+Shift+y sticky toggle
+bindsym $mod+Shift+y sticky toggle
 
 # volume control keys
-  bindsym XF86AudioRaiseVolume exec "~/.scripts/volume up"
-  bindsym XF86AudioLowerVolume exec "~/.scripts/volume down"
-  bindsym XF86AudioMute exec "~/.scripts/volume mute"
-  bindsym $mod+Shift+m exec "~/.scripts/volume mute"
-  bindsym $mod+Shift+s exec "~/.scripts/changesink"
-  bindsym $mod+Shift+v exec "pavucontrol -t 3"
+bindsym XF86AudioRaiseVolume exec "~/.scripts/volume up"
+bindsym XF86AudioLowerVolume exec "~/.scripts/volume down"
+bindsym XF86AudioMute exec "~/.scripts/volume mute"
+bindsym $mod+Shift+m exec "~/.scripts/volume mute"
+bindsym $mod+Shift+s exec "~/.scripts/changesink"
+bindsym $mod+Shift+v exec "pavucontrol -t 3"
 
 # screenshots
-  bindsym Print exec "~/.scripts/scrot-dropbox window"
-  bindsym --release Shift+Print exec "~/.scripts/scrot-dropbox select"
-  bindsym $mod+Shift+Print exec "~/.scripts/scrot-dropbox"
+bindsym Print exec "~/.scripts/scrot-dropbox window"
+bindsym --release Shift+Print exec "~/.scripts/scrot-dropbox select"
+bindsym $mod+Shift+Print exec "~/.scripts/scrot-dropbox"
 
 # media
-  bindsym XF86AudioPlay exec playerctl play-pause
-  bindsym XF86AudioNext exec playerctl next
-  bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
 
 # brightness
-  bindsym XF86MonBrightnessUp exec "sudo ~/.scripts/brightness up"
-  bindsym XF86MonBrightnessDown exec "sudo ~/.scripts/brightness down"
-  bindsym $mod+Shift+g exec "sudo ~/.scripts/acdbrightness up"
-  bindsym $mod+Shift+f exec "sudo ~/.scripts/acdbrightness down"
+bindsym XF86MonBrightnessUp exec "sudo ~/.scripts/brightness up"
+bindsym XF86MonBrightnessDown exec "sudo ~/.scripts/brightness down"
+bindsym $mod+Shift+g exec "sudo ~/.scripts/acdbrightness up"
+bindsym $mod+Shift+f exec "sudo ~/.scripts/acdbrightness down"
 
 # touchpad
-  bindsym $mod+p exec ~/.scripts/touchpad
+bindsym $mod+p exec ~/.scripts/touchpad
 
 # poweroff menu
-  set $sysmenu "      [l]ogout loc[k] [r]eboot [s]leep shut[d]own"
-  bindsym XF86PowerOff mode $sysmenu
+set $sysmenu "      [l]ogout loc[k] [r]eboot [s]leep shut[d]own"
+bindsym XF86PowerOff mode $sysmenu
 
 mode $sysmenu {
-    bindsym l            exit
-    bindsym d            exec systemctl poweroff
-    bindsym r            exec systemctl reboot
-    bindsym s            exec systemctl suspend & mode "default"
-    bindsym k            exec "i3lock -c 000000"; mode "default"
-    bindsym XF86PowerOff mode "default"
-    bindsym Return       mode "default"
-    bindsym Escape       mode "default"
+bindsym l            exit
+bindsym d            exec systemctl poweroff
+bindsym r            exec systemctl reboot
+bindsym s            exec systemctl suspend & mode "default"
+bindsym k            exec "i3lock -c 000000"; mode "default"
+bindsym XF86PowerOff mode "default"
+bindsym Return       mode "default"
+bindsym Escape       mode "default"
 }
 
 # constants
 
 ## colors
-  set $base00 #101218
-  set $base01 #1f222d
-  set $base02 #252936
-  set $base03 #7780a1
-  set $base04 #C0C5CE
-  set $base05 #d1d4e0
-  set $base06 #C9CCDB
-  set $base07 #ffffff
-  set $base08 #ee829f
-  set $base09 #f99170
-  set $base0A #ffefcc
-  set $base0B #a5ffe1
-  set $base0C #97e0ff
-  set $base0D #97bbf7
-  set $base0E #c0b7f9
-  set $base0F #fcc09e
+set $base00 #101218
+#active titles
+set $base01 #140530
+#inactive titles
+set $base02 #1a093a
+set $base03 #7f76a0
+# set $base04 #C0C5CE
+set $base05 #d7d1e0
+# set $base06 #C9CCDB
+set $base07 #ffffff
+set $base08 #ed5353
+# set $base09 #f99170
+# set $base0A #ffefcc
+# set $base0B #a5ffe1
+# set $base0C #97e0ff
+# set $base0D #97bbf7
+# set $base0E #c0b7f9
+set $base0F #ff9e68
 
 ## workspaces
-  set $workspace1 "1: "
-  set $workspace2 "2: "
-  set $workspace3 "3: "
-  set $workspace4 "4: "
-  set $workspace5 "5: "
-  set $workspace6 "6: "
-  set $workspace7 "7: "
-  set $workspace8 "8: "
-  set $workspace9 "9: "
-  set $workspace10 "10: "
+set $workspace1 "1: "
+set $workspace2 "2: "
+set $workspace3 "3: "
+set $workspace4 "4: "
+set $workspace5 "5: "
+set $workspace6 "6: "
+set $workspace7 "7: "
+set $workspace8 "8: "
+set $workspace9 "9: "
+set $workspace10 "10: "
 
 # General
-  font pango:Source Code Pro, FontAwesome Medium 14
-  floating_modifier $mod
-  hide_edge_borders both
+font pango:Source Code Pro, FontAwesome Medium 14
+floating_modifier $mod
+hide_edge_borders both
 
 # Startup
-  exec --no-startup-id nm-applet
-  exec_always --no-startup-id compton
-  exec_always --no-startup-id xmodmap ~/.Xmodmap
-  exec_always --no-startup-id feh --bg-fill ~/Dropbox/wallpapers/rainbow_blocks.jpg
-  exec --no-startup-id autokey
-  exec --no-startup-id "dunst -config $HOME/.dunstrc"
-  exec --no-startup-id 1pass
-  exec --no-startup-id ~/.dropbox-dist/dropboxd
-  exec --no-startup-id google-chrome
-  exec --no-startup-id thunderbird
-  exec --no-startup-id slack
-  exec --no-startup-id yakyak
-  exec --no-startup-id gnome-terminal
-  exec --no-startup-id gnome-terminal
-  exec --no-startup-id "syndaemon -i 0.3 -K -d"
+exec --no-startup-id nm-applet
+exec_always --no-startup-id compton
+exec_always --no-startup-id xmodmap ~/.Xmodmap
+exec_always --no-startup-id feh --bg-fill ~/Dropbox/wallpapers/rainbow_blocks.jpg
+exec --no-startup-id autokey
+exec --no-startup-id "dunst -config $HOME/.dunstrc"
+exec --no-startup-id 1pass
+exec --no-startup-id ~/.dropbox-dist/dropboxd
+exec --no-startup-id google-chrome
+exec --no-startup-id thunderbird
+exec --no-startup-id slack
+exec --no-startup-id yakyak
+exec --no-startup-id gnome-terminal
+exec --no-startup-id gnome-terminal
+exec --no-startup-id "syndaemon -i 0.3 -K -d"
 
 # Focus-last
-  bindsym $mod+Tab exec "~/.i3/focus-last.py --switch"
-  exec_always --no-startup-id "~/.i3/focus-last.py"
+bindsym $mod+Tab exec "~/.i3/focus-last.py --switch"
+exec_always --no-startup-id "~/.i3/focus-last.py"
 
 # keys
-  bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
-  bindsym $mod+q kill
+bindsym $mod+q kill
 
 # kill via title bar middle click
-  bindsym $mod+button2 kill
+bindsym $mod+button2 kill
 
 # rofi (dmenu replacement)
 
-  bindsym $mod+d exec rofi -show run -padding 50 -lines 8 -eh 2 -opacity "85" -bw 0 -bc "$base01" -bg "$base01" -fg "$base07" -hlbg "$base01" -hlfg "#9575cd" -font "SourceCodePro 18"
+bindsym $mod+d exec rofi -show run -padding 50 -lines 8 -eh 2 -opacity "85" -bw 0 -bc "$base01" -bg "$base01" -fg "$base07" -hlbg "$base01" -hlfg "#9575cd" -font "SourceCodePro 18"
 
 # change focus
-  bindsym $mod+j focus left
-  bindsym $mod+k focus down
-  bindsym $mod+l focus up
-  bindsym $mod+semicolon focus right
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
 
 # move focused window
-  bindsym $mod+Shift+j move left
-  bindsym $mod+Shift+k move down
-  bindsym $mod+Shift+l move up
-  bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
 
 # split in horizontal orientation
-  bindsym $mod+h split h
+bindsym $mod+h split h
 
 # split in vertical orientation
-  bindsym $mod+v split v
+bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-  bindsym $mod+f fullscreen toggle
+bindsym $mod+f fullscreen toggle
 
 # move workspace to other monitor
-  bindsym $mod+x move workspace to output right
+bindsym $mod+x move workspace to output right
 
 # change container layout (stacked, tabbed, toggle split)
-  bindsym $mod+s layout stacking
-  bindsym $mod+w layout tabbed
-  bindsym $mod+e layout toggle split
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-  bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-  bindsym $mod+space focus mode_toggle
+bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-  bindsym $mod+a focus parent
+bindsym $mod+a focus parent
 
 # switch to workspace
-  bindsym $mod+1 workspace $workspace1
-  bindsym $mod+2 workspace $workspace2
-  bindsym $mod+3 workspace $workspace3
-  bindsym $mod+4 workspace $workspace4
-  bindsym $mod+5 workspace $workspace5
-  bindsym $mod+6 workspace $workspace6
-  bindsym $mod+7 workspace $workspace7
-  bindsym $mod+8 workspace $workspace8
-  bindsym $mod+9 workspace $workspace9
-  bindsym $mod+0 workspace $workspace10
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspace4
+bindsym $mod+5 workspace $workspace5
+bindsym $mod+6 workspace $workspace6
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+8 workspace $workspace8
+bindsym $mod+9 workspace $workspace9
+bindsym $mod+0 workspace $workspace10
 
 # move focused container to workspace
-  bindsym $mod+Shift+1 move container to workspace $workspace1
-  bindsym $mod+Shift+2 move container to workspace $workspace2
-  bindsym $mod+Shift+3 move container to workspace $workspace3
-  bindsym $mod+Shift+4 move container to workspace $workspace4
-  bindsym $mod+Shift+5 move container to workspace $workspace5
-  bindsym $mod+Shift+6 move container to workspace $workspace6
-  bindsym $mod+Shift+7 move container to workspace $workspace7
-  bindsym $mod+Shift+8 move container to workspace $workspace8
-  bindsym $mod+Shift+9 move container to workspace $workspace9
-  bindsym $mod+Shift+0 move container to workspace $workspace10
+bindsym $mod+Shift+1 move container to workspace $workspace1
+bindsym $mod+Shift+2 move container to workspace $workspace2
+bindsym $mod+Shift+3 move container to workspace $workspace3
+bindsym $mod+Shift+4 move container to workspace $workspace4
+bindsym $mod+Shift+5 move container to workspace $workspace5
+bindsym $mod+Shift+6 move container to workspace $workspace6
+bindsym $mod+Shift+7 move container to workspace $workspace7
+bindsym $mod+Shift+8 move container to workspace $workspace8
+bindsym $mod+Shift+9 move container to workspace $workspace9
+bindsym $mod+Shift+0 move container to workspace $workspace10
 
 # assign workspaces
-  assign [class="chromium-browser|Chromium-browser|google-chrome|Google-chrome"] $workspace2
-  assign [class="Slack|yakyak"] $workspace3
-  assign [class="Mail|Thunderbird"] $workspace4
-  #assign [class="Spotify|spotify"] $workspace5
-  ## hack because spotify is retarded and doesn't assign the class name before creating the window
-  for_window [class="Spotify|spotify"] move to workspace $workspace5
-  assign [class="zoom"] $workspace6
-  for_window [class="zoom"] move to workspace $workspace6
-  assign [class="Steam"] $workspace7
-  assign [class="SWT"] $workspace9
-  assign [class="1Password.exe"] $workspace10
-  assign [class="remmina|Remmina"] $workspace10
+assign [class="chromium-browser|Chromium-browser|google-chrome|Google-chrome"] $workspace2
+assign [class="Slack|yakyak"] $workspace3
+assign [class="Mail|Thunderbird"] $workspace4
+#assign [class="Spotify|spotify"] $workspace5
+## hack because spotify is retarded and doesn't assign the class name before creating the window
+for_window [class="Spotify|spotify"] move to workspace $workspace5
+assign [class="zoom"] $workspace6
+for_window [class="zoom"] move to workspace $workspace6
+assign [class="Steam"] $workspace7
+assign [class="SWT"] $workspace9
+assign [class="1Password.exe"] $workspace10
+assign [class="remmina|Remmina"] $workspace10
 
 # window title formats
-  for_window [class=".*"] title_format " %title"
-  for_window [class="chromium-browser|Chromium-browser|google-chrome|Google-chrome"] title_format " %title"
-  for_window [class="Slack|yakyak"] title_format " %title"
-  for_window [class="Mail|Thunderbird"] title_format " %title"
-  for_window [class="spotify|Spotify"] title_format " %title"
-  for_window [class="zoom"] title_format " %title"
-  for_window [class="SWT"] title_format " %title"
-  for_window [class="1Password.exe|1pass"] title_format " %title"
-  for_window [class="gnome-terminal-server|Gnome-terminal"] title_format " %title"
-  for_window [class="remmina|Remmina"] title_format " %title"
+for_window [class=".*"] title_format " %title"
+for_window [class="chromium-browser|Chromium-browser|google-chrome|Google-chrome"] title_format " %title"
+for_window [class="Slack|yakyak"] title_format " %title"
+for_window [class="Mail|Thunderbird"] title_format " %title"
+for_window [class="spotify|Spotify"] title_format " %title"
+for_window [class="zoom"] title_format " %title"
+for_window [class="SWT"] title_format " %title"
+for_window [class="1Password.exe|1pass"] title_format " %title"
+for_window [class="gnome-terminal-server|Gnome-terminal"] title_format " %title"
+for_window [class="remmina|Remmina"] title_format " %title"
 
 # force floating for 1pass
-  for_window [class="1pass"] floating enable
+for_window [class="1pass"] floating enable
 # reload the configuration file
-  bindsym $mod+Shift+c reload
+bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-  bindsym $mod+Shift+r restart
-  bindsym $mod+Shift+n exec "killall dunst"
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+n exec "killall dunst"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+# These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym semicolon resize grow width 5 px or 5 ppt
+# Pressing left will shrink the window’s width.
+# Pressing right will grow the window’s width.
+# Pressing up will shrink the window’s height.
+# Pressing down will grow the window’s height.
+bindsym j resize shrink width 5 px or 5 ppt
+bindsym k resize grow height 5 px or 5 ppt
+bindsym l resize shrink height 5 px or 5 ppt
+bindsym semicolon resize grow width 5 px or 5 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 5 px or 5 ppt
-        bindsym Down resize grow height 5 px or 5 ppt
-        bindsym Up resize shrink height 5 px or 5 ppt
-        bindsym Right resize grow width 5 px or 5 ppt
+# same bindings, but for the arrow keys
+bindsym Left resize shrink width 5 px or 5 ppt
+bindsym Down resize grow height 5 px or 5 ppt
+bindsym Up resize shrink height 5 px or 5 ppt
+bindsym Right resize grow width 5 px or 5 ppt
 
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+# back to normal: Enter or Escape
+bindsym Return mode "default"
+bindsym Escape mode "default"
 }
 
-  bindsym $mod+r mode "resize"
+bindsym $mod+r mode "resize"
 
 # Widow Colours
 #                         border  background text    indicator
-  client.focused          $base01 $base01    $base07 $base0F
-  client.focused_inactive $base02 $base02    $base03 $base0F
-  client.unfocused        $base02 $base02    $base03 $base0F
-  client.urgent           $base02 $base08    $base00 $base0F
+client.focused          $base01 $base01    $base07 $base0F
+client.focused_inactive $base02 $base02    $base03 $base0F
+client.unfocused        $base02 $base02    $base03 $base0F
+client.urgent           $base02 $base08    $base00 $base0F
 
-  hide_edge_borders both
+hide_edge_borders both
 
 # Bar
-  bar {
-    font pango: SourceCodePro Medium, FontAwesome 15
-    status_command i3blocks
-    position bottom
-    strip_workspace_numbers yes
-    #height 25
-    colors {
-      separator $base03
-      background $base01
-      statusline $base05
+bar {
+font pango: SourceCodePro Medium, FontAwesome 15
+status_command i3blocks
+position bottom
+strip_workspace_numbers yes
+#height 25
+colors {
+separator $base03
+background $base01
+statusline $base05
 #                        border  background text
-      focused_workspace  $base01 $base01    $base07
-      active_workspace   $base01 $base02    $base03
-      inactive_workspace $base01 $base01    $base03
-      urgent_workspace   $base01 $base01    $base08
-    }
-  }
+focused_workspace  $base01 $base01    $base07
+active_workspace   $base01 $base02    $base03
+inactive_workspace $base01 $base01    $base03
+urgent_workspace   $base01 $base01    $base08
+}
+}

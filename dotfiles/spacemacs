@@ -308,16 +308,16 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (setq theming-modifications
         '((reverse
-           (mode-line :foreground "darkgreen" :background "gray7" :inverse-video nil)
+           (mode-line :foreground "darkgreen" :background "gray7" :inverse-video nil :weight bold)
            (mode-line-inactive :foreground "darkgreen" :background "black")
-           (mode-line-buffer-id :foreground "purple2" :background "gray7" :inverse-video nil)
-           (powerline-active1 :foreground "gray80" :background "purple4" :inverse-video nil)
+           (mode-line-buffer-id :foreground "purple2" :background "gray7" :inverse-video nil :weight bold :slant oblique)
+           (powerline-active1 :foreground "gray70" :background "purple4" :weight bold :inverse-video nil)
            (powerline-active2 :background "darkgreen" :inverse-video nil)
            (powerline-inactive1 :foreground "black" :background "gray12" :inverse-video nil)
            (powerline-inactive2 :foreground "black" :background "gray7" :inverse-video nil)
            (fringe :background "black" :foreground "darkgreen")
            (vertical-border :background "black" :foreground "darkgreen")
-           (linum :background "black" :foreground "mediumpurple3")
+           (linum :background "black" :foreground "mediumpurple4")
            )))
   )
 
