@@ -3,11 +3,20 @@ set $mod Mod4
 
 #colors
 
-set $green4 "#006400"
-set $purple4 "#551a8b"
-set $black "#000000"
-set $white "#ffffff"
-set $red    "#dd1111"
+set $purple1       "#9b30ff"
+set $purple2       "#912cee"
+set $purple3       "#7d26cd"
+set $purple4       "#551a8b"
+set $mediumpurple1 "#ab82ff"
+set $mediumpurple2 "#9f79ee"
+set $mediumpurple3 "#8968cd"
+set $green3        "00cd00"
+set $green4        "#006400"
+set $black         "#000000"
+set $darkgray      "#aaaaaa"
+set $white         "#ffffff"
+set $red           "#dd1111"
+set $darkorange2   "#ee7600"
 
 bindsym $mod+Shift+y sticky toggle
 
@@ -231,7 +240,8 @@ bindsym $mod+d exec rofi -show run -padding 50 -lines 8 -eh 2 -opacity "85" -bw 
 # Widow Colours
 #                       border  bg      text     indicator
 client.focused          $purple4 $purple4 $white
-client.urgent           $red    $red    $white
+client.urgent           $black   $black   $darkorange2
+client.unfocused        $black   $black   $darkgray
 
 # Bar
 bar {
@@ -242,9 +252,9 @@ strip_workspace_numbers yes
 colors {
         background $black
 #                          border  bg      text
-        focused_workspace  $purple4 $purple4 $white
-        active_workspace   $black $black $white
-        inactive_workspace $black $black $white
-        urgent_workspace   $red    $red    $white
+        focused_workspace  $black  $black $green3
+        active_workspace   $black  $black $white
+        inactive_workspace $black  $black $white
+        urgent_workspace   $black  $black $darkorange2
         }
 }
