@@ -240,6 +240,7 @@ bindsym $mod+d exec rofi -show run -padding 50 -lines 8 -eh 2 -opacity "85" -bw 
 # Widow Colours
 #                       border  bg      text     indicator
 client.focused          $purple4 $purple4 $white
+client.focused_inactive $purple3 $purple3 $white
 client.urgent           $black   $black   $darkorange2
 client.unfocused        $black   $black   $darkgray
 
