@@ -326,6 +326,21 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (set-display-table-slot display-table 5 ?║)
     (set-window-display-table (selected-window) display-table)))
 
+(defun my-copy-to-xclipboard()
+  (interactive)
+  (cond
+   ((not (use-region-p))
+    (message "Nothing to yank to X-clipboard"))
+   ((and (not (display-graphic-p))
+         (/= 0 (shell-command-on-region
+                (region-beginning) (region-end) "xsel -i -b")))
+    (message "Error: Is program `xsel' installed?"))
+   (t
+    (when (display-graphic-p)
+      (call-interactively 'clipboard-kill-ring-save))
+    (message "Yanked region to X-clipboard")
+    (deactivate-mark))))
+
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
@@ -351,7 +366,9 @@ you should place your code here."
   (global-unset-key (kbd "C-z"))
   (global-unset-key (kbd "M-<right>"))
   (global-unset-key (kbd "M-<left>"))
+  (global-unset-key (kbd "C-M-w"))
 
+  (global-set-key (kbd "C-M-w") 'my-copy-to-xclipboard)
   (global-set-key (kbd "M-<right>") 'ahs-forward)
   (global-set-key (kbd "M-<left>") 'ahs-backward)
   (global-set-key (kbd "M-m f a") 'align-regexp)
