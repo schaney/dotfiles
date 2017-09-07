@@ -1,5 +1,7 @@
 # i3 config file (v4)
-exec --no-startup-id xrandr --dpi 175
+exec --no-startup-id "xrandr --output DVI-D-0 --right-of DP-0"
+exec --no-startup-id "~/.scripts/volume"
+
 set $mod Mod4
 
 #colors
@@ -52,6 +54,7 @@ bindsym $mod+p exec ~/.scripts/touchpad
 # poweroff menu
 set $sysmenu "      [l]ogout loc[k] [r]eboot [s]leep shut[d]own"
 bindsym XF86PowerOff mode $sysmenu
+bindsym $mod+Shift+z mode $sysmenu
 
 mode $sysmenu {
 bindsym l            exit
@@ -88,7 +91,7 @@ exec_always --no-startup-id xmodmap ~/.Xmodmap
 exec_always --no-startup-id feh --bg-fill ~/Dropbox/wallpapers/rainbow_blocks.jpg
 #exec --no-startup-id autokey
 exec --no-startup-id "dunst -config $HOME/.dunstrc"
-exec --no-startup-id 1pass
+exec --no-startup-id ~/.local/bin/1pass
 exec --no-startup-id ~/.dropbox-dist/dropboxd
 exec --no-startup-id google-chrome
 exec --no-startup-id thunderbird
