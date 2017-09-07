@@ -1,4 +1,5 @@
 # i3 config file (v4)
+exec --no-startup-id xrandr --dpi 175
 set $mod Mod4
 
 #colors
@@ -7,7 +8,7 @@ set $purple1       "#9b30ff"
 set $purple2       "#912cee"
 set $purple3       "#7d26cd"
 set $purple4       "#551a8b"
-set $grayish "#232323"
+set $grayish       "#232323"
 set $mediumpurple1 "#ab82ff"
 set $mediumpurple2 "#9f79ee"
 set $mediumpurple3 "#8968cd"
@@ -239,11 +240,11 @@ bindsym $mod+r mode "resize"
 bindsym $mod+d exec rofi -show run -padding 50 -lines 8 -eh 2 -opacity "85" -bw 0 -bc $black -bg $black -fg $white -hlbg $purple4 -hlfg $white -font "SourceCodePro 16"
 
 # Widow Colours
-#                       border  bg      text     indicator
-client.focused          $black  $purple4 $white
-client.focused_inactive $black  $grayish $white
-client.urgent           $black  $black   $darkorange2
-client.unfocused        $black  $black   $darkgray
+#                       border   bg       text     indicator
+client.focused          $purple4 $purple4 $white
+client.focused_inactive $grayish $grayish $white
+client.urgent           $black   $black   $darkorange2
+client.unfocused        $black   $black   $darkgray
 
 # Bar
 bar {
@@ -252,8 +253,8 @@ status_command i3blocks
 position bottom
 strip_workspace_numbers yes
 colors {
-        background $black
 #                          border  bg      text
+        background         $black
         focused_workspace  $black  $black $green3
         active_workspace   $black  $black $white
         inactive_workspace $black  $black $white
