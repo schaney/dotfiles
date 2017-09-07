@@ -1,7 +1,7 @@
 # -*- mode: sh;-*-
 export PATH=$HOME/.scripts:$HOME/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:$PATH
 export ADZERK_REPO_PATH=$HOME/dev/adzerk/adzerk
-export EDITOR="emacsclient -a \"\" -t"
+export EDITOR="TERM=xterm-24bits emacsclient -a \"\" -t"
 export TERM=xterm-256color
 export ITERM_24BIT=yes
 export GIT_PS1_SHOWDIRTYSTATE=1
@@ -18,6 +18,7 @@ export PROMPT_COMMAND='history -a'
 
 source ~/.colors
 source ~/.aliases
+source ~/.tweaksrc
 
 if [[ $ADZERK_SCRIPTS_PATH ]]; then
     PATH="$PATH:$ADZERK_SCRIPTS_PATH:$ADZERK_SCRIPTS_PATH/../micha:$ADZERK_SCRIPTS_PATH/../jarrod"

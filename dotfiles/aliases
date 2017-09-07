@@ -1,5 +1,5 @@
 # -*- mode: sh;-*-
-alias e="emacsclient -a \"\" -t"
+alias e="TERM=xterm-24bits emacsclient -a \"\" -t"
 
 alias pbcopy='xclip -i -sel clip'
 alias myip='curl https://api.ipify.org | xclip -i -sel clip'

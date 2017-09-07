@@ -1,4 +1,6 @@
 # i3 config file (v4)
+exec --no-startup-id "xrandr --output DVI-D-0 --right-of DP-0"
+exec --no-startup-id "~/.scripts/volume"
 set $mod Mod4
 
 #colors
@@ -7,7 +9,7 @@ set $purple1       "#9b30ff"
 set $purple2       "#912cee"
 set $purple3       "#7d26cd"
 set $purple4       "#551a8b"
-set $grayish "#232323"
+set $grayish       "#232323"
 set $mediumpurple1 "#ab82ff"
 set $mediumpurple2 "#9f79ee"
 set $mediumpurple3 "#8968cd"
@@ -51,6 +53,7 @@ bindsym $mod+p exec ~/.scripts/touchpad
 # poweroff menu
 set $sysmenu "      [l]ogout loc[k] [r]eboot [s]leep shut[d]own"
 bindsym XF86PowerOff mode $sysmenu
+bindsym $mod+Shift+z mode $sysmenu
 
 mode $sysmenu {
 bindsym l            exit
@@ -87,7 +90,7 @@ exec_always --no-startup-id xmodmap ~/.Xmodmap
 exec_always --no-startup-id feh --bg-fill ~/Dropbox/wallpapers/rainbow_blocks.jpg
 #exec --no-startup-id autokey
 exec --no-startup-id "dunst -config $HOME/.dunstrc"
-exec --no-startup-id 1pass
+exec --no-startup-id ~/.local/bin/1pass
 exec --no-startup-id ~/.dropbox-dist/dropboxd
 exec --no-startup-id google-chrome
 exec --no-startup-id thunderbird
@@ -239,11 +242,11 @@ bindsym $mod+r mode "resize"
 bindsym $mod+d exec rofi -show run -padding 50 -lines 8 -eh 2 -opacity "85" -bw 0 -bc $black -bg $black -fg $white -hlbg $purple4 -hlfg $white -font "SourceCodePro 16"
 
 # Widow Colours
-#                       border  bg      text     indicator
-client.focused          $black  $purple4 $white
-client.focused_inactive $black  $grayish $white
-client.urgent           $black  $black   $darkorange2
-client.unfocused        $black  $black   $darkgray
+#                       border    bg       text     indicator
+client.focused          $purple4  $purple4 $white
+client.focused_inactive $grayish  $grayish $white
+client.urgent           $black    $black   $darkorange2
+client.unfocused        $black    $black   $darkgray
 
 # Bar
 bar {
