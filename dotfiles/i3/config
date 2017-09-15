@@ -127,7 +127,7 @@ set $workspace9 "9: "
 set $workspace10 "10: "
 
 # General
-font pango:Source Code Pro, FontAwesome Medium 14
+font pango:Source Code Pro, FontAwesome Medium 12
 floating_modifier $mod
 hide_edge_borders both
 
@@ -249,7 +249,7 @@ client.unfocused        $black   $black   $darkgray
 
 # Bar
 bar {
-font pango: SourceCodePro Medium, FontAwesome 15
+font pango: SourceCodePro Medium, FontAwesome 14
 status_command i3blocks
 position bottom
 strip_workspace_numbers yes
