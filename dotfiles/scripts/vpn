@@ -10,7 +10,7 @@ then
     service openvpn@sean stop
 elif [[ $1 == "status" ]]
 then
-    if `service openvpn@sean status | grep running > dev/null`
+    if `service openvpn@sean status | grep running > /dev/null`
     then
         echo ""
     else
