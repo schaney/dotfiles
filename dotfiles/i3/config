@@ -246,7 +246,7 @@ client.unfocused        $black   $black   $darkgray
 
 # Bar
 bar {
-font pango: SourceCodePro Medium, FontAwesome 12
+font pango: SourceCodePro Medium, FontAwesome 14
 status_command i3blocks
 position bottom
 strip_workspace_numbers yes
