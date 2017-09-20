@@ -1,7 +1,4 @@
 # i3 config file (v4)
-#exec --no-startup-id "xrandr --dpi "
-exec --no-startup-id "xrandr --output DVI-D-0 --right-of DP-0"
-exec --no-startup-id "~/.scripts/volume"
 # Startup
 exec --no-startup-id nm-applet
 exec_always --no-startup-id compton
@@ -9,7 +6,7 @@ exec_always --no-startup-id xmodmap ~/.Xmodmap
 exec_always --no-startup-id feh --bg-fill ~/Dropbox/wallpapers/rainbow_blocks.jpg
 #exec --no-startup-id autokey
 exec --no-startup-id "dunst -config $HOME/.dunstrc"
-exec --no-startup-id ~/.local/bin/1pass
+exec --no-startup-id 1pass
 exec --no-startup-id ~/.dropbox-dist/dropboxd
 exec --no-startup-id google-chrome
 exec --no-startup-id thunderbird
@@ -49,7 +46,7 @@ for_window [class="Spotify|spotify"] move to workspace $workspace5
 assign [class="zoom"] $workspace6
 for_window [class="zoom"] move to workspace $workspace6
 assign [class="Steam"] $workspace7
-assign [class="SWT"] $workspace9
+assign [class="DBeaver"] $workspace9
 assign [class="1Password.exe"] $workspace10
 assign [class="remmina|Remmina"] $workspace10
 
@@ -60,7 +57,7 @@ for_window [class="Slack|yakyak"] title_format " %title"
 for_window [class="Mail|Thunderbird"] title_format " %title"
 for_window [class="spotify|Spotify"] title_format " %title"
 for_window [class="zoom"] title_format " %title"
-for_window [class="SWT"] title_format " %title"
+for_window [class="DBeaver"] title_format " %title"
 for_window [class="1Password.exe|1pass"] title_format " %title"
 for_window [class="gnome-terminal-server|Gnome-terminal"] title_format " %title"
 for_window [class="remmina|Remmina"] title_format " %title"
@@ -127,7 +124,7 @@ set $workspace9 "9: "
 set $workspace10 "10: "
 
 # General
-font pango:Source Code Pro, FontAwesome Medium 14
+font pango:Source Code Pro, FontAwesome Medium 12
 floating_modifier $mod
 hide_edge_borders both
 
@@ -249,7 +246,7 @@ client.unfocused        $black   $black   $darkgray
 
 # Bar
 bar {
-font pango: SourceCodePro Medium, FontAwesome 15
+font pango: SourceCodePro Medium, FontAwesome 12
 status_command i3blocks
 position bottom
 strip_workspace_numbers yes

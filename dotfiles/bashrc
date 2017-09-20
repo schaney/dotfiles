@@ -19,7 +19,9 @@ export QT_AUTO_SCREEN_SCALE_FACTOR=1
 
 source ~/.colors
 source ~/.aliases
-source ~/.tweaksrc
+
+# any local tweaks put in there
+[[ -s "~/.tweaksrc" ]] && source ~/.tweaksrc
 
 if [[ $ADZERK_SCRIPTS_PATH ]]; then
     PATH="$PATH:$ADZERK_SCRIPTS_PATH:$ADZERK_SCRIPTS_PATH/../micha:$ADZERK_SCRIPTS_PATH/../jarrod"
