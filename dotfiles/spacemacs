@@ -400,6 +400,9 @@ you should place your code here."
    standard-indent 2
    tab-width 2
    indent-tabs-mode nil
+   sh-basic-offset 2
+   sh-indentation 2
+   smie-indent-basic 2
    js-indent-level 2
    js2-basic-offset 2
    js2-strict-semi-warning nil

@@ -9,6 +9,17 @@ c_cyan="\[\033[01;38;5;117m\]"
 c_reset='\[\e[m\]'
 c_orange="\[\033[01;38;5;202m\]"
 
+c_orange_bg="\[\048[01;38;5;202m\]"
+
+
+function colorgrid-bg ()
+{
+    for((i=16; i<256; i++)); do
+        printf "\e[48;5;${i}m%03d" $i;
+        printf '\e[0m';
+        [ ! $((($i - 15) % 6)) -eq 0 ] && printf ' ' || printf '\n'
+    done
+}
 function colorgrid( )
 {
     iter=16

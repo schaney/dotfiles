@@ -45,6 +45,7 @@ __prompt_command() {
     local EXIT="$?"
     PS1=""
     local sep="➤"
+    #local sep=""
     if [ $EXIT != 0 ]; then
         PS1+="${c_red}${sep} \h"
     else
