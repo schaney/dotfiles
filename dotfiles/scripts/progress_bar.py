@@ -28,6 +28,7 @@ def progress(value,  length=40, vmin=0.0, vmax=1.0):
     """
     # Block progression is 1/8
     leftpad="▕"
+    leftpad=""
     rightpad=" "
     blocks = ["", "▏","▎","▍","▌","▋","▊","▉","█"]
     vmin = vmin or 0.0

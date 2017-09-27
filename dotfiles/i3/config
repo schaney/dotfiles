@@ -124,7 +124,6 @@ set $workspace9 "9: "
 set $workspace10 "10: "
 
 # General
-font pango:Source Code Pro, FontAwesome Medium 12
 floating_modifier $mod
 hide_edge_borders both
 
@@ -229,7 +228,7 @@ bindsym Return mode "default"
 bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "resize"
+bindsym $mod+r mode "resize"fc-cache -f -v
 
 # bc = border color
 # bg = background color
@@ -245,8 +244,9 @@ client.urgent           $black   $black   $darkorange2
 client.unfocused        $black   $black   $darkgray
 
 # Bar
+font pango: Font Awesome, TerminusTTF Nerd Font Mono 12
 bar {
-font pango: SourceCodePro Medium, FontAwesome 14
+font pango: Font Awesome, TerminusTTF Nerd Font Mono 16
 status_command i3blocks
 position bottom
 strip_workspace_numbers yes

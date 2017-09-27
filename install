@@ -6,7 +6,9 @@ installdir=$HOME
 if [[ $1 == "-u" ]]; then
   echo "uninstalling..."
   ls $dotfiles | parallel --no-notice rm -f "$installdir/.{}" || "rm -rf $installdir/.{}"
+  rm -rf "$installdir/.local/share/fonts"
 else
   echo "installing..."
   ls $dotfiles | parallel --no-notice ln -fns "$dotfiles/{}" "$installdir/.{}"
+  ln -fns "$dotfiles/fonts" "$installdir/.local/share/fonts"
 fi
