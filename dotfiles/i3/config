@@ -246,7 +246,7 @@ client.unfocused        $black   $black   $darkgray
 # Bar
 font pango: Font Awesome, TerminusTTF Nerd Font Mono 12
 bar {
-font pango: Font Awesome, TerminusTTF Nerd Font Mono 16
+font pango: Font Awesome, TerminusTTF Nerd Font Mono 14
 status_command i3blocks
 position bottom
 strip_workspace_numbers yes
