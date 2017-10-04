@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 set -e
-OUTDIR="$HOME/Dropbox/Public/screenshots"
-USER_ID=63798244
-DB_BASE_URL="https://dl.dropboxusercontent.com/u/${USER_ID}/screenshots"
-IMG="$(uuidgen).png"
-OUT="${OUTDIR}/${IMG}"
+outdir="$HOME/screenshots"
+user_id=63798244
+bukkit="sean-bukkit"
+baseurl="https://s3.amazonaws.com/$bukkit/screenshots"
+img="$(uuidgen).png"
+out="${outdir}/${img}"
 if [[ $1 == "select" ]]; then
     notify-send -a scrot "select area"
-    scrot -s $OUT
+    scrot -s $out
 elif [[ $1 == "window" ]]; then
-    scrot -u $OUT
+    scrot -bu $out
 else
-    scrot $OUT
+    scrot $out
 fi
-URL="${DB_BASE_URL}/${IMG}"
-echo -n $OUT | xclip -i -sel c
+aws s3 cp $out "s3://$bukkit/screenshots/" --acl public-read
+echo -n "$baseurl/$img" | xclip -i -sel c
 notify-send -a scrot "copied to clipboard"
