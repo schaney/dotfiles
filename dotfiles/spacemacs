@@ -311,6 +311,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setq winum-scope 'frame-local)
   (setq theming-modifications
         '((reverse
            (mode-line :foreground "darkgreen" :background "gray7" :inverse-video nil :weight bold)
