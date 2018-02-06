@@ -5,7 +5,7 @@
 # -----------------------------------------------------------------------------
 import sys, math
 
-def progress(value,  length=40, vmin=0.0, vmax=1.0):
+def progress(value, length=40, vmin=0.0, vmax=1.0):
     """
     Text progress bar
 
@@ -27,9 +27,8 @@ def progress(value,  length=40, vmin=0.0, vmax=1.0):
         Text to be prepend to the bar
     """
     # Block progression is 1/8
-    leftpad="▕"
-    leftpad=""
-    rightpad=" "
+    leftpad=""
+    fullblock="█"
     blocks = ["", "▏","▎","▍","▌","▋","▊","▉","█"]
     vmin = vmin or 0.0
     vmax = vmax or 1.0
@@ -46,7 +45,7 @@ def progress(value,  length=40, vmin=0.0, vmax=1.0):
     base = 0.125      # 0.125 = 1/8
     prec = 3
     i = int(round(base*math.floor(float(y)/base),prec)/base)
-    bar = "█"*x + blocks[i]
+    bar = fullblock*x + blocks[i]
     n = length-len(bar.decode("utf-8"))
     bar = leftpad + bar + " "*n
 

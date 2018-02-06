@@ -5,35 +5,48 @@ backlight="/sys/class/backlight/intel_backlight"
 max=`cat ${backlight}/max_brightness`
 min=0
 current=`cat ${backlight}/brightness`
-step=11
+step=100
 if [[ $1 == "up" ]]
 then
+  if [[ $current == "1" ]]
+  then
+    new=$step
+  elif [[ $current == "0" ]]
+  then
+    new=1
+  else
     new=$(( $current + $step ))
-    echo "$current plus $step equals $new"
+  fi
 elif [[ $1 == "down" ]]
 then
+  if [[ $current == $step ]]
+  then
+    new=1
+  else
     new=$(( $current - $step ))
-    echo "$current minus $step equals $new"
+  fi
 elif [[ $1 == "max" ]]
 then
-    echo $(( $max / $step ))
-    exit 0
+  echo $(( $max / $step ))
+  exit 0
 else
-    echo $(( $current / $step ))
-    exit 0
+  echo $(( $current / $step ))
+  exit 0
 fi
-echo $new
 
 if (( $new > $max ))
 then
-    new=$max
+  new=$max
 fi
 
 if (( $new < $min ))
 then
-    new=$min
+  new=$min
 fi
-echo $new
+if [[ $2 == "-v" ]]
+then
+  echo "$current > $new"
+fi
 echo $new > ${backlight}/brightness
 
 pkill -RTMIN+2 i3blocks

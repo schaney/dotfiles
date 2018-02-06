@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [[ $1 ]]
+if [[ "$@" ]]
 then
-  aws sns publish --topic-arn arn:aws:sns:us-east-1:411053564761:tasker --message message --subject $1 --profile home
+  aws sns publish --topic-arn arn:aws:sns:us-east-1:411053564761:tasker --message "$@" --subject "subject" --profile home
 else
-  aws sns publish --topic-arn arn:aws:sns:us-east-1:411053564761:tasker --message message --subject "default message" --profile home
+  aws sns publish --topic-arn arn:aws:sns:us-east-1:411053564761:tasker --message "message" --subject "subject" --profile home
 fi

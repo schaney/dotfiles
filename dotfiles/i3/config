@@ -90,8 +90,8 @@ bindsym XF86AudioPrev exec playerctl previous
 # brightness
 bindsym XF86MonBrightnessUp exec "sudo ~/.scripts/brightness up"
 bindsym XF86MonBrightnessDown exec "sudo ~/.scripts/brightness down"
-bindsym $mod+Shift+g exec "sudo ~/.scripts/acdbrightness up"
-bindsym $mod+Shift+f exec "sudo ~/.scripts/acdbrightness down"
+bindsym $mod+Shift+h exec "sudo ~/.scripts/acdbrightness up"
+bindsym $mod+Shift+g exec "sudo ~/.scripts/acdbrightness down"
 
 # touchpad
 bindsym $mod+p exec ~/.scripts/touchpad
@@ -105,7 +105,7 @@ mode $sysmenu {
 bindsym l            exit
 bindsym d            exec systemctl poweroff
 bindsym r            exec systemctl reboot
-bindsym s            exec systemctl suspend & mode "default"
+bindsym s            exec systemctl suspend &; mode "default"
 bindsym k            exec "i3lock -c 000000"; mode "default"
 bindsym XF86PowerOff mode "default"
 bindsym Return       mode "default"
