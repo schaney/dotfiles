@@ -1,0 +1,37 @@
+#!/bin/bash
+empty=""
+q1=""
+q2=""
+q3=""
+full=""
+plug=""
+percent=$(acpi -b | cut -d, -f2 | tr -d '[:space:]')
+percent=${percent::-1}
+time=$(acpi -b | awk '{print $5}' | cut -d: -f1,2)
+charging=$(acpi -b | grep -i charging)
+
+if [[ -n $time ]]
+then
+  time=" ($time)"
+fi
+
+if [[ $charging ]]
+then
+  icon=$plug
+elif [[ $percent -ge 95 ]]
+then
+  icon=$full
+elif [[ $percent -ge 75 ]]
+then
+  icon=$q3
+elif [[ $percent -ge 50 ]]
+then
+  icon=$q2
+elif [[ $percent -ge 25 ]]
+then
+  icon=$q1
+else
+  icon+=$empty
+fi
+
+echo "$icon  ${percent}%$time"

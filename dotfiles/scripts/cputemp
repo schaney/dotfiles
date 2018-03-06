@@ -1,2 +1,25 @@
 #!/bin/bash
-sensors | grep Core | awk '{print substr($3, 2)}' | head -1
+fanstotempicon() {
+  empty="" #0 0
+  q1=""    #0 1 | 1 0
+  q2=""    #1 1
+  q3=""    #1 2 | 2 1
+  full=""  #2 2
+  fanstotal=$(($1 + $2))
+  case $fanstotal in
+    0) echo $empty ;;
+    1) echo $q1 ;;
+    2) echo $q2 ;;
+    3) echo $q3 ;;
+    4) echo $full ;;
+  esac
+
+}
+export -f fanstotempicon
+
+temp=$(sensors | grep Core | awk '{print substr($3, 2)}' | head -1)
+fan1=$(i8kfan | cut -f1 -d' ')
+fan2=$(i8kfan | cut -f2 -d' ')
+tempicon=$(fanstotempicon $fan1 $fan2)
+
+echo $tempicon $temp

@@ -229,7 +229,7 @@ bindsym Return mode "default"
 bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "resize"fc-cache -f -v
+bindsym $mod+r mode "resize"
 
 # bc = border color
 # bg = background color
