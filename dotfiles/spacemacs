@@ -41,7 +41,7 @@ values."
      emacs-lisp
      git
      html
-     ivy
+     helm
      javascript
      lua
      org
