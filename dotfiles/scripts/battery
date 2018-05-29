@@ -8,7 +8,7 @@ plug=""
 percent=$(acpi -b | cut -d, -f2 | tr -d '[:space:]')
 percent=${percent::-1}
 time=$(acpi -b | awk '{print $5}' | cut -d: -f1,2)
-charging=$(acpi -b | grep -i charging)
+charging=$(acpi -b | grep -v Discharging)
 
 if [[ -n $time ]]
 then

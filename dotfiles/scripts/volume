@@ -5,16 +5,18 @@ current_volume=`pacmd list-sinks |grep -wA 15 'index: '${active_sink}'' |grep 'v
 current_description=`pacmd list-sinks |grep -wA 50 'index: '${active_sink}'' | grep 'alsa\.card_name' | awk -F = '{print $2}' | sed -e 's/^[[ ]]*//' | tr -d '"'`
 muted=`pacmd list-sinks |grep -wA 30 'index: '${active_sink}'' | grep 'muted:' | cut -d: -f2 | tr -d ' '`
 
+interval=${2:-5}
+
 if [[ $1 == "up" ]]
 then
   [[ $muted == "yes" ]] && pactl set-sink-mute $active_sink toggle && muted="no"
   if [[ $current_volume -lt 125 ]]; then
-    pactl set-sink-volume $active_sink +5%
+    pactl set-sink-volume $active_sink "+${interval}%"
   fi
 elif [[ $1 == "down" ]]
 then
   [[ $muted == "yes" ]] && pactl set-sink-mute $active_sink toggle && muted="no"
-  pactl set-sink-volume $active_sink -5%
+  pactl set-sink-volume $active_sink "-${interval}%"
 elif [[ $1 == "mute" ]]
 then
   pactl set-sink-mute $active_sink toggle
