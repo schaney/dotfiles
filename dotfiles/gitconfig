@@ -7,6 +7,7 @@
 	editor = "TERM=xterm-24bits emacsclient -a \"\" -t"
 [alias]
     co = checkout
+    unit = pull
     st = status
     ci = commit
     a = add

@@ -20,6 +20,10 @@ export QT_AUTO_SCREEN_SCALE_FACTOR=1
 source ~/.colors
 source ~/.aliases
 
+command_exists () {
+  type "$1" &> /dev/null ;
+}
+
 aws-region ()
 {
   [[ -n $1 ]] && export AWS_DEFAULT_REGION=$1;
@@ -49,6 +53,8 @@ EOT
 }
 complete -F _aws-region aws-region
 
+command_exists aws && complete -C $(which aws_completer) aws
+
 # any local tweaks put in there
 [[ -s "~/.tweaksrc" ]] && source ~/.tweaksrc
 
@@ -63,10 +69,6 @@ fi
 [ -d ~/.local/bin ] && export PATH="$PATH:/$HOME/.local/bin"
 [ -f ~/.scripts/git-completion.bash ] && source ~/.scripts/git-completion.bash
 [ -f ~/.scripts/git-prompt.sh ] && source ~/.scripts/git-prompt.sh
-
-command_exists () {
-    type "$1" &> /dev/null ;
-}
 
 [ `uname` != "Darwin" ] && [ $DISPLAY ] && command_exists xset && xset m 0 0 &> /dev/null
 
@@ -100,8 +102,6 @@ __prompt_command() {
     if [[ $region ]]; then region="${region} "; fi
     PS1+="${c_purple}${region}${redishcolor}${sep} \w ${c_blue}\$(__git_ps1 '%s ')${redishcolor}${c_yellow}${sep}${c_reset} "
 }
-
-
 
 [ -f /Users/sean/.travis/travis.sh ] && source /Users/sean/.travis/travis.sh
 
