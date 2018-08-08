@@ -3,13 +3,12 @@ set -e
 outdir="$HOME/screenshots"
 img="$(uuidgen).png"
 out="${outdir}/${img}"
-opts="-e 'xclip -selection c -t image/png < $f'"
 if [[ $1 == "select" ]]; then
-    notify-send -a scrot "select area"
-    scrot -s $out $opts
+  notify-send -a scrot "select area"
+  scrot -s $out -e 'xclip -selection c -t image/png < $f'
 elif [[ $1 == "window" ]]; then
-    scrot -bu $out $opts
+  scrot -bu $out -e 'xclip -selection c -t image/png < $f'
 else
-    scrot $out $opts
+  scrot $out -e 'xclip -selection c -t image/png < $f'
 fi
 notify-send -a scrot "copied to clipboard"
