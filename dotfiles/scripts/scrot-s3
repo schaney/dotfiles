@@ -1,19 +1,15 @@
 #!/usr/bin/env bash
 set -e
 outdir="$HOME/screenshots"
-user_id=63798244
-bukkit="sean-bukkit"
-baseurl="https://s3.amazonaws.com/$bukkit/screenshots"
 img="$(uuidgen).png"
 out="${outdir}/${img}"
+opts="-e 'xclip -selection c -t image/png < $f'"
 if [[ $1 == "select" ]]; then
     notify-send -a scrot "select area"
-    scrot -s $out
+    scrot -s $out $opts
 elif [[ $1 == "window" ]]; then
-    scrot -bu $out
+    scrot -bu $out $opts
 else
-    scrot $out
+    scrot $out $opts
 fi
-aws s3 cp $out "s3://$bukkit/screenshots/" --acl public-read
-echo -n "$baseurl/$img" | xclip -i -sel c
 notify-send -a scrot "copied to clipboard"
