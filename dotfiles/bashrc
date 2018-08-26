@@ -1,5 +1,5 @@
 # -*- mode: sh;-*-
-export PATH=$HOME/.scripts:$HOME/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/.scripts:$HOME/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:$PATH
 export ADZERK_REPO_PATH=$HOME/dev/adzerk/adzerk
 export EDITOR="TERM=xterm-24bits emacsclient -a \"\" -t"
 export TERM=xterm-256color
@@ -15,6 +15,8 @@ export HISTCONTROL=ignoreboth
 export HISTTIMEFORMAT='%F %T '
 export PROMPT_COMMAND='history -a'
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export ZERKENV_BUCKET=zerkenv
+export ZERKENV_REGION=us-east-1
 [ -d $HOME/dev/adzerk/cli-tools/scripts ] && export ADZERK_SCRIPTS_PATH=$HOME/dev/adzerk/cli-tools/scripts
 
 source ~/.colors
@@ -23,6 +25,8 @@ source ~/.aliases
 command_exists () {
   type "$1" &> /dev/null ;
 }
+
+command_exists zerkenv && source <(zerkenv -i bash)
 
 aws-region ()
 {
@@ -91,22 +95,22 @@ __prompt_command() {
         PS1+="${c_green}${sep} \h "
     fi
 
-    if [ $ADZERK_ENV_IS_SET ]
-    then
-        local redishcolor=$c_orange
-    else
-        local redishcolor=$c_purple
-    fi
-
     local region=$(aws-region)
-    if [[ $region ]]; then region="${region} "; fi
-    PS1+="${c_purple}${region}${redishcolor}${sep} \w ${c_blue}\$(__git_ps1 '%s ')${redishcolor}${c_yellow}${sep}${c_reset} "
+    if [[ $region ]]; then region="${c_purple}${sep} ${region} "; fi
+    [[ -n $ZERKENV_MODULES ]] && local ze="${c_orange}${sep} $(echo $ZERKENV_MODULES | tr ' ' '') "
+
+    PS1+="${region}${ze}${c_yellow}${sep} \w ${c_blue}\$(__git_ps1 '%s ')${c_orange}${c_magenta}${sep}${c_reset} "
+}
+
+zclear () {
+  zerkload clear
+  unset ZERKENV_MODULES
 }
 
 [ -f /Users/sean/.travis/travis.sh ] && source /Users/sean/.travis/travis.sh
 
 hgrep () {
-    history | grep "$@"
+  history | grep "$@"
 }
 
 gc ()
@@ -126,49 +130,6 @@ gc ()
       cd "$TO"
     fi
   fi
-}
-
-creds ()
-{
-    ssh-add ~/.ssh/{id_rsa,adzerk.pem,bifrost.pem,reporting.pem}
-    if [ $ADZERK_ENV_IS_SET ]
-    then
-        echo "env is already set :)"
-    else
-        eval "$(gpg -d ~/.creds.asc)"
-    fi
-}
-
-uncreds ()
-{
-  unset ADZERK_ENV_IS_SET
-}
-
-function set-aws-keys {
-    export AWS_ACCESS_KEY=$1
-    export AWS_ACCESS_KEY_ID=$1
-    export AWS_SECRET_KEY=$2
-    export AWS_SECRET_KEY_ID=$2
-    export AWS_SECRET_ACCESS_KEY=$2
-    export AWS_SECRET_ACCESS_KEY_ID=$2
-}
-
-function aws-keys {
-    if [[ "$1" == "reporting" ]]; then
-        echo "setting reporting account keys"
-        set-aws-keys $ADZERK_REPORTING_AWS_KEY $ADZERK_REPORTING_AWS_SECRET
-    elif [[ "$1" == "personal" ]]; then
-        echo "setting personal account keys"
-        set-aws-keys $PERSONAL_AWS_KEY $PERSONAL_AWS_SECRET
-    else
-        echo "setting adzerk account keys"
-        set-aws-keys $ADZERK_AWS_ACCESS_KEY $ADZERK_AWS_SECRET_KEY
-    fi
-}
-
-fixcamera ()
-{
-    sudo killall AppleCameraAssistant; sudo killall VDCAssistant
 }
 
 sr ()
