@@ -102,19 +102,17 @@ __prompt_command() {
     #ze="${c_orange}${sep} $(echo $ZERKENV_MODULES | wc -w) "
 
     if [[ -n $ZERKENV_MODULES ]]; then
-      first3=$(echo $ZERKENV_MODULES | cut -f1-3 -d' ' | sed 's/\@//g' | sed 's/ //g')
-      rest=$(echo $ZERKENV_MODULES | cut -f4- -d ' ' | wc -w)
-      ze="${c_orange}${sep} $first3"
-      [[ $rest -gt 0 ]] && ze+=" + $rest "
-    else
-      ze="o"
+      local first3=$(echo $ZERKENV_MODULES | cut -f1-3 -d' ' | sed 's/\@//g' | sed 's/ //g')
+      local rest=$(echo $ZERKENV_MODULES' ' | cut -f4- -d ' ' | wc -w)
+      local ze="${c_orange}${sep} $first3 "
+      [[ $rest -gt 0 ]] && ze+="+ $rest "
     fi
 
     PS1+="${region}${ze}${c_yellow}${sep} \w ${c_blue}\$(__git_ps1 '%s ')${c_orange}${c_magenta}${sep}${c_reset} "
 }
 
-zclear () {
-  zerkload clear
+zerkclear () {
+  zerkload unset
   unset ZERKENV_MODULES
 }
 
