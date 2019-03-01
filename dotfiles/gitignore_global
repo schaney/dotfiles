@@ -7,3 +7,4 @@
 .boot/
 .nrepl-*
 .mc-lists.el
+.nrepl*

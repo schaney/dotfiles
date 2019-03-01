@@ -5,10 +5,10 @@ q2=""
 q3=""
 full=""
 plug=""
-percent=$(acpi -b | cut -d, -f2 | tr -d '[:space:]')
+percent=$(acpi -b | head -1 | cut -d, -f2 | tr -d '[:space:]')
 percent=${percent::-1}
-time=$(acpi -b | awk '{print $5}' | cut -d: -f1,2)
-charging=$(acpi -b | grep -v Discharging)
+time=$(acpi -b | head -1 | awk '{print $5}' | cut -d: -f1,2)
+charging=$(acpi -b | head -1 | grep -v Discharging)
 
 if [[ -n $time ]]
 then

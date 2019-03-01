@@ -2,7 +2,7 @@
 	name = schaney
 	email = sean@adzerk.com
 [core]
-	excludesfile = $HOME/.gitignore_global
+	excludesfile = /home/sean/.gitignore_global
 	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
 	editor = "TERM=xterm-24bits emacsclient -a \"\" -t"
 [alias]

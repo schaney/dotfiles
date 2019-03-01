@@ -9,7 +9,7 @@ exec --no-startup-id "dunst -config $HOME/.dunstrc"
 exec --no-startup-id 1pass
 exec --no-startup-id ~/.dropbox-dist/dropboxd
 exec --no-startup-id google-chrome
-exec --no-startup-id thunderbird
+exec --no-startup-id mailspring
 exec --no-startup-id slack
 exec --no-startup-id yakyak
 exec --no-startup-id gnome-terminal
@@ -39,7 +39,7 @@ set $darkorange2   "#ee7600"
 # assign workspaces
 assign [class="chromium-browser|Chromium-browser|google-chrome|Google-chrome"] $workspace2
 assign [class="Slack|yakyak"] $workspace3
-assign [class="Mail|Thunderbird"] $workspace4
+assign [class="Mail|Thunderbird|Mailspring|mailspring"] $workspace4
 #assign [class="Spotify|spotify"] $workspace5
 ## hack because spotify is retarded and doesn't assign the class name before creating the window
 for_window [class="Spotify|spotify"] move to workspace $workspace5
