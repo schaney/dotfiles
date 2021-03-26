@@ -3,7 +3,7 @@
 exec --no-startup-id nm-applet
 exec_always --no-startup-id compton
 exec_always --no-startup-id xmodmap ~/.Xmodmap
-exec_always --no-startup-id feh --bg-fill ~/Dropbox/wallpapers/rainbow_blocks.jpg
+exec_always --no-startup-id feh --bg-fill ~/Dropbox/wallpapers/tree.jpg
 #exec --no-startup-id autokey
 exec --no-startup-id "dunst -config $HOME/.dunstrc"
 exec --no-startup-id 1pass
@@ -71,6 +71,8 @@ bindsym $mod+Shift+y sticky toggle
 # volume control keys
 bindsym XF86AudioRaiseVolume exec "~/.scripts/volume up"
 bindsym XF86AudioLowerVolume exec "~/.scripts/volume down"
+bindsym Shift+f10 exec "~/.scripts/volume up"
+bindsym Shift+f11 exec "~/.scripts/volume down"
 bindsym Shift+XF86AudioRaiseVolume exec "~/.scripts/volume up 1"
 bindsym Shift+XF86AudioLowerVolume exec "~/.scripts/volume down 1"
 bindsym XF86AudioMute exec "~/.scripts/volume mute"
@@ -249,7 +251,7 @@ client.unfocused        $black   $black   $darkgray
 # Bar
 font pango: Font Awesome, TerminusTTF Nerd Font Mono 12
 bar {
-font pango: Font Awesome, TerminusTTF Nerd Font Mono 14
+font pango: Font Awesome, TerminusTTF Nerd Font Mono 12
 status_command i3blocks
 position bottom
 strip_workspace_numbers yes

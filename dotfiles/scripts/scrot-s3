@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -e
-#outdir="$HOME/screenshots"
-outdir="$HOME/reports/"
-img="$(uuidgen).png"
+outdir="$HOME/screenshots"
+#outdir="$HOME/soc/screenshots"
+#img="$(uuidgen).png"
+img="screenshot.png"
 out="${outdir}/${img}"
 if [[ $1 == "select" ]]; then
   notify-send -a scrot "select area"

@@ -21,3 +21,6 @@ alias nmr='sudo service network-manager restart'
 alias zz='zerkload'
 complete -F _zerkload zz
 alias headphones='alsactl restore'
+alias cider='boot add-middleware nrepl-server wait'
+alias dc=docker-compose
+alias d=docker

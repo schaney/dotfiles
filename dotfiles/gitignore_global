@@ -8,3 +8,4 @@
 .nrepl-*
 .mc-lists.el
 .nrepl*
+*.env

@@ -1,5 +1,13 @@
 #!/bin/bash
+
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+mainscreen=eDP-1-1
+mac=DP-1-1-2
+dell_left=DP-1-1-3
+dell_right=DP-1-1-1
+
+screens=$(xrandr | grep -v disconnected | grep connected | cut -f1 -d' ')
+nonmain=$(echo "$screens" | grep -v $mainscreen)
 
 if [[ "$1" ]]; then
   num="$1"
@@ -7,13 +15,29 @@ else
   num=$(xrandr | grep -v disconnected | grep connected | wc -l)
 fi
 
-mainscreen=eDP-1-1
-otherscreen=DP-1-1-2
-
-if [[ "$num" = "2" ]]; then
-  xrandr --output $otherscreen --auto --right-of $mainscreen
+if [[ "$num" = "1080" ]]; then
+  xrandr --output $mainscreen --mode 1920x1080
+elif [[ "$num" = "1440" ]]; then
+  xrandr --output $mainscreen --mode 2560x1440
+elif [[ "$num" = "2" ]]; then
+  xrandr --output $nonmain --auto --right-of $mainscreen
+elif [[ "$num" = "3" ]]; then
+  xrandr --output $mainscreen --auto \
+         --output $dell_left --auto --right-of $mainscreen \
+         --output $dell_right --auto --right-of $dell_left
+elif [[ "$num" = "1" ]]; then
+  xrandr --output $mainscreen --auto \
+         $(for screen in $nonmain; do echo " --output $screen --off"; done;)
+elif [[ "$num" = "home" ]]; then
+  xrandr --output $mainscreen --off \
+         --output $dell_left --auto \
+         --output $dell_right --auto --right-of $dell_left
+elif [[ "$num" = "home2" ]]; then
+  xrandr --output $mainscreen --auto \
+         --output $dell_left --right-of $mainscreen \
+         --output $dell_right --off
 else
-  xrandr --output $otherscreen --off
+  echo xrandr $(for screen in $screens; do echo " --output $screen --auto"; done;)
 fi
-i3-msg restart
-$dir/fixtouchscreen
+#i3-msg restart
+#$dir/fixtouchscreen
