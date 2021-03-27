@@ -16,8 +16,10 @@ fanstotempicon() {
 
 }
 export -f fanstotempicon
-temps=$(sensors | grep Core | awk '{print substr($3, 2)}' | cut -d. -f1 | paste -sd+)
-avgtemp=$(echo "($temps) / 4" | bc)
+cores=$(sensors | grep Core | awk '{print substr($3, 2)}' | cut -d. -f1)
+temps=$(echo "$cores" | paste -sd+)
+corecount=$(echo "$cores" | wc -l)
+avgtemp=$(echo "($temps) / $corecount" | bc)
 temp="${avgtemp}°C"
 #temp="$(sensors | grep Core | awk '{print substr($3, 2)}' | sed 's/°C//g' | awk '{x += $1} END {print x/NR}')°C"
 #temp=$(sensors | grep Core | awk '{print substr($3, 2)}' | head -1)

@@ -7,16 +7,18 @@ else
   action="start"
 fi
 
+wlp=$(iw dev | grep wlp | awk '{print $2}')
+
 if [[ $1 == "on" ]]
 then
   [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
   service openvpn@sean start
-  systemd-resolve --interface wlp2s0 --set-domain none
+  systemd-resolve --interface $wlp --set-domain none
 elif [[ $1 == "off" ]]
 then
   [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
   service openvpn@sean stop
-  systemd-resolve --interface wlp2s0 --set-domain '~' --set-domain nc.rr.com
+  systemd-resolve --interface $wlp --set-domain '~' --set-domain nc.rr.com
 elif [[ $1 == "status" ]]
 then
   if `service openvpn@sean status | grep running > /dev/null`

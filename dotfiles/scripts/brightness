@@ -4,8 +4,8 @@ backlight="/sys/class/backlight/intel_backlight"
 
 max=`cat ${backlight}/max_brightness`
 min=0
+step=$(echo $max / 25 | bc)
 current=`cat ${backlight}/brightness`
-step=100
 if [[ $1 == "up" ]]
 then
   if [[ $current == "1" ]]
