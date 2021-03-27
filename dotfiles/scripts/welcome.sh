@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-batman="$(cat $dir/batman.ascii)"
+picture="$(cat $dir/$(hostname).ascii)"
 if command -v lolcat > /dev/null; then
-  echo "$batman" | lolcat --seed 3 -p 10000 -F 0.7
+  echo "$picture" | lolcat --seed 3 -F .12
 else
-  echo "$(tput setaf 3)${batman}"
+  echo "$(tput setaf 3)${picture}"
 fi
 echo
