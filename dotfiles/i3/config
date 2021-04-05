@@ -2,7 +2,7 @@
 # Startup
 exec --no-startup-id nm-applet
 exec_always --no-startup-id xmodmap ~/.Xmodmap
-#exec_always --no-startup-id feh --bg-fill ~/Dropbox/wallpapers/tree.jpg
+exec_always --no-startup-id feh --bg-fill ~/Pictures/background.jpg
 #exec --no-startup-id autokey
 exec --no-startup-id "dunst -config $HOME/.dunstrc"
 exec --no-startup-id google-chrome
