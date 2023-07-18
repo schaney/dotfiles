@@ -35,9 +35,12 @@
 [github]
 	user = schaney
 [credential]
-	helper = osxkeychain
+	helper = !aws codecommit credential-helper $@
+	UseHttpPath = true
 [filter "media"]
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
 [push]
 	default = matching
+[init]
+	templatedir = ~/.git-templates

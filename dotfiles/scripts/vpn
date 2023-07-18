@@ -2,26 +2,24 @@
 
 if `service openvpn@sean status | grep running > /dev/null`
 then
+  running=yes
   action="stop"
 else
+  running=no
   action="start"
 fi
 
 wlp=$(iw dev | grep wlp | awk '{print $2}')
 
-if [[ $1 == "on" ]]
+if [[ $1 == "on" ]]; then
+  action="start"
+elif [[ $1 == "off" ]]; then
+  action="stop"
+fi
+
+if [[ $1 == "status" ]]
 then
-  [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
-  service openvpn@sean start
-  systemd-resolve --interface $wlp --set-domain none
-elif [[ $1 == "off" ]]
-then
-  [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
-  service openvpn@sean stop
-  systemd-resolve --interface $wlp --set-domain '~' --set-domain nc.rr.com
-elif [[ $1 == "status" ]]
-then
-  if `service openvpn@sean status | grep running > /dev/null`
+  if [[ $running == "yes" ]]
   then
     #echo ""
     echo ""
@@ -30,8 +28,15 @@ then
     echo ""
   fi
 else
-  [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
-  service openvpn@sean $action
+  if [[ $action == "start" ]]; then
+    [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+    echo turning vpn on
+    service openvpn@sean start
+  elif [[ $action == "stop" ]]; then
+    [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+    echo turning vpn off
+    service openvpn@sean stop
+  fi
 fi
 
 pkill -RTMIN+3 i3blocks

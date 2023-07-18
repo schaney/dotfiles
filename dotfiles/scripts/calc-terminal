@@ -1,0 +1,10 @@
+#!/bin/bash
+
+iscalcrunning=$(i3-msg -t get_tree | grep window_role | grep calculator)
+
+if [[ -z $iscalcrunning ]]; then
+  gnome-terminal --role calculator -q --zoom 3 -- qalc
+fi
+
+i3-msg '[window_role="calculator"] scratchpad show; [window_role="calculator"] move position center' > /dev/null
+

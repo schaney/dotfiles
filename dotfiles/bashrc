@@ -1,7 +1,9 @@
 # -*- mode: sh;-*-
 export PATH=$HOME/.local/bin:$HOME/.scripts:$HOME/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:$PATH
 export ADZERK_REPO_PATH=$HOME/dev/adzerk/adzerk
+export INFRA_REPO=$HOME/dev/adzerk/infrastructure
 export EDITOR="TERM=xterm-24bits emacsclient -a \"\" -t"
+export XDG_CONFIG_HOME=$HOME/.config
 export TERM=xterm-256color
 export ITERM_24BIT=yes
 export GIT_PS1_SHOWDIRTYSTATE=1
@@ -17,6 +19,8 @@ export PROMPT_COMMAND='history -a'
 #export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export ZERKENV_BUCKET=zerkenv
 export ZERKENV_REGION=us-east-1
+export AWS_DEFAULT_REGION=us-east-1
+export AWS_REGION=$AWS_DEFAULT_REGION
 [ -d $HOME/dev/adzerk/cli-tools/scripts ] && export ADZERK_SCRIPTS_PATH=$HOME/dev/adzerk/cli-tools/scripts
 
 source ~/.colors
@@ -28,45 +32,116 @@ command_exists () {
 
 command_exists zerkenv && source <(zerkenv -i bash)
 
+aws_regions=$(cat << EOT
+us-east-1	use1
+us-east-2	use2
+us-west-1	usw1
+us-west-2	usw2
+ca-central-1	cac1
+eu-west-1	ew1
+eu-west-2	ew2
+eu-central-1	ec1
+ap-southeast-1	apse1
+ap-southeast-2	apse2
+ap-south-1	aps1
+ap-northeast-1	apne1
+ap-northeast-2	apne2
+sa-east-1	sae1
+cn-north-1	cn1
+EOT
+           )
+
 aws-region ()
 {
-  [[ -n $1 ]] && export AWS_DEFAULT_REGION=$1;
-  echo $AWS_DEFAULT_REGION
+  [[ -n $1 ]] && export AWS_DEFAULT_REGION=$1 && export AWS_REGION=$AWS_DEFAULT_REGION;
+  if [[ $1 == 'short' ]]; then
+    echo "$aws_regions" | grep ${AWS_DEFAULT_REGION:-none} | cut -f2
+  else
+    echo $AWS_DEFAULT_REGION
+  fi
 }
 
 _aws-region() {
   local cur=${COMP_WORDS[COMP_CWORD]}
-  local ses=$(cat <<EOT
-ap-south-1
-eu-west-2
-eu-west-1
-ap-northeast-2
-ap-northeast-1
-sa-east-1
-ca-central-1
-ap-southeast-1
-ap-southeast-2
-eu-central-1
-us-east-1
-us-east-2
-us-west-1
-us-west-2
-EOT
-        )
+  local ses=$(echo "$aws_regions" | cut -f1)
   COMPREPLY=( $(compgen -W "$ses" -- $cur) )
 }
 complete -F _aws-region aws-region
+
+am-i-logged-in-to-aws () {
+  local sso_home=~/.aws/sso/cache
+  local logged_in=false
+  if [[ ! -d $sso_home ]]; then
+    echo $logged_in
+    return
+  fi
+  # in the sso cache dir, there's a .json file that seems to be the only thing
+  # that matters as to whether you are actually logged in or not
+  for f in $(ls $sso_home | grep -v boto); do
+    expires="$(date -d "$(cat $sso_home/$f | jt expiresAt %)" +%s)"
+    now="$(date +%s)"
+    # if the expiration of our sso cache has passed, delete it
+    if [[ $now -ge $expires ]]; then
+      rm $sso_home/$f
+    else
+      logged_in=true
+    fi
+  done
+  echo $logged_in
+}
+
+awp () {
+  local profile=$1
+  export AWS_PROFILE=$profile
+  if [[ ! $profile ]]; then
+    echo "please provide a profile"
+    return
+  fi
+  local cli_cache=~/.aws/cli/cache
+  if [[ $(am-i-logged-in-to-aws) == "false" ]]; then
+    aws sso login --profile $profile
+  fi
+}
+
+_awp() {
+  local cur=${COMP_WORDS[COMP_CWORD]}
+  local ses=$(cat ~/.aws/config| grep '^\[' | cut -f2 -d' ' | sed 's/\]//g')
+  COMPREPLY=( $(compgen -W "$ses" -- $cur) )
+}
+
+complete -F _awp awp
+
+aws-env-vars () {
+  aws configure export-credentials --format env
+}
+
+aws-logout () {
+  aws sso logout
+  rm -rf ~/.aws/sso ~/.aws/cli
+  unset AWS_PROFILE
+  unset AWS_ACCESS_KEY_ID
+  unset AWS_SECRET_ACCESS_KEY
+  unset AWS_SESSION_TOKEN
+}
+
+add-keys ()
+{
+  eval $(ssh-agent -s)
+  ssh-add $HOME/.ssh/{adzerk.pem,bifrost.pem,reporting.pem,id_rsa}
+}
 
 command_exists aws && complete -C $(which aws_completer) aws
 
 # any local tweaks put in there
 [[ -s "~/.tweaksrc" ]] && source ~/.tweaksrc
 
-if [[ $ADZERK_SCRIPTS_PATH ]]; then
+if [[ -d $ADZERK_SCRIPTS_PATH ]]; then
   PATH="$PATH:$ADZERK_SCRIPTS_PATH:$ADZERK_SCRIPTS_PATH/../micha"
   PATH="$PATH:$ADZERK_SCRIPTS_PATH:$ADZERK_SCRIPTS_PATH/../jarrod"
   PATH="$PATH:$ADZERK_SCRIPTS_PATH:$ADZERK_SCRIPTS_PATH/../sean"
 fi
+
+[[ -d $INFRA_REPO ]] && PATH="$PATH:$INFRA_REPO/scripts"
 
 [ -d ~/.scripts ] && export PATH="$PATH:$HOME/.scripts"
 [ -d /usr/local/go/bin ] && export PATH="$PATH:/usr/local/go/bin"
@@ -83,32 +158,38 @@ __prompt_command() {
     PS1=""
     # local sep="➤"
     # local sep=""
-    local sep=""
+    # local sep=""
     # local sep=""
     # local sep=""
     # local sep=""
     # local sep=""
     # local sep=""
+    local sep="."
+    local sep2=""
+    local sep3=""
+    local sep4=""
     if [ $EXIT != 0 ]; then
-        PS1+="${c_red}${sep} \h "
+        PS1+="${c_red}${sep3}\h($EXIT)"
     else
-        PS1+="${c_green}${sep} \h "
+        PS1+="${c_green}${sep3}\h"
     fi
 
     local region=$(aws-region)
-    if [[ $region ]]; then region="${c_purple}${sep} ${region} "; fi
-    #[[ -n $ZERKENV_MODULES ]] && local ze="${c_orange}${sep} $(echo $ZERKENV_MODULES | sed 's/\@//g' | sed 's/ //g') "
+    if [[ $region ]]; then region="${c_purple}${sep}${region}"; fi
 
-    #ze="${c_orange}${sep} $(echo $ZERKENV_MODULES | wc -w) "
+    local loggedincolor=
+    if [[ $(am-i-logged-in-to-aws) == "true" ]]; then loggedincolor="${c_orange}"; else loggedincolor="${c_grey}"; fi
 
-    if [[ -n $ZERKENV_MODULES ]]; then
-      local first3=$(echo $ZERKENV_MODULES | cut -f1-3 -d' ' | sed 's/\@//g' | sed 's/ //g')
-      local rest=$(echo $ZERKENV_MODULES' ' | cut -f4- -d ' ' | wc -w)
-      local ze="${c_orange}${sep} $first3 "
-      [[ $rest -gt 0 ]] && ze+="+ $rest "
-    fi
+    local profile=
+    if [[ -n $AWS_PROFILE ]]; then profile="${loggedincolor}${sep}${AWS_PROFILE}"; fi
 
-    PS1+="${region}${ze}${c_yellow}${sep} \w ${c_blue}\$(__git_ps1 '%s ')${c_orange}${c_magenta}${sep}${c_reset} "
+    local ticket=
+    if [[ -n $TICKET ]]; then ticket="${c_magenta}$sep$TICKET"; fi
+
+    local git=$(__git_ps1 '%s')
+    if [[ -n $git ]]; then git=" ${c_blue}\$(__git_ps1 '@%s')"; fi
+
+    PS1+="${region}${profile}${ticket} ${c_yellow}${sep2} \w${git}${sep4}${c_reset} "
 }
 
 zerkclear () {
@@ -139,7 +220,19 @@ gc ()
       cd "$TO"
     fi
   fi
+
+  if [[ -n "$2" ]]; then
+    tmux new -s "$1"
+  fi
 }
+
+_gc () {
+  local cur=${COMP_WORDS[COMP_CWORD]}
+  local ses=$(find $HOME/dev/ -maxdepth 2 -mindepth 2 | rev | cut -d'/' -f1,2  | rev)
+  COMPREPLY=( $(compgen -W "$ses" -- $cur) )
+}
+
+complete -F _gc gc
 
 sr ()
 {
@@ -185,3 +278,5 @@ fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+complete -C /usr/bin/terraform terraform

@@ -1,4 +1,4 @@
 #!/bin/bash
 input=$(xinput | grep -i touchscreen | cut -f2 | cut -d= -f2)
-output=eDP-1-1
+output=eDP-1
 xinput map-to-output $input $output

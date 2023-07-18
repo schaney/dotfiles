@@ -1,16 +1,18 @@
 # i3 config file (v4)
 # Startup
+exec --no-startup-id gnome-terminal
+exec --no-startup-id gnome-terminal
 exec --no-startup-id nm-applet
 exec_always --no-startup-id xmodmap ~/.Xmodmap
 exec_always --no-startup-id feh --bg-fill ~/Pictures/background.jpg
 #exec --no-startup-id autokey
 exec --no-startup-id "dunst -config $HOME/.dunstrc"
-exec --no-startup-id google-chrome
-exec --no-startup-id mailspring
+exec --no-startup-id firefox -P work
+exec --no-startup-id firefox -P sean
+exec --no-startup-id thunderbird
 exec --no-startup-id slack
-exec --no-startup-id yakyak
-exec --no-startup-id gnome-terminal
-exec --no-startup-id gnome-terminal
+
+exec --no-startup-id 'gnome-terminal --role calculator -q --zoom 3 -- qalc'
 
 set $mod Mod4
 
@@ -34,33 +36,42 @@ set $darkorange2   "#ee7600"
 
 # assign workspaces
 assign [class="chromium-browser|Chromium-browser|google-chrome|Google-chrome"] $workspace2
+assign [class="firefox"] $workspace2
 assign [class="Slack|yakyak"] $workspace3
-assign [class="Mail|Thunderbird|Mailspring|mailspring"] $workspace4
+assign [class="Mail|thunderbird"] $workspace4
 #assign [class="Spotify|spotify"] $workspace5
 ## hack because spotify is dumb and doesn't assign the class name before creating the window
 for_window [class="Spotify|spotify"] move to workspace $workspace5
 assign [class="zoom"] $workspace6
 for_window [class="zoom"] move to workspace $workspace6
 assign [class="Steam"] $workspace7
+assign [class="discord"] $workspace7
+assign [class="signal|Signal"] $workspace7
 assign [class="DBeaver"] $workspace9
-assign [class="1Password.exe"] $workspace10
-assign [class="remmina|Remmina"] $workspace10
+assign [class="AWS VPN Client"] $workspace10
+
 
 # window title formats
 for_window [class=".*"] title_format " %title"
 for_window [class="chromium-browser|Chromium-browser|google-chrome|Google-chrome"] title_format " %title"
+for_window [class="firefox"] title_format " %title"
 for_window [class="Slack|yakyak"] title_format " %title"
-for_window [class="Mail|Thunderbird"] title_format " %title"
+for_window [class="Mail|thunderbird"] title_format " %title"
 for_window [class="spotify|Spotify"] title_format " %title"
 for_window [class="zoom"] title_format " %title"
 for_window [class="DBeaver"] title_format " %title"
-for_window [class="1Password.exe|1pass"] title_format " %title"
 for_window [class="gnome-terminal-server|Gnome-terminal"] title_format " %title"
-for_window [class="remmina|Remmina"] title_format " %title"
+for_window [class="AWS VPN Client"] title_format " %title"
 
-# force floating for 1pass
-for_window [class="1pass"] floating enable
+# floating windows
+for_window [class="gnome-calculator|Gnome-calculator"] floating enable
 
+# calculator - requires qalc
+for_window [window_role="calculator"] floating enable
+for_window [window_role="calculator"] resize set 1600 1200
+for_window [window_role="calculator"] move scratchpad
+
+bindsym $mod+c exec "~/.scripts/calc-terminal"
 
 bindsym $mod+Shift+y sticky toggle
 
@@ -86,6 +97,9 @@ bindsym $mod+Shift+Print exec "~/.scripts/scrot-s3"
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
+
+# notifications
+bindsym $mod+Shift+n exec "~/.scripts/toggle-notifications toggle"
 
 # brightness
 bindsym XF86MonBrightnessUp exec "sudo ~/.scripts/brightness up"
@@ -114,7 +128,7 @@ bindsym Escape       mode "default"
 
 ## workspaces
 set $workspace1 "1: "
-set $workspace2 "2: "
+set $workspace2 "2: "
 set $workspace3 "3: "
 set $workspace4 "4: "
 set $workspace5 "5: "
@@ -122,7 +136,7 @@ set $workspace6 "6: "
 set $workspace7 "7: "
 set $workspace8 "8: "
 set $workspace9 "9: "
-set $workspace10 "10: "
+set $workspace10 "10: "
 
 # General
 floating_modifier $mod
@@ -203,7 +217,6 @@ bindsym $mod+Shift+0 move container to workspace $workspace10
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-bindsym $mod+Shift+n exec "killall dunst"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {

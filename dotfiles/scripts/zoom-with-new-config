@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+conf=$HOME/.config/zoomus.conf
+
+if [[ $1 == "kill" ]]; then
+  echo "killing zoom"
+  pkill -f zoom
+  exit 0
+fi
+
+if pgrep zoom; then
+  echo "zoom is already running, exiting"
+  exit 0
+fi
+
+if [[ -f "${conf}.good" ]]; then
+  echo "copying good config"
+  cp ${conf}.good $conf
+else
+  echo "${conf}.good does not exist"
+fi
+
+/usr/bin/zoom

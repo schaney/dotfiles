@@ -27,7 +27,8 @@ def progress(value, length=40, vmin=0.0, vmax=1.0):
         Text to be prepend to the bar
     """
     # Block progression is 1/8
-    leftpad=""
+    #leftpad=""
+    leftpad="▐"
     fullblock="█"
     blocks = ["", "▏","▎","▍","▌","▋","▊","▉","█"]
     vmin = vmin or 0.0

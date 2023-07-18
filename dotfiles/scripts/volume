@@ -19,6 +19,12 @@ fallback_description=$(pacmd list-sinks \
                          | sed -e 's/^[[ ]]*//' \
                          | tr -d '"')
 
+device.product.name = "PCM2900C Audio CODEC"
+device.serial = "BurrBrown_from_Texas_Instruments_USB_AUDIO_CODEC"
+device.string = "2"
+device.description = "PCM2900C Audio CODEC"
+
+
 extra_description=$(pacmd list-sinks \
                       | awk "/index:\ ${active_sink}/{y=1; next}y" \
                       | grep -e 'device.profile.description' \
@@ -33,8 +39,12 @@ else
   current_description=$fallback_description
 fi
 
-if [[ $current_description = "WD19 Dock" ]]; then
+if [[ $current_description = WD* ]]; then
   current_description="$current_description ($extra_description)"
+fi
+
+if [[ $current_description = "USB AUDIO  CODEC" ]]; then
+  current_description=$(echo $fallback_description | cut -f1 -d' ')
 fi
 
 muted=`pacmd list-sinks |grep -wA 30 'index: '${active_sink}'' | grep 'muted:' | cut -d: -f2 | tr -d ' '`

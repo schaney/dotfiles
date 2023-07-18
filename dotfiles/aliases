@@ -16,7 +16,6 @@ alias top='htop'
 alias ll='ls -alF'
 alias g='git'
 alias stripcolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"'
-alias 1password='~/.wine/drive_c/Program\ Files\ \(x86\)/1Password\ 4/1Password.exe'
 alias nmr='sudo service network-manager restart'
 alias zz='zerkload'
 complete -F _zerkload zz
@@ -24,3 +23,8 @@ alias headphones='alsactl restore'
 alias cider='boot add-middleware nrepl-server wait'
 alias dc=docker-compose
 alias d=docker
+alias grep='grep -i'
+alias markdown=vmd
+#alias tm='echo -n ™ | xclip -i -sel clip'
+alias meow=cat
+alias ssmsession='aws ssm start-session --target'

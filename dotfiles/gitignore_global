@@ -9,3 +9,4 @@
 .mc-lists.el
 .nrepl*
 *.env
+.log/

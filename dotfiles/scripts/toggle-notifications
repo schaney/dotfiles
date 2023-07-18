@@ -1,0 +1,20 @@
+#!/bin/bash
+
+dotoggle=$1
+
+if [[ -n $dotoggle || $BLOCK_BUTTON -eq 1 ]]; then
+  if $(dunstctl is-paused); then
+    notify-send -a dunst 'notifications unpaused'
+  else
+    notify-send -a dunst 'pausing notifications'
+    sleep 1
+  fi
+  dunstctl set-paused toggle
+fi
+
+if $(dunstctl is-paused); then
+  echo 
+else
+  echo 
+fi
+pkill -RTMIN+5 i3blocks
