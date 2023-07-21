@@ -11,6 +11,7 @@ exec --no-startup-id firefox -P work
 exec --no-startup-id firefox -P sean
 exec --no-startup-id thunderbird
 exec --no-startup-id slack
+exec --no-startup-id greenclip daemon
 
 exec --no-startup-id 'gnome-terminal --role calculator -q --zoom 3 -- qalc'
 
@@ -71,7 +72,7 @@ for_window [window_role="calculator"] floating enable
 for_window [window_role="calculator"] resize set 1600 1200
 for_window [window_role="calculator"] move scratchpad
 
-bindsym $mod+c exec "~/.scripts/calc-terminal"
+bindsym $mod+Shift+c exec "~/.scripts/calc-terminal"
 
 bindsym $mod+Shift+y sticky toggle
 
@@ -214,7 +215,7 @@ bindsym $mod+Shift+9 move container to workspace $workspace9
 bindsym $mod+Shift+0 move container to workspace $workspace10
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+t reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
@@ -249,6 +250,7 @@ bindsym $mod+r mode "resize"
 # hlbg = highlighted bg color
 # hlfg = highlighted foreground
 bindsym $mod+d exec "~/.scripts/rofi-run"
+bindsym $mod+c exec "~/.scripts/rofi-run clipboard"
 
 # Widow Colours
 #                       border   bg       text     indicator

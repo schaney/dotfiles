@@ -1,2 +1,7 @@
 #!/bin/bash
-rofi -show combi -modes combi -combi-modes "window,run"
+
+if [[ "$1" == "clipboard" ]]; then
+  rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
+else
+  rofi -show combi -modes combi -combi-modes "window,run"
+fi

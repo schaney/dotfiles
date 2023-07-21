@@ -1,0 +1,14 @@
+#!/bin/bash
+
+say YEET
+
+mode=
+while getopts ":ht" o; do
+  case "${o}" in
+    t) mode="-t" ;;
+    *) exit 1 ;;
+  esac
+done
+shift $((OPTIND-1))
+
+echo "$@" | asg-instance-terminate $mode

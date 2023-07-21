@@ -10,3 +10,4 @@
 .nrepl*
 *.env
 .log/
+*.md.temp

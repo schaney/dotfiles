@@ -21,6 +21,7 @@ export ZERKENV_BUCKET=zerkenv
 export ZERKENV_REGION=us-east-1
 export AWS_DEFAULT_REGION=us-east-1
 export AWS_REGION=$AWS_DEFAULT_REGION
+export BROWSER=firefox
 [ -d $HOME/dev/adzerk/cli-tools/scripts ] && export ADZERK_SCRIPTS_PATH=$HOME/dev/adzerk/cli-tools/scripts
 
 source ~/.colors
@@ -68,6 +69,20 @@ _aws-region() {
 }
 complete -F _aws-region aws-region
 
+aws-console () {
+  local start_url=$(aws configure get sso_start_url)
+  local region=$(aws configure get sso_region)
+  local account_id=$(aws configure get sso_account_id)
+  local role=$(aws configure get sso_role_name)
+  $BROWSER $(aws-sso-util console launch \
+               --sso-start-url $start_url \
+               --sso-region $region \
+               --account-id $account_id \
+               --role-name $role \
+               --print
+    )
+}
+
 am-i-logged-in-to-aws () {
   local sso_home=~/.aws/sso/cache
   local logged_in=false
@@ -75,9 +90,11 @@ am-i-logged-in-to-aws () {
     echo $logged_in
     return
   fi
-  # in the sso cache dir, there's a .json file that seems to be the only thing
-  # that matters as to whether you are actually logged in or not
   for f in $(ls $sso_home | grep -v boto); do
+    # find our token
+    if [[ ! "$(cat $sso_home/$f | jt startUrl %)" == "https://kevel.awsapps.com/start" ]]; then
+      continue
+    fi
     expires="$(date -d "$(cat $sso_home/$f | jt expiresAt %)" +%s)"
     now="$(date +%s)"
     # if the expiration of our sso cache has passed, delete it
@@ -112,7 +129,11 @@ _awp() {
 complete -F _awp awp
 
 aws-env-vars () {
-  aws configure export-credentials --format env
+  if [[ $1 == c ]]; then
+    aws configure export-credentials --format env | pbcopy
+  else
+    eval $(aws configure export-credentials --format env)
+  fi
 }
 
 aws-logout () {
@@ -205,24 +226,46 @@ hgrep () {
 
 gc ()
 {
-  if [[ -z "$1" ]]; then
-    gc $(tmux display-message -p '#S')
+  local DEVHOME=$HOME/dev/
+  local no_args=false
+  if [[ -z "$1" ]]; then no_args=true; fi
+  local action="$2"
+  local session_exists=false
+  tmux has-session -t "$1" 2> /dev/null
+  if [[ $? -eq 0 ]]; then session_exists=true; fi
+
+  if [[ $no_args == true && -n $TMUX ]]; then
+    repo="$(tmux display-message -p '#S')"
   else
-    if grep -q "/" <(echo "$1"); then
-      local FROM="git@github.com:${1?}"
-      local TO="$HOME/dev/${1?}"
-      if [[ ! -d "$TO" ]]; then
-        git clone "$FROM" "$TO" > /dev/null 2>&1
-        if [[ $? != 0 ]]; then
-          TO="$(pwd)"
-        fi
-      fi
-      cd "$TO"
+    repo="$1"
+  fi
+
+  local FROM="git@github.com:${repo}"
+  local TO="$DEVHOME/${repo}"
+
+  if grep -q "/" <(echo "$1"); then
+    if [[ ! -d "$TO" ]]; then
+      git clone "$FROM" "$TO" > /dev/null 2>&1
     fi
   fi
 
-  if [[ -n "$2" ]]; then
-    tmux new -s "$1"
+  if [[ $action == t ]]; then
+    if [[ -z $TMUX ]]; then
+      if [[ $session_exists == false ]]; then
+        tmux new -s "$1"
+      else
+        tmux attach -t "$1"
+      fi
+    else
+      if [[ $session_exists == false ]]; then
+        TMUX='' tmux new-session -d -s "$1"
+      fi
+      tmux switch-client -t "$1"
+    fi
+  elif [[ $action = b ]]; then
+    $BROWSER "https://github.com/$1"
+  else
+    cd "$TO"
   fi
 }
 
@@ -233,6 +276,12 @@ _gc () {
 }
 
 complete -F _gc gc
+
+if [[ $TMUX ]]; then gc; fi
+
+branch2ticket () {
+  export TICKET=$(git rev-parse --abbrev-ref HEAD | cut -d'/' -f2)
+}
 
 sr ()
 {
@@ -272,11 +321,37 @@ if [[ -z "$SSH_CLIENT" ]]; then
   ~/.scripts/welcome.sh
 fi
 
-if [[ $TMUX ]]; then
-  gc
-fi
-
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
 complete -C /usr/bin/terraform terraform
+
+
+###-begin-cdktf-completions-###
+#
+# yargs command completion script
+#
+# Installation: cdktf completion >> ~/.bashrc
+#    or cdktf completion >> ~/.bash_profile on OSX.
+#
+_cdktf_yargs_completions()
+{
+  local cur_word args type_list
+
+  cur_word="${COMP_WORDS[COMP_CWORD]}"
+  args=("${COMP_WORDS[@]}")
+
+  # ask yargs to generate completions.
+  type_list=$(cdktf --get-yargs-completions "${args[@]}")
+
+  COMPREPLY=( $(compgen -W "${type_list}" -- ${cur_word}) )
+
+  # if no match was found, fall back to filename completion
+  if [ ${#COMPREPLY[@]} -eq 0 ]; then
+    COMPREPLY=()
+  fi
+
+  return 0
+}
+complete -o bashdefault -o default -F _cdktf_yargs_completions cdktf
+###-end-cdktf-completions-###
