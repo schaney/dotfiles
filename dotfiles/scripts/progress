@@ -2,4 +2,4 @@
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 max=`sudo ~/.scripts/brightness max`
 cur=`sudo ~/.scripts/brightness`
-python2 $dir/progress_bar.py $cur 10 0 $max
+python $dir/progress_bar.py $cur 10 0 $max

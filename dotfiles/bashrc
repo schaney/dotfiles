@@ -1,7 +1,7 @@
 # -*- mode: sh;-*-
 export PATH=$HOME/.local/bin:$HOME/.scripts:$HOME/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:$PATH
 export ADZERK_REPO_PATH=$HOME/dev/adzerk/adzerk
-export INFRA_REPO=$HOME/dev/adzerk/infrastructure
+export PACS_REPO=$HOME/dev/adzerk/pacs
 export EDITOR="TERM=xterm-24bits emacsclient -a \"\" -t"
 export XDG_CONFIG_HOME=$HOME/.config
 export TERM=xterm-256color
@@ -16,14 +16,13 @@ export HISTSIZE=$HISTFILESIZE
 export HISTCONTROL=ignoreboth
 export HISTTIMEFORMAT='%F %T '
 export PROMPT_COMMAND='history -a'
-#export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_AUTO_SCREEN_SCALE_FACTOR=0
 export ZERKENV_BUCKET=zerkenv
 export ZERKENV_REGION=us-east-1
 export AWS_DEFAULT_REGION=us-east-1
 export AWS_REGION=$AWS_DEFAULT_REGION
 export BROWSER=firefox
 [ -d $HOME/dev/adzerk/cli-tools/scripts ] && export ADZERK_SCRIPTS_PATH=$HOME/dev/adzerk/cli-tools/scripts
-
 source ~/.colors
 source ~/.aliases
 
@@ -41,6 +40,7 @@ us-west-2	usw2
 ca-central-1	cac1
 eu-west-1	ew1
 eu-west-2	ew2
+eu-west-3	ew3
 eu-central-1	ec1
 ap-southeast-1	apse1
 ap-southeast-2	apse2
@@ -70,17 +70,42 @@ _aws-region() {
 complete -F _aws-region aws-region
 
 aws-console () {
-  local start_url=$(aws configure get sso_start_url)
-  local region=$(aws configure get sso_region)
-  local account_id=$(aws configure get sso_account_id)
-  local role=$(aws configure get sso_role_name)
-  $BROWSER $(aws-sso-util console launch \
-               --sso-start-url $start_url \
-               --sso-region $region \
-               --account-id $account_id \
-               --role-name $role \
-               --print
-    )
+  local cred_process=$(aws configure get credential_process)
+  if [[ $cred_process ]]; then
+    AWS_PROFILE=$(aws configure get credential_process | cut -d' ' -f4) pacs -o
+  else
+    local start_url=$(aws configure get sso_start_url)
+    local region=$(aws configure get sso_region)
+    local account_id=$(aws configure get sso_account_id)
+    local role=$(aws configure get sso_role_name)
+    $BROWSER $(aws-sso-util console launch \
+                 --sso-start-url $start_url \
+                 --sso-region $region \
+                 --account-id $account_id \
+                 --role-name $role \
+                 --print
+      )
+  fi
+}
+
+aws-console2 () {
+  local fed_url='https://signin.aws.amazon.com/federation'
+  local creds=$(aws configure export-credentials)
+  local accesskey=$(echo "$creds" | jt AccessKeyId %)
+  local secretkey=$(echo "$creds" | jt SecretAccessKey %)
+  local token=$(echo "$creds" | jt SessionToken %)
+  local data=$(cat <<EOT
+{
+  "Action": "getSigninToken",
+  "Session": {
+    "sessionId":"$accesskey",
+    "sessionKey":"$secretkey",
+    "sessionToken":"$token"
+}
+EOT
+        )
+  curl -X POST -d "$data" $fed_url
+
 }
 
 am-i-logged-in-to-aws () {
@@ -92,14 +117,14 @@ am-i-logged-in-to-aws () {
   fi
   for f in $(ls $sso_home | grep -v boto); do
     # find our token
-    if [[ ! "$(cat $sso_home/$f | jt startUrl %)" == "https://kevel.awsapps.com/start" ]]; then
+    if [[ ! "$(cat $sso_home/$f 2> /dev/null| jt startUrl %)" == "https://kevel.awsapps.com/start" ]]; then
       continue
     fi
     expires="$(date -d "$(cat $sso_home/$f | jt expiresAt %)" +%s)"
     now="$(date +%s)"
     # if the expiration of our sso cache has passed, delete it
     if [[ $now -ge $expires ]]; then
-      rm $sso_home/$f
+      rm -f $sso_home/$f
     else
       logged_in=true
     fi
@@ -116,23 +141,26 @@ awp () {
   fi
   local cli_cache=~/.aws/cli/cache
   if [[ $(am-i-logged-in-to-aws) == "false" ]]; then
-    aws sso login --profile $profile
+    aws sso login --profile devopsro.jha
   fi
 }
 
 _awp() {
   local cur=${COMP_WORDS[COMP_CWORD]}
-  local ses=$(cat ~/.aws/config| grep '^\[' | cut -f2 -d' ' | sed 's/\]//g')
+  local ses=$(cat ~/.aws/config| grep -i '^\[' | cut -f2 -d' ' | sed 's/\]//g')
   COMPREPLY=( $(compgen -W "$ses" -- $cur) )
 }
 
 complete -F _awp awp
 
 aws-env-vars () {
+  local cmd="aws configure export-credentials --format env"
   if [[ $1 == c ]]; then
-    aws configure export-credentials --format env | pbcopy
+    $cmd | pbcopy
+  elif [[ $1 == p ]]; then
+    $cmd
   else
-    eval $(aws configure export-credentials --format env)
+    eval $($cmd)
   fi
 }
 
@@ -162,7 +190,7 @@ if [[ -d $ADZERK_SCRIPTS_PATH ]]; then
   PATH="$PATH:$ADZERK_SCRIPTS_PATH:$ADZERK_SCRIPTS_PATH/../sean"
 fi
 
-[[ -d $INFRA_REPO ]] && PATH="$PATH:$INFRA_REPO/scripts"
+[[ -d $PACS_REPO ]] && PATH="$PATH:$PACS_REPO/scripts"
 
 [ -d ~/.scripts ] && export PATH="$PATH:$HOME/.scripts"
 [ -d /usr/local/go/bin ] && export PATH="$PATH:/usr/local/go/bin"
@@ -226,7 +254,7 @@ hgrep () {
 
 gc ()
 {
-  local DEVHOME=$HOME/dev/
+  local DEVHOME=$HOME/dev
   local no_args=false
   if [[ -z "$1" ]]; then no_args=true; fi
   local action="$2"
@@ -265,7 +293,9 @@ gc ()
   elif [[ $action = b ]]; then
     $BROWSER "https://github.com/$1"
   else
-    cd "$TO"
+    if [[ -d "$TO" ]]; then
+      cd "$TO"
+    fi 
   fi
 }
 

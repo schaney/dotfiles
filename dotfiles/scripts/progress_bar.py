@@ -47,7 +47,7 @@ def progress(value, length=40, vmin=0.0, vmax=1.0):
     prec = 3
     i = int(round(base*math.floor(float(y)/base),prec)/base)
     bar = fullblock*x + blocks[i]
-    n = length-len(bar.decode("utf-8"))
+    n = length - len(bar)
     bar = leftpad + bar + " "*n
 
     sys.stdout.write(bar)

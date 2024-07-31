@@ -1,14 +1,13 @@
 # i3 config file (v4)
 # Startup
 exec --no-startup-id gnome-terminal
-exec --no-startup-id gnome-terminal
 exec --no-startup-id nm-applet
 exec_always --no-startup-id xmodmap ~/.Xmodmap
 exec_always --no-startup-id feh --bg-fill ~/Pictures/background.jpg
 #exec --no-startup-id autokey
 exec --no-startup-id "dunst -config $HOME/.dunstrc"
-exec --no-startup-id firefox -P work
-exec --no-startup-id firefox -P sean
+exec --no-startup-id firefox -p work
+exec --no-startup-id firefox -p sean
 exec --no-startup-id thunderbird
 exec --no-startup-id slack
 exec --no-startup-id greenclip daemon
@@ -79,8 +78,8 @@ bindsym $mod+Shift+y sticky toggle
 # volume control keys
 bindsym XF86AudioRaiseVolume exec "~/.scripts/volume up"
 bindsym XF86AudioLowerVolume exec "~/.scripts/volume down"
-bindsym Shift+f10 exec "~/.scripts/volume up"
-bindsym Shift+f11 exec "~/.scripts/volume down"
+bindsym $mod+Shift+Up exec "~/.scripts/volume up"
+bindsym $mod+Shift+Down exec "~/.scripts/volume down"
 bindsym Shift+XF86AudioRaiseVolume exec "~/.scripts/volume up 1"
 bindsym Shift+XF86AudioLowerVolume exec "~/.scripts/volume down 1"
 bindsym XF86AudioMute exec "~/.scripts/volume mute"
