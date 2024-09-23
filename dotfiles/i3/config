@@ -1,11 +1,11 @@
 # i3 config file (v4)
 # Startup
+exec --no-startup-id "dunst -config $HOME/.dunstrc"
 exec --no-startup-id gnome-terminal
 exec --no-startup-id nm-applet
 exec_always --no-startup-id xmodmap ~/.Xmodmap
 exec_always --no-startup-id feh --bg-fill ~/Pictures/background.jpg
 #exec --no-startup-id autokey
-exec --no-startup-id "dunst -config $HOME/.dunstrc"
 exec --no-startup-id firefox -p work
 exec --no-startup-id firefox -p sean
 exec --no-startup-id thunderbird

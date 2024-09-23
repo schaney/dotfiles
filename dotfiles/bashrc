@@ -88,6 +88,11 @@ aws-console () {
   fi
 }
 
+aws-console-link () {
+  BROWSER=echo aws-console | pbcopy
+  echo link copied to clipboard
+}
+
 aws-console2 () {
   local fed_url='https://signin.aws.amazon.com/federation'
   local creds=$(aws configure export-credentials)
