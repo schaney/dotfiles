@@ -2,11 +2,8 @@
 
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 mainscreen=eDP-1-1
-ultrawide=DP-1-2-1
 dell_left=DP-1-1-2
 dell_right=DP-1-1-1
-drew_right=DP-1-1-1-6
-drew_left=DP-1-1-2
 
 screens=$(xrandr | grep -v disconnected | grep connected | cut -f1 -d' ')
 nonmain=$(echo "$screens" | grep -v $mainscreen)
@@ -41,10 +38,6 @@ elif [[ "$num" = "home2" ]]; then
   xrandr --output $mainscreen --auto \
          --output $dell_left --right-of $mainscreen \
          --output $dell_right --off
-elif [[ "$num" = "drew" ]]; then
-  xrandr --output $mainscreen --auto \
-         --output $drew_right --auto --left-of $mainscreen \
-         --output $drew_left --auto --left-of $drew_right
 else
   echo xrandr $(for screen in $screens; do echo " --output $screen --auto"; done;)
 fi

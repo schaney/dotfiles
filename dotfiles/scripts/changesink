@@ -1,35 +1,55 @@
 #!/bin/bash
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-active_sink=`$dir/currentsink`
-if [ -z $1 ]
-then
-    largest_sink=`pactl list sinks short | cut -f1 | sort -nu | tail -n1`
-    smallest_sink=`pactl list sinks short | cut -f1 | sort -nur | tail -n1`
-    if [[ $active_sink == $largest_sink ]]
-    then
-        sink=$smallest_sink
-    else
-        sink="$(pactl list sinks short | cut -f1 | sort -nu | grep -A 1 $active_sink | tail -1)"
+active_sink=$($dir/currentsink)
+sinks=($(wpctl status \
+           | sed -n '/Sink endpoints\:/q;p' \
+           | sed '1,/Sinks\:/d' \
+           | head -n-1 \
+           | awk '{if ($0 ~ /\*/) {print $3} else {print $2}}' \
+           | sed 's/\.//g' \
+           | sort -nu
+       ))
+sinks_len=${#sinks[@]}
+
+
+if [ -z $1 ]; then
+
+  cur_idx=
+  for i in "${!sinks[@]}"; do
+    if [[ "${sinks[$i]}" = "${active_sink}" ]]; then
+      cur_idx=$i
+      break;
     fi
+  done
+
+  idx=$cur_idx
+  while true; do
+    idx=$(( ($idx + 1) % $sinks_len ))
+    echo "next index: $idx"
+    # break if we've looped all the way around
+    if [[ $idx == $cur_idx ]]; then
+      echo "tried everything, bye"
+      break;
+    fi
+    next_sink=${sinks[$idx]}
+    echo "next sink: $next_sink"
+    wpctl set-default $next_sink;
+    if [[ $next_sink == $($dir/currentsink) ]]; then
+      echo "found the next available sink"
+      break;
+    fi
+    echo "couldn't use this sink"
+  done
+
 else
-    if pactl list sinks short | cut -f1 | grep $1
-    then
-        sink=$1
-    else
-        echo "invalid sink"
-        exit 0
-    fi
+
+  if echo "$sinks" | grep $1
+  then
+    sink=$1
+  else
+    echo "invalid sink"
+    exit 0
+  fi
 fi
-
-echo "Setting default sink to: $sink";
-pacmd set-default-sink $sink
-pacmd list-sink-inputs | grep index | while read line
-do
-echo "Moving input: ";
-echo $line | cut -f2 -d' ';
-echo "to sink: $sink";
-pacmd move-sink-input `echo $line | cut -f2 -d' '` $sink
-
-done
 
 pkill -RTMIN+1 i3blocks

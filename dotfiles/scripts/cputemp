@@ -16,7 +16,7 @@ fanstotempicon() {
 
 }
 export -f fanstotempicon
-cores=$(sensors | grep Core | awk '{print substr($3, 2)}' | cut -d. -f1)
+cores=$(sensors | grep -w Core | awk '{print substr($3, 2)}' | cut -d. -f1)
 temps=$(echo "$cores" | paste -sd+)
 corecount=$(echo "$cores" | wc -l)
 avgtemp=$(echo "($temps) / $corecount" | bc)

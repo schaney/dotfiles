@@ -1,2 +1,9 @@
 #!/bin/bash
-pacmd list-sinks |awk '/* index:/{print $3}'
+
+wpctl status \
+  | sed -n '/Sink endpoints\:/q;p' \
+  | sed '1,/Sinks\:/d' \
+  | head -n-1 \
+  | grep \* \
+  | awk '{print $3}' \
+  | sed 's/\.//g'

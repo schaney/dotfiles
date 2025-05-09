@@ -67,12 +67,13 @@ _aws-region() {
   local ses=$(echo "$aws_regions" | cut -f1)
   COMPREPLY=( $(compgen -W "$ses" -- $cur) )
 }
+
 complete -F _aws-region aws-region
 
 aws-console () {
   local cred_process=$(aws configure get credential_process)
   if [[ $cred_process ]]; then
-    AWS_PROFILE=$(aws configure get credential_process | cut -d' ' -f4) pacs -o
+    AWS_PROFILE=$(aws configure get credential_process | cut -d' ' -f4) pacs -o $1
   else
     local start_url=$(aws configure get sso_start_url)
     local region=$(aws configure get sso_region)
@@ -194,6 +195,8 @@ if [[ -d $ADZERK_SCRIPTS_PATH ]]; then
   PATH="$PATH:$ADZERK_SCRIPTS_PATH:$ADZERK_SCRIPTS_PATH/../jarrod"
   PATH="$PATH:$ADZERK_SCRIPTS_PATH:$ADZERK_SCRIPTS_PATH/../sean"
 fi
+
+[ -d $HOME/dev/adzerk/teammgmt/bin ] && PATH="$PATH:$HOME/dev/adzerk/teammgmt/bin"
 
 [[ -d $PACS_REPO ]] && PATH="$PATH:$PACS_REPO/scripts"
 
@@ -388,5 +391,6 @@ _cdktf_yargs_completions()
 
   return 0
 }
+
 complete -o bashdefault -o default -F _cdktf_yargs_completions cdktf
 ###-end-cdktf-completions-###

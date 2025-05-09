@@ -9,8 +9,11 @@ percent=$(acpi -b | head -1 | cut -d, -f2 | tr -d '[:space:]')
 percent=${percent::-1}
 time=$(acpi -b | head -1 | awk '{print $5}' | cut -d: -f1,2)
 charging=$(acpi -b | head -1 | grep -v Discharging)
+notcharging=$(acpi -b | head -1 | grep 'Not charging')
 
-if [[ -n $time ]]
+if [[ -n $notcharging ]]; then
+  time=" (idle)"
+elif [[ -n $time ]]
 then
   time=" ($time)"
 fi
