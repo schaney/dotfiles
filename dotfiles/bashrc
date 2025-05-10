@@ -226,9 +226,9 @@ __prompt_command() {
     local sep3=""
     local sep4=""
     if [ $EXIT != 0 ]; then
-        PS1+="${c_red}${sep3}\h($EXIT)"
+      PS1+="${c_red}${sep2} \u@\h($EXIT)"
     else
-        PS1+="${c_green}${sep3}\h"
+      PS1+="${c_orange}${sep2} \u${c_green}@\h"
     fi
 
     local region=$(aws-region)
@@ -246,7 +246,7 @@ __prompt_command() {
     local git=$(__git_ps1 '%s')
     if [[ -n $git ]]; then git=" ${c_blue}\$(__git_ps1 '@%s')"; fi
 
-    PS1+="${region}${profile}${ticket} ${c_yellow}${sep2} \w${git}${sep4}${c_reset} "
+    PS1+="${region}${profile}${ticket} ${c_yellow}${sep2} \w${git} ${sep2}${c_reset} "
 }
 
 zerkclear () {
