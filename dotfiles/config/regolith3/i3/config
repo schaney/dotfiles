@@ -1,6 +1,5 @@
 # i3 config file (v4)
 # Startup
-exec --no-startup-id "dunst -config $HOME/.dunstrc"
 exec --no-startup-id gnome-terminal
 exec --no-startup-id nm-applet
 exec_always --no-startup-id xmodmap ~/.Xmodmap
