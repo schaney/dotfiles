@@ -1,12 +1,28 @@
 #!/bin/bash
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-dotfiles=$dir/dotfiles
-installdir=$HOME
+export DOTFILES=$dir/dotfiles
+export INSTALLDIR=$HOME
 
-if [[ $1 == "-u" ]]; then
-  echo "uninstalling..."
-  ls $dotfiles | parallel --no-notice rm -f "$installdir/.{}" || "rm -rf $installdir/.{}"
-else
-  echo "installing..."
-  ls $dotfiles | parallel --no-notice ln -fns "$dotfiles/{}" "$installdir/.{}"
-fi
+pushd $DOTFILES
+
+echo "creating dirs"
+
+# for d in "$(find * -type d)"; do
+#   echo $INSTALLDIR/.$d
+#   mkdir -p $INSTALLDIR/.$d
+# done
+
+echo "symlinking files"
+
+
+find * -type f -exec sh -c '
+  for f do
+    echo "$INSTALLDIR/.$f"
+    ln -fns "$DOTFILES/$f" "$INSTALLDIR/.$f"
+  done
+' exec-sh {} +
+
+
+popd
+
+echo done
