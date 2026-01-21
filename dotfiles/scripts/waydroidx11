@@ -1,0 +1,2 @@
+#!/bin/bash
+unset WAYLAND_DISPLAY && waydroid session stop && weston --shell="kiosk-shell.so" --width 1920 --height 1085 --socket=wayland-1 &>/dev/null & sleep 1 && WAYLAND_DISPLAY=wayland-1 XDG_SESSION_TYPE=wayland waydroid show-full-ui && pkill -x weston

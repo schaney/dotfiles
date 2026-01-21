@@ -1,0 +1,3 @@
+#!/bin/bash
+# force this dconf setting. sometimes it gets blown away and that's annoying af
+dconf write /org/gnome/desktop/input-sources/xkb-options "['caps_is_alt:caps_is_alt']"
