@@ -1,14 +1,31 @@
 # i3 config file (v4)
+
+# stuff from regolith
+
+# dbus
+exec --no-startup-id systemctl --user import-environment XDG_CURRENT_DESKTOP DISPLAY I3SOCK
+exec --no-startup-id hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd XDG_CURRENT_DESKTOP DISPLAY I3SOCK
+
+# picom
+set_from_resource $wm.program.compositor wm.program.compositor /usr/share/regolith-compositor/init
+exec_always --no-startup-id $wm.program.compositor
+
+
+# end regolith stuff
+
+
+
+
 # Startup
 exec --no-startup-id gnome-terminal
 exec --no-startup-id nm-applet
 exec_always --no-startup-id xmodmap ~/.Xmodmap
 exec_always --no-startup-id feh --bg-fill ~/Pictures/background.jpg
 #exec --no-startup-id autokey
-exec --no-startup-id firefox -p work
-exec --no-startup-id firefox -p sean
-exec --no-startup-id thunderbird
-exec --no-startup-id slack
+exec --no-startup-id firefox
+#exec --no-startup-id thunderbird
+#exec --no-startup-id slack
 exec --no-startup-id greenclip daemon
 
 exec --no-startup-id 'gnome-terminal --role calculator -q --zoom 3 -- qalc'
@@ -36,7 +53,6 @@ set $darkorange2   "#ee7600"
 # assign workspaces
 assign [class="chromium-browser|Chromium-browser|google-chrome|Google-chrome"] $workspace2
 assign [class="firefox"] $workspace2
-assign [class="Slack|yakyak"] $workspace3
 assign [class="Mail|thunderbird"] $workspace4
 #assign [class="Spotify|spotify"] $workspace5
 ## hack because spotify is dumb and doesn't assign the class name before creating the window
@@ -44,8 +60,8 @@ for_window [class="Spotify|spotify"] move to workspace $workspace5
 assign [class="zoom"] $workspace6
 for_window [class="zoom"] move to workspace $workspace6
 assign [class="Steam"] $workspace7
-assign [class="discord"] $workspace7
-assign [class="signal|Signal"] $workspace7
+assign [class="discord"] $workspace3
+assign [class="signal|Signal"] $workspace3
 assign [class="DBeaver"] $workspace9
 assign [class="AWS VPN Client"] $workspace10
 
