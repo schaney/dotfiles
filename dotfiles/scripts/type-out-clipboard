@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# weird shit happens if we start typing immediately while the keybind is still pressed
+sleep 1;
+xclip -selection clipboard -out\
+  | tr \\n \\r \
+  | xdotool type \
+            --delay 50 \
+            --file -

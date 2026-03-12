@@ -44,3 +44,4 @@
 	default = matching
 [init]
 	templatedir = ~/.git-templates
+	defaultBranch = main

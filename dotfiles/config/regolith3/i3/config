@@ -15,7 +15,7 @@ exec_always --no-startup-id $wm.program.compositor
 # Startup
 exec --no-startup-id gnome-terminal
 exec --no-startup-id nm-applet
-exec_always --no-startup-id xmodmap ~/.Xmodmap
+#exec_always --no-startup-id xmodmap ~/.Xmodmap
 exec_always --no-startup-id feh --bg-fill ~/Pictures/background.jpg
 #exec --no-startup-id autokey
 #exec --no-startup-id firefox -p work
@@ -27,6 +27,8 @@ exec --no-startup-id greenclip daemon
 exec --no-startup-id 'gnome-terminal --role calculator -q --zoom 3 -- qalc'
 
 set $mod Mod4
+set $alt Mod1
+workspace_layout tabbed
 
 #colors
 
@@ -50,16 +52,18 @@ set $darkorange2   "#ee7600"
 assign [class="chromium-browser|Chromium-browser|google-chrome|Google-chrome"] $workspace2
 assign [class="firefox"] $workspace2
 assign [class="Slack|yakyak"] $workspace3
+assign [class="discord"] $workspace3
+assign [class="signal|Signal"] $workspace3
 assign [class="Mail|thunderbird"] $workspace4
 #assign [class="Spotify|spotify"] $workspace5
 ## hack because spotify is dumb and doesn't assign the class name before creating the window
 for_window [class="Spotify|spotify"] move to workspace $workspace5
 assign [class="zoom"] $workspace6
 for_window [class="zoom"] move to workspace $workspace6
-assign [class="Steam"] $workspace7
-assign [class="discord"] $workspace7
-assign [class="signal|Signal"] $workspace7
+assign [class="Steam|steamwebhelper|steam"] $workspace7
+for_window [class="Steam|steamwebhelper|steam"] move to $workspace7
 assign [class="DBeaver"] $workspace9
+assign [class="rusty-path-of-building-1"] $workspace9
 assign [class="AWS VPN Client"] $workspace10
 
 
@@ -97,7 +101,7 @@ bindsym Shift+XF86AudioLowerVolume exec "~/.scripts/volume down 1"
 bindsym XF86AudioMute exec "~/.scripts/volume mute"
 bindsym $mod+Shift+m exec "~/.scripts/volume mute"
 bindsym $mod+Shift+s exec "~/.scripts/changesink"
-bindsym $mod+Shift+v exec "pavucontrol -t 3"
+#bindsym $mod+Shift+v exec "pavucontrol -t 3"
 
 # screenshots
 bindsym Print exec "~/.scripts/scrot-s3 window"
@@ -112,6 +116,9 @@ bindsym XF86AudioPrev exec playerctl previous
 
 # notifications
 bindsym $mod+Shift+n exec "~/.scripts/toggle-notifications toggle"
+
+# work around stupid sites that block pasting
+bindsym $mod+Shift+v exec "~/.scripts/type-out-clipboard > /tmp/wtflog 2>&1"
 
 # brightness
 bindsym XF86MonBrightnessUp exec "sudo ~/.scripts/brightness up"
@@ -128,7 +135,7 @@ bindsym XF86PowerOff mode $sysmenu
 bindsym $mod+Shift+z mode $sysmenu
 
 mode $sysmenu {
-bindsym l            exit
+bindsym l            exec gnome-session-quit --logout --no-prompt
 bindsym d            exec systemctl poweroff
 bindsym r            exec systemctl reboot
 bindsym s            exec systemctl suspend &; mode "default"
@@ -255,6 +262,23 @@ bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
+
+# resize window (you can also use the mouse for that)
+mode "move" {
+# These bindings trigger as soon as you enter the move mode
+bindsym Left move left 5px
+bindsym Down move down 5px
+bindsym Up move up 5px
+bindsym Right move right 5px
+
+# back to normal: Enter or Escape
+bindsym Return mode "default"
+bindsym Escape mode "default"
+}
+
+bindsym $mod+m mode "move"
+
+
 
 # bc = border color
 # bg = background color

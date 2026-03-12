@@ -4,7 +4,6 @@
 
     font: "TerminusTTF Nerd Font Mono 22";
 
-    /* Gruvbox light colors */
     purple1:       #9b30ff;
     purple2:       #912cee;
     purple3:       #7d26cd;
@@ -61,9 +60,8 @@ window {
     fullscreen: true;
     bordercolor:     @bordercolor;
     background-color: @background;
-    border:           2px;
+    border:           0px;
     padding:          0px;
-    border-radius:    10px;
     padding:          0.5em;
     spacing:          0px;
 
