@@ -34,9 +34,6 @@
     untracked = cyan
 [github]
 	user = schaney
-[credential]
-	helper = !aws codecommit credential-helper $@
-	UseHttpPath = true
 [filter "media"]
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
