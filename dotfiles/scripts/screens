@@ -4,6 +4,12 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 mainscreen=eDP-1-1
 dell_left=DP-1-1-2
 dell_right=DP-1-1-1
+tv=HDMI-A-0
+
+if [[ $HOSTNAME == 'piccolo' ]]; then
+  dell_left=DisplayPort-1
+  dell_right=DisplayPort-0
+fi
 
 screens=$(xrandr | grep -v disconnected | grep connected | cut -f1 -d' ')
 nonmain=$(echo "$screens" | grep -v $mainscreen)
@@ -18,6 +24,9 @@ if [[ "$num" = "1080" ]]; then
   xrandr --output $mainscreen --mode 1920x1080
 elif [[ "$num" = "1440" ]]; then
   xrandr --output $mainscreen --mode 2560x1440
+elif [[ "$num" = "mirror" ]]; then
+  xrandr --output $tv --mode 1920x1080 \
+         --output $dell_right --mode 1920x1080 --same-as $tv
 elif [[ $num = "office" ]]; then
   xrandr --output $mainscreen --auto \
          --output $ultrawide --auto  --right-of $mainscreen
@@ -33,7 +42,8 @@ elif [[ "$num" = "1" ]]; then
 elif [[ "$num" = "home" ]]; then
   xrandr --output $mainscreen --off \
          --output $dell_left --auto \
-         --output $dell_right --auto --right-of $dell_left
+         --output $dell_right --auto --right-of $dell_left \
+         --output $tv --off
 elif [[ "$num" = "home2" ]]; then
   xrandr --output $mainscreen --auto \
          --output $dell_left --right-of $mainscreen \

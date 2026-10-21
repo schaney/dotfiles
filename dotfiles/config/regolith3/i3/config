@@ -51,7 +51,8 @@ set $darkorange2   "#ee7600"
 # assign workspaces
 assign [class="chromium-browser|Chromium-browser|google-chrome|Google-chrome"] $workspace2
 assign [class="firefox"] $workspace2
-assign [class="Slack|yakyak"] $workspace3
+for_window [class="firefox"] move to workspace $workspace2
+#assign [class="Slack|yakyak"] $workspace3
 assign [class="discord"] $workspace3
 assign [class="signal|Signal"] $workspace3
 assign [class="Mail|thunderbird"] $workspace4
@@ -62,8 +63,10 @@ assign [class="zoom"] $workspace6
 for_window [class="zoom"] move to workspace $workspace6
 assign [class="Steam|steamwebhelper|steam"] $workspace7
 for_window [class="Steam|steamwebhelper|steam"] move to $workspace7
+assign [class="rusty-path-of-building-1"] $workspace1
+for_window [title="Awakened PoE Trade — Mozilla Firefox"] move to $workspace1
+assign [title="Awakened PoE Trade — Mozilla Firefox"] $workspace1
 assign [class="DBeaver"] $workspace9
-assign [class="rusty-path-of-building-1"] $workspace9
 assign [class="AWS VPN Client"] $workspace10
 
 

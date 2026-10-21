@@ -5,6 +5,7 @@ outdir="$HOME/screenshots"
 #img="$(uuidgen).png"
 img="screenshot.png"
 out="${outdir}/${img}"
+sleep 2
 if [[ $1 == "select" ]]; then
   notify-send -a scrot "select area"
   scrot -s $out -e 'xclip -selection c -t image/png < $f'
