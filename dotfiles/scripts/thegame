@@ -1,0 +1,6 @@
+#!/bin/bash
+if [[ $BLOCK_BUTTON = 8 ]]; then
+  echo "click me"
+else
+  echo "you just lost the game"
+fi
