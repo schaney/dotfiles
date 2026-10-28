@@ -265,22 +265,29 @@ gc ()
 {
   local DEVHOME=$HOME/dev
   local no_args=false
-  if [[ -z "$1" ]]; then no_args=true; fi
+  local session_name="$1"
+  if [[ -z "$session_name" ]]; then no_args=true; fi
   local action="$2"
   local session_exists=false
-  tmux has-session -t "$1" 2> /dev/null
+  tmux has-session -t "$session_name" 2> /dev/null
   if [[ $? -eq 0 ]]; then session_exists=true; fi
+
+  session_display_name=$session_name
+  if [[ $session_name = "noita" ]]; then
+    session_name="schaney/the-eyes-bro-what-are-they"
+    session_display_name="noita"
+  fi
 
   if [[ $no_args == true && -n $TMUX ]]; then
     repo="$(tmux display-message -p '#S')"
   else
-    repo="$1"
+    repo="$session_name"
   fi
 
   local FROM="git@github.com:${repo}"
   local TO="$DEVHOME/${repo}"
 
-  if grep -q "/" <(echo "$1"); then
+  if grep -q "/" <(echo "$session_name"); then
     if [[ ! -d "$TO" ]]; then
       git clone "$FROM" "$TO" > /dev/null 2>&1
     fi
@@ -289,28 +296,29 @@ gc ()
   if [[ $action == t ]]; then
     if [[ -z $TMUX ]]; then
       if [[ $session_exists == false ]]; then
-        tmux new -s "$1"
+        tmux new -s "$session_display_name"
       else
-        tmux attach -t "$1"
+        tmux attach -t "$session_display_name"
       fi
     else
       if [[ $session_exists == false ]]; then
-        TMUX='' tmux new-session -d -s "$1"
+        TMUX='' tmux new-session -d -s "$session_name"
       fi
-      tmux switch-client -t "$1"
+      tmux switch-client -t "$session_name"
     fi
   elif [[ $action = b ]]; then
-    $BROWSER "https://github.com/$1"
+    $BROWSER "https://github.com/$session_name"
   else
     if [[ -d "$TO" ]]; then
       cd "$TO"
-    fi 
+    fi
   fi
 }
 
 _gc () {
   local cur=${COMP_WORDS[COMP_CWORD]}
   local ses=$(find $HOME/dev/ -maxdepth 2 -mindepth 2 | rev | cut -d'/' -f1,2  | rev)
+  ses="$ses noita"
   COMPREPLY=( $(compgen -W "$ses" -- $cur) )
 }
 
