@@ -14,4 +14,6 @@ elif [[ $1 == "window" ]]; then
 else
   scrot $out -e 'xclip -selection c -t image/png < $f'
 fi
+
+cp $outdir/$(ls $outdir -Art | tail -n 1) $outdir/latest.png
 notify-send -a scrot "copied to clipboard"

@@ -1,74 +1,127 @@
 #!/bin/bash
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-active_sink=$($dir/currentsink)
-current_volume=$(wpctl get-volume $active_sink)
-
-current_volume=$(echo "$(wpctl get-volume $active_sink | cut -d' ' -f2) * 100 / 1" | bc)
-
-
-
-good_description=$(wpctl inspect $active_sink \
-                     | grep 'alsa\.card_name' \
-                     | head -1 \
-                     | awk -F = '{print $2}' \
-                     | sed -e 's/^[[ ]]*//' \
-                     | tr -d '"')
-
-fallback_description=$(wpctl inspect $active_sink \
-                         | grep -e 'node.description' \
-                         | head -1 \
-                         | awk -F = '{print $2}' \
-                         | sed -e 's/^[[ ]]*//' \
-                         | tr -d '"')
-
-extra_description=$(wpctl inspect $active_sink \
-                      | grep -e 'device.profile.description' \
-                      | head -1 \
-                      | awk -F = '{print $2}' \
-                      | sed -e 's/^[[ ]]*//' \
-                      | tr -d '"')
-
-if [[ $good_description ]]; then
-  current_description=$good_description
-else
-  current_description=$fallback_description
-fi
-
-if [[ $current_description = WD* || $current_description = sof* ]]; then
-  current_description="$current_description ($extra_description)"
-fi
-
-if [[ $current_description = "USB AUDIO  CODEC" ]]; then
-  current_description=$(echo $fallback_description | cut -f1 -d' ')
-fi
-
-muted=$(wpctl get-volume ${active_sink} | grep MUTED)
-
 interval=${2:-5}
+max_vol=150
 
+get_state() {
+  active_sink=$($dir/currentsink)
+  current_volume=$(echo "$(wpctl get-volume $active_sink | cut -d' ' -f2) * 100 / 1" | bc)
+  muted=$(wpctl get-volume ${active_sink} | grep MUTED)
+  good_description=$(wpctl inspect $active_sink \
+                       | grep 'alsa\.card_name' \
+                       | head -1 \
+                       | awk -F = '{print $2}' \
+                       | sed -e 's/^[[ ]]*//' \
+                       | tr -d '"')
 
-if [[ $1 == "up" ]]; then
-  [[ -n $muted ]] && wpctl set-mute $active_sink toggle && muted=
-  if [[ $current_volume -lt 125 ]]; then
-    wpctl set-volume $active_sink "${interval}%+"
+  fallback_description=$(wpctl inspect $active_sink \
+                           | grep -e 'node.description' \
+                           | head -1 \
+                           | awk -F = '{print $2}' \
+                           | sed -e 's/^[[ ]]*//' \
+                           | tr -d '"')
+
+  extra_description=$(wpctl inspect $active_sink \
+                        | grep -e 'device.profile.description' \
+                        | head -1 \
+                        | awk -F = '{print $2}' \
+                        | sed -e 's/^[[ ]]*//' \
+                        | tr -d '"')
+
+  if [[ $good_description ]]; then
+    current_description=$good_description
+  else
+    current_description=$fallback_description
   fi
-elif [[ $1 == "down" ]]
-then
+
+  if [[ $current_description = WD* || $current_description = sof* ]]; then
+    current_description="$current_description ($extra_description)"
+  fi
+
+  if [[ $current_description = "USB AUDIO CODEC" ]]; then
+    current_description=$(echo $fallback_description | cut -f1 -d' ')
+  fi
+}
+
+get_state
+
+vol_up() {
+  [[ -n $muted ]] && wpctl set-mute $active_sink toggle && muted=
+  if [[ $current_volume -lt $max_vol ]]; then
+    wpctl set-volume $active_sink "${interval}%+"
+    current_volume=$(($current_volume + $interval))
+  fi
+}
+
+vol_down() {
   [[ -n $muted ]] && wpctl set-mute $active_sink toggle && muted=
   wpctl set-volume $active_sink "${interval}%-"
-elif [[ $1 == "mute" ]]
-then
-  wpctl set-mute $active_sink toggle
-else
-  if [[ -n $muted ]]
-  then
-    volume=""
+  current_volume=$(($current_volume - $interval))
+}
+
+vol_mute() {
+  if [[ -z $muted ]]; then
+    muted=1
   else
-    volume=""
+    muted=
   fi
-  volume="$volume ${current_volume}%  ${current_description}"
-  echo $volume
+  wpctl set-mute $active_sink toggle
+}
+
+action="$1"
+
+#echo "$BLOCK_BUTTON" >> ~/whatever.log
+
+if [[ -n "$BLOCK_BUTTON" ]]; then
+  case "$BLOCK_BUTTON" in
+    2) # middle click
+      action=mute
+      ;;
+    4) # scroll up
+      action=up
+      ;;
+    5) # scroll down
+      action=down
+      ;;
+    8) # back button
+      action=change_r
+      ;;
+    9) # forward button
+      action=change
+      ;;
+  esac
 fi
 
+case "$action" in
+  up)
+    vol_up
+    ;;
+  down)
+    vol_down
+    ;;
+  mute)
+    vol_mute
+    ;;
+  change)
+    $dir/changesink > /dev/null
+    get_state
+    ;;
+  change_r)
+    $dir/changesink -r > /dev/null
+    get_state
+    ;;
+esac
+
+# always output the current state
+if [[ -n $muted ]]
+then
+  volume=""
+else
+  volume=""
+fi
+volume="$volume ${current_volume}%  ${current_description}"
+echo $volume
+
+# refresh the dispaly
 pkill -RTMIN+1 i3blocks

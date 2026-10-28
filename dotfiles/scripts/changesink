@@ -11,6 +11,15 @@ sinks=($(wpctl status \
        ))
 sinks_len=${#sinks[@]}
 
+itr=1
+while getopts "r" opt; do
+  case "${opt}" in
+    r)
+      itr=-1
+      ;;
+  esac
+done
+shift $((OPTIND -1))
 
 if [ -z $1 ]; then
 
@@ -24,7 +33,7 @@ if [ -z $1 ]; then
 
   idx=$cur_idx
   while true; do
-    idx=$(( ($idx + 1) % $sinks_len ))
+    idx=$(( ($idx + $itr) % $sinks_len ))
     echo "next index: $idx"
     # break if we've looped all the way around
     if [[ $idx == $cur_idx ]]; then

@@ -21,6 +21,8 @@ export AWS_REGION=$AWS_DEFAULT_REGION
 export BROWSER=firefox
 
 export NOITA_HOME=$HOME/snap/steam/common/.local/share/Steam/steamapps/common/Noita
+export NOITA_APP_ID=881100
+export NOITA_SAVE_DIR=$HOME/snap/steam/common/.local/share/Steam/steamapps/compatdata/881100/pfx/drive_c/users/steamuser/AppData/LocalLow/Nolla_Games_Noita
 
 source ~/.colors
 source ~/.aliases
