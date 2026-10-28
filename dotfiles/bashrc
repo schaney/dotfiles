@@ -23,6 +23,7 @@ export BROWSER=firefox
 export NOITA_HOME=$HOME/snap/steam/common/.local/share/Steam/steamapps/common/Noita
 export NOITA_APP_ID=881100
 export NOITA_SAVE_DIR=$HOME/snap/steam/common/.local/share/Steam/steamapps/compatdata/881100/pfx/drive_c/users/steamuser/AppData/LocalLow/Nolla_Games_Noita
+export NOITA_REPO="schaney/the-eyes-bro-what-are-they"
 
 source ~/.colors
 source ~/.aliases
@@ -274,16 +275,19 @@ gc ()
 
   session_display_name=$session_name
   if [[ $session_name = "noita" ]]; then
-    session_name="schaney/the-eyes-bro-what-are-they"
+    session_name="$NOITA_REPO"
     session_display_name="noita"
   fi
 
   if [[ $no_args == true && -n $TMUX ]]; then
     repo="$(tmux display-message -p '#S')"
+    if [[ $repo = "noita" ]]; then
+      repo=$NOITA_REPO
+    fi
   else
     repo="$session_name"
   fi
-
+  
   local FROM="git@github.com:${repo}"
   local TO="$DEVHOME/${repo}"
 
@@ -302,9 +306,9 @@ gc ()
       fi
     else
       if [[ $session_exists == false ]]; then
-        TMUX='' tmux new-session -d -s "$session_name"
+        TMUX='' tmux new-session -d -s "$session_display_name"
       fi
-      tmux switch-client -t "$session_name"
+      tmux switch-client -t "$session_display_name"
     fi
   elif [[ $action = b ]]; then
     $BROWSER "https://github.com/$session_name"

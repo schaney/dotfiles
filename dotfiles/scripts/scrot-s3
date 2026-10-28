@@ -8,11 +8,13 @@ out="${outdir}/${img}"
 sleep 2
 if [[ $1 == "select" ]]; then
   notify-send -a scrot "select area"
-  scrot -s $out -e 'xclip -selection c -t image/png < $f'
+  sleep 0.3;
+  scrot -f -s $out -e 'xclip -selection c -t image/png < $f'
 elif [[ $1 == "window" ]]; then
   scrot -bu $out -e 'xclip -selection c -t image/png < $f'
 else
-  scrot $out -e 'xclip -selection c -t image/png < $f'
+  sleep 0.3;
+  scrot -f -s $out -e 'xclip -selection c -t image/png < $f'
 fi
 
 cp $outdir/$(ls $outdir -Art | tail -n 1) $outdir/latest.png
