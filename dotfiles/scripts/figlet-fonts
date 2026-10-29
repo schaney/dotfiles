@@ -1,0 +1,10 @@
+#!/bin/bash
+msg=${1:-"why hello there"}
+sep='--------------------------------------------------------------------------------'
+find /usr/share/figlet/ -type f -print0 |
+  while LC_ALL=C IFS= read -r -d '' font; do
+    echo $sep
+    echo "$font"
+    echo $sep
+    echo "$msg" | figlet -f "$font"
+  done

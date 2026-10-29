@@ -16,4 +16,3 @@ else
   color=$(( ($RANDOM % 256) + 1))
   echo "$(tput setaf $color)${picture}"
 fi
-echo
