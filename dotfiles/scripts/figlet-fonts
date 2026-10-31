@@ -1,7 +1,18 @@
 #!/bin/bash
+
+search="*"
+while getopts "s:" opt; do
+  case "${opt}" in
+    s)
+      search="*${OPTARG}*"
+      ;;
+  esac
+done
+shift $((OPTIND -1))
+
 msg=${1:-"why hello there"}
 sep='--------------------------------------------------------------------------------'
-find /usr/share/figlet/ -type f -print0 |
+find /usr/share/figlet/ -type f -iname "$search" -print0 |
   while LC_ALL=C IFS= read -r -d '' font; do
     echo $sep
     echo "$font"

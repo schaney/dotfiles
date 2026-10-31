@@ -11,7 +11,12 @@ if command -v lolcat > /dev/null; then
   seed=$(( ($RANDOM % 256) + 1))
   freq=$(echo "scale=3; $(((RANDOM % 50) + 100))/1000" | bc)
   spread=$(echo "scale=3; $(((RANDOM % 1000) + 1))/100 + 0.1" | bc)
-  echo "$picture" | lolcat --seed $seed -F $freq -t -p $spread
+  echo "$picture" | \
+    lolcat -t -a \
+      --seed $seed \
+      -F $freq \
+      -p $spread \
+      -s 10000
 else
   color=$(( ($RANDOM % 256) + 1))
   echo "$(tput setaf $color)${picture}"
