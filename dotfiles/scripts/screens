@@ -26,7 +26,8 @@ elif [[ "$num" = "1440" ]]; then
   xrandr --output $mainscreen --mode 2560x1440
 elif [[ "$num" = "mirror" ]]; then
   xrandr --output $tv --mode 1920x1080 \
-         --output $dell_right --mode 1920x1080 --same-as $tv
+         --output $dell_right --mode 1920x1080 --same-as $tv \
+         --output $dell_left --left-of $dell_right --mode 2560x1440
 elif [[ $num = "office" ]]; then
   xrandr --output $mainscreen --auto \
          --output $ultrawide --auto  --right-of $mainscreen
